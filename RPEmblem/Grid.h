@@ -164,6 +164,8 @@ public:
 			color = vector3(1, 0.2, 0.2);
 		if (blueHighLight)
 			color = vector3(0.2, 0.2, 1);
+		if (!triggerColors)
+			color = vector3(0.2, 1, 0.2);
 		glColor3f(color.x,color.y,color.z);
 		glTexCoord2f(0, 0); glVertex3f(position.x - 1, position.y + 0.11 - 1, 0);
 		//glColor3f(0, 1, 0);
@@ -206,7 +208,12 @@ public:
 	virtual void draw()
 	{
 		resistance = belowContent->resistance;
-		belowContent->draw();
+		if (blueHighLight)
+			belowContent->draw(false);
+		else if (redHighLight)
+			belowContent->draw(true);
+		else
+			belowContent->draw();
 		glEnable(GL_TEXTURE_2D);
 		glBindTexture(GL_TEXTURE_2D, texture);
 		glEnable(GL_BLEND);
@@ -214,9 +221,9 @@ public:
 		glBegin(GL_QUADS);
 		glPushMatrix();
 
-		//glColor3f(1, 0, 0);
+		glColor3f(1, 0, 0);
 		glLoadIdentity();
-		glColor3f(1, 1, 1);
+		
 		glTexCoord2f(0, 0); glVertex3f(belowContent->position.x - 1, belowContent->position.y + 0.11 - 1, 0);
 		//glColor3f(0, 1, 0);
 		glTexCoord2f(0, 1); glVertex3f(belowContent->position.x - 1.11, belowContent->position.y + 0.11 - 1, 0);
@@ -262,6 +269,8 @@ public:
 	int health;
 	int maxHealth;
 	float xp;
+	bool alive;
+	bool waiting;
 	GLint texture;
 	map<vector2,Land*> pathTaken;
 	vector2 position;//The actual value between -2 and 2
@@ -274,6 +283,8 @@ public:
 
 	virtual void init(vector2 change, string newName)
 	{
+		alive = health > 0;
+		waiting = false;
 		health = 1;
 		cord = change;
 
@@ -358,6 +369,8 @@ class HeavyMace : Characters
 {
 	virtual void init(vector2 change, string newName)
 	{
+		alive = health > 0;
+		waiting = false;
 		turnOrder = 1;
 		health = 10;
 		cord = change;
@@ -395,6 +408,8 @@ class Swordsman : Characters
 {
 	virtual void init(vector2 change, string newName)
 	{
+		alive = health > 0;
+		waiting = false;
 		turnOrder = 2;
 		health = 10;
 		cord = change;
@@ -432,6 +447,8 @@ class Axeman : Characters
 {
 	virtual void init(vector2 change, string newName)
 	{
+		alive = health > 0;
+		waiting = false;
 		turnOrder = 3;
 		health = 10;
 		cord = change;
@@ -666,6 +683,60 @@ public:
 		landNodes = newNode;
 	}
 };
+class Screens
+{
+public:
+	GLint texture;
+	bool show;
+	Screens(void)
+	{
+		show = true;
+	}
+	~Screens(){}
+	virtual void draw()
+	{
+		if (!show)
+			return;
+		glEnable(GL_TEXTURE_2D);
+
+		glBindTexture(GL_TEXTURE_2D, texture);
+		glBegin(GL_QUADS);
+		glPushMatrix();
+		glRotatef(180, 1, 0, 0);
+		glLoadIdentity();
+		glColor3f(1, 1, 1);
+		glTexCoord2f(0, 0); glVertex3f(-1, 1, 0);
+		glTexCoord2f(1, 0); glVertex3f(1, 1, 0);
+		glTexCoord2f(1, 1); glVertex3f(1, -1, 0);
+		glTexCoord2f(0, 1); glVertex3f(-1, -1, 0);
+		glPopMatrix();
+		glEnd();
+		glRotatef(-180, 1, 0, 0);
+		glDisable(GL_TEXTURE_2D);
+	}
+	virtual bool load(char file)
+	{
+		texture = SOIL_load_OGL_texture
+			(
+			"splash.png",
+			SOIL_LOAD_AUTO,
+			SOIL_CREATE_NEW_ID,
+			SOIL_FLAG_INVERT_Y
+			);
+
+		if (texture == 0)
+			//throw std::bad_exception("Failure to load image");
+			return false;
+
+
+		// Typical Texture Generation Using Data From The Bitmap
+		glBindTexture(GL_TEXTURE_2D, texture);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+
+		return true;
+	}
+};
 class Grid
 {
 public:
@@ -684,11 +755,15 @@ public:
 	enum STATE { SPLASH, MENU, GAME, EXIT, OPTIONS };//Game states
 	STATE curr;//The current state
 	bool move;
+	bool paused;
+	bool filling;
 	int turn;//Controls who can act and who cannot
 	XmlLoader xml;
+	Screens scr;
 	
 	void init(int x/*18*/, int y/*18*/)
 	{
+		paused = false;
 		turn = 1;
 		playable[1] = (Characters*)new HeavyMace;
 		playable[2] = (Characters*)new Swordsman;
@@ -734,6 +809,9 @@ public:
 		}
 		nodes = newNode;*/
 		xml.loadNodes(nodes, 1);
+		scr.load((const char)"splash");
+		curr = STATE::SPLASH;
+		keyState[' '] = false;
 	}
 	void draw()
 	{
@@ -747,6 +825,11 @@ public:
 		testturn--;
 		if (testturn < 1)
 			testturn = 3;*/
+		if (scr.show)
+		{
+			scr.draw();
+			return;
+		}
 		for (int i = 0; i < 18; i++) {
 			for (int ii = 0; ii < 18; ii++) {
 				if (turn <= 3)
@@ -830,6 +913,10 @@ public:
 	}
 	void update()
 	{
+		if (curr == STATE::GAME)
+			scr.show = false;
+		if (scr.show)
+			return;
 		//if (selectedNode != vector2(-1,-1))
 		for (map<int, Characters*>::iterator it = playable.begin(); it != playable.end();it++)
 		{
@@ -854,6 +941,7 @@ public:
 					}*/
 					if (move)
 					{
+						it->second->waiting = false;
 						it->second->updatePos(selectedNode);
 						turn++;
 						move = false;
@@ -879,6 +967,8 @@ public:
 				//card.showOpSel = false;
 				selCharacter = (Characters*)new Characters;
 			}
+			it->second->alive = it->second->health > 0;
+			it->second->waiting = false;
 		}
 		if (turn > 3)
 			turn = 1;

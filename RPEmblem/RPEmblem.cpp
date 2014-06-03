@@ -53,35 +53,32 @@ void resize(int width, int height)
 
 void keyboard(unsigned char key, int x, int y)
 {
-	//maps.keyState[key] = true;
+	grid.keyState[key] = true;
 }
 void keyboard_up(unsigned char key, int x, int y)
 {
-	/*maps.keyState[key] = false;
+	grid.keyState[key] = false;
 	switch (key)
 	{
 	case ' ':
-		if (player.jump == 2 && maps.curr == maps.GAME)
+		if (grid.curr == grid.GAME)
 		{
-			player.jump = 1;
-			player.jumpYPos = player.position.y;
-			//position.y++;
 		}
-		else if (maps.curr == maps.MENU)
+		else if (grid.curr == grid.SPLASH)
 		{
-			maps.curr = maps.GAME;
+			grid.curr = grid.GAME;
 		}
 		break;
 	case 27:
 		//glutDestroyWindow(Win.id);
-		//exit(0);
-		maps.paused = !maps.paused;
-		if (!maps.paused)
-			glutSetCursor(GLUT_CURSOR_NONE);
-		else
-			glutSetCursor(GLUT_CURSOR_CROSSHAIR);
+		exit(0);
+		grid.paused = !grid.paused;
+		//if (!maps.paused)
+		//	glutSetCursor(GLUT_CURSOR_NONE);
+		//else
+		//	glutSetCursor(GLUT_CURSOR_CROSSHAIR);
 		break;
-	case '/':
+	/*case '/':
 		player.position.x = 0;
 		player.position.z = 0;
 		break;
@@ -101,7 +98,7 @@ void keyboard_up(unsigned char key, int x, int y)
 		break;
 	case 'r': case 'R':
 		maps.reload();
-		break;
+		break;*/
 	case 'p': case 'P':
 		glutFullScreen();
 		break;
@@ -109,18 +106,18 @@ void keyboard_up(unsigned char key, int x, int y)
 		std::cout << "Breaking the game :D";
 		break;
 	case 'f': case 'F':
-		if (player.filling == 0)
+		if (grid.filling == 0)
 		{
 			glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
-			player.filling = 1;
+			grid.filling = 1;
 		}
 		else
 		{
 			glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
-			player.filling = 0;
+			grid.filling = 0;
 		}
 		break;
-	}*/
+	}
 }
 void keyCommands()
 {
