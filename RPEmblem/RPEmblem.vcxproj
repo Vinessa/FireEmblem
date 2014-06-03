@@ -103,7 +103,6 @@
     <None Include="glut32.dll" />
   </ItemGroup>
   <ItemGroup>
-    <Library Include="..\..\..\..\..\Downloads\tinyxml2-master\tinyxml2-master\tinyxml2\bin\Win32-Debug-Dll\tinyxml2.lib" />
     <Library Include="glut32.lib" />
     <Library Include="SOIL.lib" />
   </ItemGroup>
@@ -114,6 +113,7 @@
     <Image Include="paper.png" />
     <Image Include="rock.png" />
     <Image Include="select.png" />
+    <Image Include="splash.png" />
     <Image Include="wall.png" />
   </ItemGroup>
   <ItemGroup>
