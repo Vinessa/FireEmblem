@@ -1,18 +1,51 @@
-﻿Build started 6/3/2014 5:44:57 PM.
-     1>Project "C:\Users\vinessam\Documents\GitHub\FireEmblem\RPEmblem\RPEmblem.vcxproj" on node 2 (Rebuild target(s)).
+﻿Build started 6/4/2014 10:02:00 AM.
+     1>Project "C:\Users\vinessam\Documents\GitHub\FireEmblem\RPEmblem\RPEmblem.vcxproj" on node 2 (Build target(s)).
      1>ClCompile:
-         C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\CL.exe /c /ZI /nologo /W3 /WX- /sdl /Od /Oy- /D WIN32 /D _DEBUG /D _CONSOLE /D _LIB /D _UNICODE /D UNICODE /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Yc"stdafx.h" /Fp"Debug\RPEmblem.pch" /Fo"Debug\\" /Fd"Debug\vc120.pdb" /Gd /TP /analyze- /errorReport:prompt stdafx.cpp
-         stdafx.cpp
-         C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\CL.exe /c /ZI /nologo /W3 /WX- /sdl /Od /Oy- /D WIN32 /D _DEBUG /D _CONSOLE /D _LIB /D _UNICODE /D UNICODE /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Yu"stdafx.h" /Fp"Debug\RPEmblem.pch" /Fo"Debug\\" /Fd"Debug\vc120.pdb" /Gd /TP /analyze- /errorReport:prompt Grid.cpp RPEmblem.cpp VectorLib.cpp Weapon.cpp
-         Weapon.cpp
-         VectorLib.cpp
-         RPEmblem.cpp
-     1>c:\users\vinessam\documents\github\fireemblem\rpemblem\grid.h(11): fatal error C1083: Cannot open include file: 'tinyxml.h': No such file or directory
-         Grid.cpp
-     1>c:\users\vinessam\documents\github\fireemblem\rpemblem\grid.h(11): fatal error C1083: Cannot open include file: 'tinyxml.h': No such file or directory
-         Generating Code...
-     1>Done Building Project "C:\Users\vinessam\Documents\GitHub\FireEmblem\RPEmblem\RPEmblem.vcxproj" (Rebuild target(s)) -- FAILED.
+         C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\CL.exe /c /ZI /nologo /W3 /WX- /sdl /Od /Oy- /D WIN32 /D _DEBUG /D _CONSOLE /D _LIB /D _UNICODE /D UNICODE /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Debug\\" /Fd"Debug\vc120.pdb" /Gd /TP /analyze- /errorReport:prompt Attacks.cpp
+         Attacks.cpp
+     1>c:\users\vinessam\documents\github\fireemblem\rpemblem\attacks.cpp(18): error C2039: 'AdjacentCharacters' : is not a member of 'Characters'
+                 c:\users\vinessam\documents\github\fireemblem\rpemblem\grid.h(267) : see declaration of 'Characters'
+     1>c:\users\vinessam\documents\github\fireemblem\rpemblem\attacks.cpp(19): error C2143: syntax error : missing ';' before '}'
+     1>c:\users\vinessam\documents\github\fireemblem\rpemblem\attacks.cpp(24): error C2276: '*' : illegal operation on bound member function expression
+     1>c:\users\vinessam\documents\github\fireemblem\rpemblem\attacks.cpp(30): error C3867: 'Weapon::type': function call missing argument list; use '&Weapon::type' to create a pointer to member
+     1>c:\users\vinessam\documents\github\fireemblem\rpemblem\attacks.cpp(30): error C2446: '==' : no conversion from 'const char *' to 'std::string (__thiscall Weapon::* )(void)'
+                 There is no context in which this conversion is possible
+     1>c:\users\vinessam\documents\github\fireemblem\rpemblem\attacks.cpp(30): error C2040: '==' : 'std::string (__thiscall Weapon::* )(void)' differs in levels of indirection from 'const char [4]'
+     1>c:\users\vinessam\documents\github\fireemblem\rpemblem\attacks.cpp(35): error C3867: 'Weapon::type': function call missing argument list; use '&Weapon::type' to create a pointer to member
+     1>c:\users\vinessam\documents\github\fireemblem\rpemblem\attacks.cpp(35): error C2446: '==' : no conversion from 'const char *' to 'std::string (__thiscall Weapon::* )(void)'
+                 There is no context in which this conversion is possible
+     1>c:\users\vinessam\documents\github\fireemblem\rpemblem\attacks.cpp(35): error C2040: '==' : 'std::string (__thiscall Weapon::* )(void)' differs in levels of indirection from 'const char [5]'
+     1>c:\users\vinessam\documents\github\fireemblem\rpemblem\attacks.cpp(68): error C2181: illegal else without matching if
+     1>c:\users\vinessam\documents\github\fireemblem\rpemblem\attacks.cpp(75): error C2043: illegal break
+     1>c:\users\vinessam\documents\github\fireemblem\rpemblem\attacks.cpp(77): error C2046: illegal case
+     1>c:\users\vinessam\documents\github\fireemblem\rpemblem\attacks.cpp(80): error C2043: illegal break
+     1>c:\users\vinessam\documents\github\fireemblem\rpemblem\attacks.cpp(81): error C2046: illegal case
+     1>c:\users\vinessam\documents\github\fireemblem\rpemblem\attacks.cpp(84): error C2043: illegal break
+     1>c:\users\vinessam\documents\github\fireemblem\rpemblem\attacks.cpp(90): error C2051: case expression not constant
+     1>c:\users\vinessam\documents\github\fireemblem\rpemblem\attacks.cpp(91): warning C4060: switch statement contains no 'case' or 'default' labels
+     1>c:\users\vinessam\documents\github\fireemblem\rpemblem\attacks.cpp(93): error C2043: illegal break
+     1>c:\users\vinessam\documents\github\fireemblem\rpemblem\attacks.cpp(95): error C2046: illegal case
+     1>c:\users\vinessam\documents\github\fireemblem\rpemblem\attacks.cpp(98): error C2043: illegal break
+     1>c:\users\vinessam\documents\github\fireemblem\rpemblem\attacks.cpp(100): error C2046: illegal case
+     1>c:\users\vinessam\documents\github\fireemblem\rpemblem\attacks.cpp(103): error C2043: illegal break
+     1>c:\users\vinessam\documents\github\fireemblem\rpemblem\attacks.cpp(122): error C2039: 'damage' : is not a member of 'Weapon'
+                 c:\users\vinessam\documents\github\fireemblem\rpemblem\weapon.h(7) : see declaration of 'Weapon'
+     1>c:\users\vinessam\documents\github\fireemblem\rpemblem\attacks.cpp(123): error C2039: 'damage' : is not a member of 'Weapon'
+                 c:\users\vinessam\documents\github\fireemblem\rpemblem\weapon.h(7) : see declaration of 'Weapon'
+     1>c:\users\vinessam\documents\github\fireemblem\rpemblem\attacks.cpp(134): error C2039: 'IsDead' : is not a member of 'Characters'
+                 c:\users\vinessam\documents\github\fireemblem\rpemblem\grid.h(267) : see declaration of 'Characters'
+     1>c:\users\vinessam\documents\github\fireemblem\rpemblem\attacks.cpp(134): error C2065: 'True' : undeclared identifier
+     1>c:\users\vinessam\documents\github\fireemblem\rpemblem\attacks.cpp(141): error C2039: 'IsDead' : is not a member of 'Characters'
+                 c:\users\vinessam\documents\github\fireemblem\rpemblem\grid.h(267) : see declaration of 'Characters'
+     1>c:\users\vinessam\documents\github\fireemblem\rpemblem\attacks.cpp(141): error C2065: 'True' : undeclared identifier
+     1>c:\users\vinessam\documents\github\fireemblem\rpemblem\attacks.cpp(149): error C2039: 'IsDead' : is not a member of 'Characters'
+                 c:\users\vinessam\documents\github\fireemblem\rpemblem\grid.h(267) : see declaration of 'Characters'
+     1>c:\users\vinessam\documents\github\fireemblem\rpemblem\attacks.cpp(149): error C2065: 'True' : undeclared identifier
+     1>c:\users\vinessam\documents\github\fireemblem\rpemblem\attacks.cpp(156): error C2039: 'IsDead' : is not a member of 'Characters'
+                 c:\users\vinessam\documents\github\fireemblem\rpemblem\grid.h(267) : see declaration of 'Characters'
+     1>c:\users\vinessam\documents\github\fireemblem\rpemblem\attacks.cpp(156): error C2065: 'True' : undeclared identifier
+     1>Done Building Project "C:\Users\vinessam\Documents\GitHub\FireEmblem\RPEmblem\RPEmblem.vcxproj" (Build target(s)) -- FAILED.
 
 Build FAILED.
 
-Time Elapsed 00:00:01.55
+Time Elapsed 00:00:00.40

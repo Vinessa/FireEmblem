@@ -26,6 +26,7 @@ public:
 	int ShakeItUp();
 	int ConvertWeaponStringToInt(Weapon* a_Weapon); // The Weapon class returns a string, but string can't be used in a switch statement so I'm converting to an int. 1 = Sword, 2 = Axe and 3 = Mace
 	void ResolveAttacks(Characters* ActiveCharacter, Characters* TargetCharacter);
+	void ResolveAllAttacks(Characters* ActiveCharacter); //goes through the array of adjacent characters and resolves battles
 
 	
 };

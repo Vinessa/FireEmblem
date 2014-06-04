@@ -13,7 +13,7 @@ Attacks::~Attacks(void)
 {
 }
 
-void Attacks::ResolveAttackRound(Characters* ActiveCharacter) // goes through the array of adjacent characters and resolves battles
+void Attacks::ResolveAllAttacks(Characters* ActiveCharacter) // goes through the array of adjacent characters and resolves battles
 {
 	std::vector<Characters*> Opponents(ActiveCharacter-> AdjacentCharacters) //copies the vector containing the possible opponents
 }
