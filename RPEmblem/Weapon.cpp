@@ -1,7 +1,5 @@
-
 #include "stdafx.h"
 #include "Weapon.h"
-
 
 SWORD::SWORD(int newDurability)
 {
@@ -14,11 +12,10 @@ SWORD::SWORD(int newDurability)
 	durability = newDurability;
 }
 
-
 int SWORD::Compare(Weapon* Weapon2){
-		// sword take mace
-		// axe takes sword
-		// mace takes axe
+	// sword take mace
+	// axe takes sword
+	// mace takes axe
 	if (Weapon2->type() == "Sword"){
 		return 0;
 	}
@@ -28,12 +25,12 @@ int SWORD::Compare(Weapon* Weapon2){
 	else if (Weapon2->type() == "Mace"){
 		return 2;
 	}
-	else 
+	else
 		return 0;
 }
 
 int MACE::Compare(Weapon* Weapon2){
-	if  (Weapon2->type() == "Sword"){
+	if (Weapon2->type() == "Sword"){
 		return 1;
 	}
 	else if (Weapon2->type() == "Axe"){

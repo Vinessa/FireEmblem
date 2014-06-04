@@ -35,7 +35,7 @@ void init(void)
 	glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
 	//glutSetCursor(GLUT_CURSOR_NONE);
 	//glfwDisable(GLFW_MOUSE_CURSOR);
-	grid.init(18,18);
+	grid.init(18, 18);
 	grid.screen = screen;
 }
 void resize(int width, int height)
@@ -78,27 +78,27 @@ void keyboard_up(unsigned char key, int x, int y)
 		//else
 		//	glutSetCursor(GLUT_CURSOR_CROSSHAIR);
 		break;
-	/*case '/':
-		player.position.x = 0;
-		player.position.z = 0;
-		break;
-	case '5':
-		player.health--;
-		break;
-	case '8': case 'w': case 'W':
-		player.speed.x = 0;
-		player.speed.z = 0;
-		break;
-	case '2': case 's': case 'S':
-		player.speed.x = 0;
-		player.speed.z = 0;
-		break;
-	case 'q': case 'Q':
-		maps.fireBullet(player.position, 0, player.lx, player.ly, player.lz);
-		break;
-	case 'r': case 'R':
-		maps.reload();
-		break;*/
+		/*case '/':
+			player.position.x = 0;
+			player.position.z = 0;
+			break;
+			case '5':
+			player.health--;
+			break;
+			case '8': case 'w': case 'W':
+			player.speed.x = 0;
+			player.speed.z = 0;
+			break;
+			case '2': case 's': case 'S':
+			player.speed.x = 0;
+			player.speed.z = 0;
+			break;
+			case 'q': case 'Q':
+			maps.fireBullet(player.position, 0, player.lx, player.ly, player.lz);
+			break;
+			case 'r': case 'R':
+			maps.reload();
+			break;*/
 	case 'p': case 'P':
 		glutFullScreen();
 		break;
@@ -124,41 +124,41 @@ void keyCommands()
 	/*typedef std::map<unsigned char, bool>::iterator it_type;
 	for (it_type iterator = maps.keyState.begin(); iterator != maps.keyState.end(); iterator++)
 	{
-		if (iterator->second)
-		{
-			switch (iterator->first)
-			{
-			case '4': case 'a': case 'A':
-				//angle -= 0.005f;
-				//lx = sin(angle);
-				//lz = -cos(angle);
-				//position.x -= lx * 0.1f;
-				//position.z += lz * 0.1f;
-				break;
-			case '8': case 'w': case 'W':
-				//position.x += lx * 0.1f;
-				//position.z += lz * 0.1f;
-				player.speed.x = player.lx * 0.1f;
-				player.speed.z = player.lz * 0.1f;
-				break;
-			case '2': case 's': case 'S':
-				//position.x -= lx * 0.1f;
-				//position.z -= lz * 0.1f;
-				player.speed.x = -(player.lx * 0.1f);
-				player.speed.z = -(player.lz * 0.1f);
-				break;
-			case '6': case 'd': case 'D':
-				//position.x += lx * 0.1f;
-				//angle += 0.005f;
-				//lx = sin(angle);
-				//lz = -cos(angle);
-				break;
+	if (iterator->second)
+	{
+	switch (iterator->first)
+	{
+	case '4': case 'a': case 'A':
+	//angle -= 0.005f;
+	//lx = sin(angle);
+	//lz = -cos(angle);
+	//position.x -= lx * 0.1f;
+	//position.z += lz * 0.1f;
+	break;
+	case '8': case 'w': case 'W':
+	//position.x += lx * 0.1f;
+	//position.z += lz * 0.1f;
+	player.speed.x = player.lx * 0.1f;
+	player.speed.z = player.lz * 0.1f;
+	break;
+	case '2': case 's': case 'S':
+	//position.x -= lx * 0.1f;
+	//position.z -= lz * 0.1f;
+	player.speed.x = -(player.lx * 0.1f);
+	player.speed.z = -(player.lz * 0.1f);
+	break;
+	case '6': case 'd': case 'D':
+	//position.x += lx * 0.1f;
+	//angle += 0.005f;
+	//lx = sin(angle);
+	//lz = -cos(angle);
+	break;
 
-			case 'q': case 'Q':
-				//bulletpair.fireBullet();
-				break;
-			}
-		}
+	case 'q': case 'Q':
+	//bulletpair.fireBullet();
+	break;
+	}
+	}
 	}*/
 }
 void keyboard_s(int key, int x, int y)
@@ -180,23 +180,23 @@ void display(void)
 	{
 	case maps.GAME:
 
-		gluLookAt(player.position.x, player.position.y + 1.0f, player.position.z, player.position.x + player.lx, player.position.y + 1.0f + player.ly, player.position.z + player.lz, 0.0f, 1.0f, 0.0f);
+	gluLookAt(player.position.x, player.position.y + 1.0f, player.position.z, player.position.x + player.lx, player.position.y + 1.0f + player.ly, player.position.z + player.lz, 0.0f, 1.0f, 0.0f);
 
-		player.draw();
-		maps.draw();
+	player.draw();
+	maps.draw();
 
-		drawGui();
+	drawGui();
 
-		break;
+	break;
 	case maps.MENU:
-		drawMenu();
-		break;
+	drawMenu();
+	break;
 	case maps.EXIT:
-		break;
+	break;
 	case maps.SPLASH:
-		break;
+	break;
 	case maps.OPTIONS:
-		break;
+	break;
 	}*/
 	glFlush();
 	glutSwapBuffers();
@@ -210,16 +210,16 @@ void update()
 	grid.update();
 	/*if (!maps.paused)
 	{
-		bool fall = maps.update(player.speed, player.position, player.size, player.jump, player.invTimer, player.health, player.lightInf);
-		player.update(fall);
+	bool fall = maps.update(player.speed, player.position, player.size, player.jump, player.invTimer, player.health, player.lightInf);
+	player.update(fall);
 	}*/
 }
 void mouseClick(int button, int state, int x, int y)
 {
 	/*if (button == GLUT_LEFT_BUTTON && state == GLUT_DOWN && !maps.paused) {
 		maps.fireBullet(player.position, player.angle, player.lx, player.ly, player.lz);
-	}
-	else if (maps.paused && y > (screen.y / 2) - (screen.y / 5) && y < (screen.y / 2) + (screen.y / 5) && x > screen.x / 4 && x < (screen.x / 2) + (screen.x / 4))
+		}
+		else if (maps.paused && y > (screen.y / 2) - (screen.y / 5) && y < (screen.y / 2) + (screen.y / 5) && x > screen.x / 4 && x < (screen.x / 2) + (screen.x / 4))
 		exit(0);*/
 
 	//float x_tran = x - (screen.x / 2);
@@ -280,52 +280,52 @@ void mouseMotion(int x, int y)
 {
 	/*if (!maps.paused)
 	{
-		static bool warped = false;
-		bool capture = false;
-		if (warped)
-		{
-			warped = false;
-			return;
-		}
+	static bool warped = false;
+	bool capture = false;
+	if (warped)
+	{
+	warped = false;
+	return;
+	}
 
-		mouse.x = x;
-		mouse.y = y;
-		if (x != screen.x || y != screen.y)
-			capture = true;
-		if (capture)
-		{
-			warped = true;
-			if (x > screen.x / 2)
-			{
-				player.angle -= 0.05f;
-				player.lx = sin(player.angle);
-				player.lz = -cos(player.angle);
-				glutWarpPointer(screen.x / 2, screen.y / 2);
-			}
-			else if (x < screen.x / 2)
-			{
-				player.angle += 0.05f;
-				//if (player.vertAngle < 0)
-				//player.vertAngle = 0;
-				player.lx = sin(player.angle);
-				player.lz = -cos(player.angle);
-				glutWarpPointer(screen.x / 2, screen.y / 2);
-			}
-			if (y < screen.y / 2 && player.vertAngle < 0.8)
-			{
-				player.vertAngle += 0.05f;
-				player.ly = sin(player.vertAngle);
-				glutWarpPointer(screen.x / 2, screen.y / 2);
-			}
-			else if (y > screen.y / 2 && player.vertAngle > -0.8)
-			{
-				player.vertAngle -= 0.05f;
-				//if (player.vertAngle > 360)
-				//player.vertAngle = 360;
-				player.ly = sin(player.vertAngle);
-				glutWarpPointer(screen.x / 2, screen.y / 2);
-			}
-		}
+	mouse.x = x;
+	mouse.y = y;
+	if (x != screen.x || y != screen.y)
+	capture = true;
+	if (capture)
+	{
+	warped = true;
+	if (x > screen.x / 2)
+	{
+	player.angle -= 0.05f;
+	player.lx = sin(player.angle);
+	player.lz = -cos(player.angle);
+	glutWarpPointer(screen.x / 2, screen.y / 2);
+	}
+	else if (x < screen.x / 2)
+	{
+	player.angle += 0.05f;
+	//if (player.vertAngle < 0)
+	//player.vertAngle = 0;
+	player.lx = sin(player.angle);
+	player.lz = -cos(player.angle);
+	glutWarpPointer(screen.x / 2, screen.y / 2);
+	}
+	if (y < screen.y / 2 && player.vertAngle < 0.8)
+	{
+	player.vertAngle += 0.05f;
+	player.ly = sin(player.vertAngle);
+	glutWarpPointer(screen.x / 2, screen.y / 2);
+	}
+	else if (y > screen.y / 2 && player.vertAngle > -0.8)
+	{
+	player.vertAngle -= 0.05f;
+	//if (player.vertAngle > 360)
+	//player.vertAngle = 360;
+	player.ly = sin(player.vertAngle);
+	glutWarpPointer(screen.x / 2, screen.y / 2);
+	}
+	}
 	}
 	//glutWarpPointer(screen.x/2,screen.y/2);*/
 }
@@ -349,4 +349,3 @@ int main(int argc, char** argv)
 	glutMainLoop();
 	return(1);
 }
-

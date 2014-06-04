@@ -60,7 +60,7 @@ public:
 		glColor3f(1, 1, 1);
 		glTexCoord2f(0, 0); glVertex3f(position.x - 1, position.y + 0.11 - 1, 0);
 		//glColor3f(0, 1, 0);
-		glTexCoord2f(1,0); glVertex3f(position.x - 1.11, position.y + 0.11 - 1, 0);
+		glTexCoord2f(1, 0); glVertex3f(position.x - 1.11, position.y + 0.11 - 1, 0);
 		//glColor3f(0, 0, 1);
 		glTexCoord2f(1, 1); glVertex3f(position.x - 1.11, position.y - 1, 0);
 		//glColor3f(0, 0, 0);
@@ -108,7 +108,6 @@ public:
 		if (texture == 0)
 			return false;
 
-
 		// Typical Texture Generation Using Data From The Bitmap
 		glBindTexture(GL_TEXTURE_2D, texture);
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
@@ -116,7 +115,7 @@ public:
 
 		return true;
 	}
-}; 
+};
 class Dirt :Land
 {
 public:
@@ -132,7 +131,7 @@ public:
 	virtual void draw()
 	{
 		glEnable(GL_TEXTURE_2D);
-		glBindTexture(GL_TEXTURE_2D,texture);
+		glBindTexture(GL_TEXTURE_2D, texture);
 		glBegin(GL_QUADS);
 		glPushMatrix();
 
@@ -141,7 +140,7 @@ public:
 		glColor3f(1, 1, 1);
 		glTexCoord2f(0, 0); glVertex3f(position.x - 1, position.y + 0.11 - 1, 0);
 		//glColor3f(0, 1, 0);
-		glTexCoord2f(1,0); glVertex3f(position.x - 1.11, position.y + 0.11 - 1, 0);
+		glTexCoord2f(1, 0); glVertex3f(position.x - 1.11, position.y + 0.11 - 1, 0);
 		//glColor3f(0, 0, 1);
 		glTexCoord2f(1, 1); glVertex3f(position.x - 1.11, position.y - 1, 0);
 		//glColor3f(0, 0, 0);
@@ -166,7 +165,7 @@ public:
 			color = vector3(0.2, 0.2, 1);
 		if (!triggerColors)
 			color = vector3(0.2, 1, 0.2);
-		glColor3f(color.x,color.y,color.z);
+		glColor3f(color.x, color.y, color.z);
 		glTexCoord2f(0, 0); glVertex3f(position.x - 1, position.y + 0.11 - 1, 0);
 		//glColor3f(0, 1, 0);
 		glTexCoord2f(1, 0); glVertex3f(position.x - 1.11, position.y + 0.11 - 1, 0);
@@ -191,7 +190,6 @@ public:
 		if (texture == 0)
 			//throw std::bad_exception("Failure to load image");
 			return false;
-
 
 		// Typical Texture Generation Using Data From The Bitmap
 		glBindTexture(GL_TEXTURE_2D, texture);
@@ -223,7 +221,7 @@ public:
 
 		glColor3f(1, 0, 0);
 		glLoadIdentity();
-		
+
 		glTexCoord2f(0, 0); glVertex3f(belowContent->position.x - 1, belowContent->position.y + 0.11 - 1, 0);
 		//glColor3f(0, 1, 0);
 		glTexCoord2f(0, 1); glVertex3f(belowContent->position.x - 1.11, belowContent->position.y + 0.11 - 1, 0);
@@ -254,7 +252,6 @@ public:
 		if (texture == 0)
 			return false;
 
-
 		// Typical Texture Generation Using Data From The Bitmap
 		glBindTexture(GL_TEXTURE_2D, texture);
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
@@ -263,6 +260,7 @@ public:
 		return true;
 	}
 };
+
 class Characters
 {
 public:
@@ -272,15 +270,28 @@ public:
 	bool alive;
 	bool waiting;
 	GLint texture;
-	map<vector2,Land*> pathTaken;
 	vector2 position;//The actual value between -2 and 2
 	vector2 cord;//The cords on the grid
 	std::string name;
 	Weapon * weapon;
 	float mvmP = 100;
 	int turnOrder;
-	int carryDistance = 100;//5 tiles of dirt
-
+	Characters(void){}
+	Characters(Characters* newChar)
+	{
+		health = newChar->health;
+		maxHealth = newChar->maxHealth;
+		xp = newChar->xp;
+		alive = newChar->alive;
+		waiting = newChar->waiting;
+		texture = newChar->texture;
+		position = newChar->position;//The actual value between -2 and 2
+		cord = newChar->cord;//The cords on the grid
+		name = newChar->name;
+		weapon = newChar->weapon;
+		mvmP = newChar->mvmP;
+		turnOrder = newChar->turnOrder;
+	}
 	virtual void init(vector2 change, string newName)
 	{
 		alive = health > 0;
@@ -308,9 +319,9 @@ public:
 		glLoadIdentity();
 		glColor3f(1, 1, 1);
 		glTexCoord2f(0, 0); glVertex3f(position.x - 1.11, position.y + 0.11 - 1, 0);
-		glTexCoord2f(1,0); glVertex3f(position.x - 1, position.y + 0.11 - 1, 0);
+		glTexCoord2f(1, 0); glVertex3f(position.x - 1, position.y + 0.11 - 1, 0);
 		glTexCoord2f(1, 1); glVertex3f(position.x - 1, position.y - 1, 0);
-		glTexCoord2f(0,1); glVertex3f(position.x - 1.11, position.y - 1, 0);
+		glTexCoord2f(0, 1); glVertex3f(position.x - 1.11, position.y - 1, 0);
 		glPopMatrix();
 		glDisable(GL_TEXTURE_2D);
 		glEnd();
@@ -364,9 +375,28 @@ public:
 			return false;
 			//return rtV;
 	}
+	/*void operator = (Characters* newChar)
+	{
+		this->alive = newChar->alive;
+		this->health = newChar->health;
+		this->maxHealth = newChar->maxHealth;
+		this->waiting = newChar->waiting;
+		this->texture = newChar->texture;
+		this->position = newChar->position;
+		this->cord = newChar->cord;
+		this->name = newChar->name;
+		this->weapon = newChar->weapon;
+		this->mvmP = newChar->mvmP;
+		this->turnOrder = newChar->turnOrder;
+		
+	}*/
+		//void operator *= (float change);
 };
 class HeavyMace : Characters
 {
+public:
+	HeavyMace(void){}
+//private:
 	virtual void init(vector2 change, string newName)
 	{
 		alive = health > 0;
@@ -395,7 +425,6 @@ class HeavyMace : Characters
 		if (texture == 0)
 			return false;
 
-
 		// Typical Texture Generation Using Data From The Bitmap
 		glBindTexture(GL_TEXTURE_2D, texture);
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
@@ -406,6 +435,8 @@ class HeavyMace : Characters
 };
 class Swordsman : Characters
 {
+public:
+	Swordsman(void){}
 	virtual void init(vector2 change, string newName)
 	{
 		alive = health > 0;
@@ -434,7 +465,6 @@ class Swordsman : Characters
 		if (texture == 0)
 			return false;
 
-
 		// Typical Texture Generation Using Data From The Bitmap
 		glBindTexture(GL_TEXTURE_2D, texture);
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
@@ -445,6 +475,8 @@ class Swordsman : Characters
 };
 class Axeman : Characters
 {
+public:
+	Axeman(void){}
 	virtual void init(vector2 change, string newName)
 	{
 		alive = health > 0;
@@ -460,7 +492,6 @@ class Axeman : Characters
 
 		weapon = (Weapon*)new AXE(20);
 	}
-
 	virtual bool load()
 	{
 		texture = SOIL_load_OGL_texture
@@ -474,7 +505,6 @@ class Axeman : Characters
 		if (texture == 0)
 			return false;
 
-
 		// Typical Texture Generation Using Data From The Bitmap
 		glBindTexture(GL_TEXTURE_2D, texture);
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
@@ -484,6 +514,74 @@ class Axeman : Characters
 	}
 };
 
+class Items
+{
+public:
+	bool alive;
+	GLint texture;
+	vector2 position;//The actual value between -2 and 2
+	vector2 cord;//The cords on the grid
+	Items(){}
+	~Items(){}
+	virtual void init(vector2 change)
+	{
+		alive = true;
+		cord = change;
+
+		position.x = (0.11) * cord.x + (0.11);
+		position.y = (0.11) * cord.y;
+		load("item.png");
+	}
+	virtual void draw()
+	{
+		glEnable(GL_TEXTURE_2D);
+		glBindTexture(GL_TEXTURE_2D, texture);
+		glBegin(GL_QUADS);
+		glPushMatrix();
+
+		glLoadIdentity();
+		glColor3f(1, 1, 1);
+		glTexCoord2f(0, 0); glVertex3f(position.x - 1.11, position.y + 0.11 - 1, 0);
+		glTexCoord2f(1, 0); glVertex3f(position.x - 1, position.y + 0.11 - 1, 0);
+		glTexCoord2f(1, 1); glVertex3f(position.x - 1, position.y - 1, 0);
+		glTexCoord2f(0, 1); glVertex3f(position.x - 1.11, position.y - 1, 0);
+		glPopMatrix();
+		glDisable(GL_TEXTURE_2D);
+		glEnd();
+	}
+	virtual bool load(char * file)
+	{
+		texture = SOIL_load_OGL_texture
+			(
+			(const char*)file,
+			SOIL_LOAD_AUTO,
+			SOIL_CREATE_NEW_ID, 0
+			/*SOIL_FLAG_INVERT_Y*/
+			);
+
+		if (texture == 0)
+			return false;
+
+		// Typical Texture Generation Using Data From The Bitmap
+		glBindTexture(GL_TEXTURE_2D, texture);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+
+		return true;
+	}
+	virtual void effect(Characters*& character)
+	{
+		character->health += 10;
+	}
+};
+class HPickup:Items
+{
+public:
+	virtual void effect(Characters*& character)
+	{
+		character->health += 20;
+	}
+};
 
 class PlayCard
 {
@@ -512,8 +610,7 @@ public:
 		glTexCoord2f(0, 1); glVertex3f(0.5f, 0.75f, 0);
 		glPopMatrix();
 		glEnd();
-		
-		
+
 		glBindTexture(GL_TEXTURE_2D, sel->texture);
 		glBegin(GL_QUADS);
 		glPushMatrix();
@@ -529,7 +626,7 @@ public:
 		glTexCoord2f(0, 1); glVertex3f(0.51f, 0.76f, 0);
 		glPopMatrix();
 		glEnd();
-		
+
 		if (showOpSel)
 		{
 			glBindTexture(GL_TEXTURE_2D, opSel->texture);
@@ -564,7 +661,6 @@ public:
 			//throw std::bad_exception("Failure to load image");
 			return false;
 
-
 		// Typical Texture Generation Using Data From The Bitmap
 		glBindTexture(GL_TEXTURE_2D, texture);
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
@@ -580,7 +676,7 @@ public:
 	XmlLoader(){}
 	~XmlLoader(){}
 	// Loads from an XML file all of a lvls data
-	void loadElement(vector<Land*> & landNodes,TiXmlElement * node,int i)
+	void loadElement(vector<Land*> & landNodes, TiXmlElement * node, int i)
 	{
 		std::stringstream yTemp;
 		std::stringstream typeTemp;
@@ -598,7 +694,6 @@ public:
 		}
 		else if (type == "Dirt")
 		{
-
 			Dirt * nDirt = new Dirt();
 			nDirt->init();
 			landNodes.at(y) = (Land*)nDirt;
@@ -652,33 +747,32 @@ public:
 		/*
 		for (int i = 0; i < 18; i++)
 		{
-			vector<Land*> newSubNode = vector<Land*>(18);
-			for (int ii = 0; ii < 18; ii++)
-			{
-				if (ii == 0 || ii == 18 - 1 || i == 0 || i == 18 - 1)
-				{
+		vector<Land*> newSubNode = vector<Land*>(18);
+		for (int ii = 0; ii < 18; ii++)
+		{
+		if (ii == 0 || ii == 18 - 1 || i == 0 || i == 18 - 1)
+		{
+		Wall * nWall = new Wall;
+		nWall->init();
+		//newDirt.object = nDirt;
+		newSubNode.at(ii) = (Land*)nWall;
+		}
+		else
+		{
+		Dirt * nDirt = new Dirt();
+		nDirt->init();
+		//newDirt.object = nDirt;
+		newSubNode.at(ii) = (Land*)nDirt;
+		}
+		newSubNode.at(ii)->load();
+		newSubNode.at(ii)->position.x = (0.11) * i + (0.11);
 
-					Wall * nWall = new Wall;
-					nWall->init();
-					//newDirt.object = nDirt;
-					newSubNode.at(ii) = (Land*)nWall;
-				}
-				else
-				{
-					Dirt * nDirt = new Dirt();
-					nDirt->init();
-					//newDirt.object = nDirt;
-					newSubNode.at(ii) = (Land*)nDirt;
-				}
-				newSubNode.at(ii)->load();
-				newSubNode.at(ii)->position.x = (0.11) * i + (0.11);
+		newSubNode.at(ii)->position.y = (0.11) * ii;
 
-				newSubNode.at(ii)->position.y = (0.11) * ii;
-
-				//(((12.5 * breadth)) - ((ii + countx) * breadth)) + ((breadth * 5)*i);
-				//0, (((12.5 * breadth)) - (countz * breadth)) + (breadth*i);
-			}
-			newNode.at(i) = newSubNode;
+		//(((12.5 * breadth)) - ((ii + countx) * breadth)) + ((breadth * 5)*i);
+		//0, (((12.5 * breadth)) - (countz * breadth)) + (breadth*i);
+		}
+		newNode.at(i) = newSubNode;
 		}*/
 		landNodes = newNode;
 	}
@@ -720,14 +814,13 @@ public:
 			(
 			"splash.png",
 			SOIL_LOAD_AUTO,
-			SOIL_CREATE_NEW_ID,0
+			SOIL_CREATE_NEW_ID, 0
 			/*SOIL_FLAG_INVERT_Y*/
 			);
 
 		if (texture == 0)
 			//throw std::bad_exception("Failure to load image");
 			return false;
-
 
 		// Typical Texture Generation Using Data From The Bitmap
 		glBindTexture(GL_TEXTURE_2D, texture);
@@ -760,15 +853,15 @@ public:
 	int turn;//Controls who can act and who cannot
 	XmlLoader xml;
 	Screens scr;
-	
+
 	void init(int x/*18*/, int y/*18*/)
 	{
 		paused = false;
 		turn = 1;
-		playable[1] = (Characters*)new HeavyMace;
+		playable[1] = (Characters*)new HeavyMace();
 		playable[2] = (Characters*)new Swordsman;
 		playable[3] = (Characters*)new Axeman;
-		playable[1]->init(vector2(9,9),"HeavyMace");
+		playable[1]->init(vector2(9, 9), "HeavyMace");
 		playable[2]->init(vector2(9, 12), "Swordsman");
 		playable[3]->init(vector2(12, 9), "Axeman");
 		selectedNode = vector2(-1, -1);
@@ -779,39 +872,48 @@ public:
 		/*vector<vector<Land*>> newNode = vector<vector<Land*>>(18);
 		for (int i = 0; i < x; i++)
 		{
-			vector<Land*> newSubNode = vector<Land*>(18);
-			for (int ii = 0; ii < y; ii++)
-			{
-				if (ii == 0 || ii == y-1 || i == 0 || i == x-1)
-				{
+		vector<Land*> newSubNode = vector<Land*>(18);
+		for (int ii = 0; ii < y; ii++)
+		{
+		if (ii == 0 || ii == y-1 || i == 0 || i == x-1)
+		{
+		Wall * nWall = new Wall;
+		nWall->init();
+		//newDirt.object = nDirt;
+		newSubNode.at(ii) = (Land*)nWall;
+		}
+		else
+		{
+		Dirt * nDirt = new Dirt();
+		nDirt->init();
+		//newDirt.object = nDirt;
+		newSubNode.at(ii) = (Land*)nDirt;
+		}
+		newSubNode.at(ii)->load();
+		newSubNode.at(ii)->position.x = (0.11) * i + (0.11);
 
-					Wall * nWall = new Wall;
-					nWall->init();
-					//newDirt.object = nDirt;
-					newSubNode.at(ii) = (Land*)nWall;
-				}
-				else
-				{
-					Dirt * nDirt = new Dirt();
-					nDirt->init();
-					//newDirt.object = nDirt;
-					newSubNode.at(ii) = (Land*)nDirt;
-				}
-				newSubNode.at(ii)->load();
-				newSubNode.at(ii)->position.x = (0.11) * i + (0.11);
+		newSubNode.at(ii)->position.y = (0.11) * ii;
 
-				newSubNode.at(ii)->position.y = (0.11) * ii;
-
-				//(((12.5 * breadth)) - ((ii + countx) * breadth)) + ((breadth * 5)*i);
-				//0, (((12.5 * breadth)) - (countz * breadth)) + (breadth*i);
-			}
-			newNode.at(i) = newSubNode;
+		//(((12.5 * breadth)) - ((ii + countx) * breadth)) + ((breadth * 5)*i);
+		//0, (((12.5 * breadth)) - (countz * breadth)) + (breadth*i);
+		}
+		newNode.at(i) = newSubNode;
 		}
 		nodes = newNode;*/
 		xml.loadNodes(nodes, 1);
 		scr.load((const char)"splash");
 		curr = STATE::SPLASH;
 		keyState[' '] = false;
+
+
+
+
+		HPickup newPickHP;
+		newPickHP.effect(playable[1]);
+		//playable[1] = newPickHP.effect(playable[1]);
+		//playable[1] = (Characters*)chara;
+		int bob = 5;
+
 	}
 	void draw()
 	{
@@ -824,7 +926,7 @@ public:
 		/*int testturn = 4 - turn;
 		testturn--;
 		if (testturn < 1)
-			testturn = 3;*/
+		testturn = 3;*/
 		if (scr.show)
 		{
 			scr.draw();
@@ -836,16 +938,16 @@ public:
 				{
 					/*int checkturn = turn + 1;
 					if (checkturn > 3)
-						checkturn = 3;
+					checkturn = 3;
 					if (checkturn == 2)
-						checkturn--;*/
+					checkturn--;*/
 					//if (playable[turn]->cord.checkSpace(vector2(i, ii), 5))
-					if (playable[turn]->calculateCost(nodes[i][ii],4,vector2(i,ii)))
+					if (playable[turn]->calculateCost(nodes[i][ii], 4, vector2(i, ii)))
 					{
 						nodes[i][ii]->blueHighLight = true;
 						nodes[i][ii]->redHighLight = false;
 					}
-					else if (playable[turn]->calculateAtLand(nodes[i][ii], 4, vector2(i,ii)))
+					else if (playable[turn]->calculateAtLand(nodes[i][ii], 4, vector2(i, ii)))
 					{
 						nodes[i][ii]->blueHighLight = false;
 						nodes[i][ii]->redHighLight = true;
@@ -859,17 +961,16 @@ public:
 				}
 				else
 					nodes[i][ii]->draw();
-				
+
 				/*if (Dirt * p = dynamic_cast<Dirt*>(ii))
 				{
-
 				}
 				y++;
 				if (ii->resistance > 100 || (y == selectedNode.y && x == selectedNode.x))
-					drawWall(ii->position);
+				drawWall(ii->position);
 				else
 				{
-					drawSquare(ii->position);
+				drawSquare(ii->position);
 				}*/
 			}
 		}
@@ -878,11 +979,9 @@ public:
 		playable[2]->draw();
 		playable[3]->draw();
 		card.draw();
-		
 	}
 	void drawSquare(vector2 pos)
 	{
-		
 		glBegin(GL_QUADS);
 		glPushMatrix();
 
@@ -896,7 +995,6 @@ public:
 		glVertex3f(pos.x - 1, pos.y - 1, 0);
 		glPopMatrix();
 		glEnd();
-
 	}void drawWall(vector2 pos)
 	{
 		glBegin(GL_QUADS);
@@ -909,7 +1007,6 @@ public:
 		glVertex3f(pos.x - 1, pos.y - 1, 0);
 		glPopMatrix();
 		glEnd();
-
 	}
 	void update()
 	{
@@ -918,14 +1015,14 @@ public:
 		if (scr.show)
 			return;
 		//if (selectedNode != vector2(-1,-1))
-		for (map<int, Characters*>::iterator it = playable.begin(); it != playable.end();it++)
+		for (map<int, Characters*>::iterator it = playable.begin(); it != playable.end(); it++)
 		{
 			if (turn == it->second->turnOrder)
 			{
 				card.sel = (Characters*)it->second;
 				if (move && playable[turn]->calculateCost(nodes[selectedNode.x][selectedNode.y], 4, selectedNode))
 				{
-					for (map<int, Characters*>::iterator itt = playable.begin(); itt != playable.end();itt++)
+					for (map<int, Characters*>::iterator itt = playable.begin(); itt != playable.end(); itt++)
 					{
 						if (itt->second->cord == selectedNode)
 						{
@@ -934,10 +1031,10 @@ public:
 					}
 					/*for (map<int, Characters*>::iterator itt = unplayable.begin(); itt != unplayable.end(); itt++)
 					{
-						if (itt->second->cord == selectedNode)
-						{
-							move = false;
-						}
+					if (itt->second->cord == selectedNode)
+					{
+					move = false;
+					}
 					}*/
 					if (move)
 					{
@@ -957,7 +1054,7 @@ public:
 				card.opSel = (Characters*)selCharacter;
 				card.showOpSel = true;
 			}
-			else if (selectedNode == vector2(-1,-1))
+			else if (selectedNode == vector2(-1, -1))
 			{
 				card.showOpSel = false;
 				selCharacter = (Characters*)new Characters;
@@ -974,4 +1071,3 @@ public:
 			turn = 1;
 	}
 };
-
