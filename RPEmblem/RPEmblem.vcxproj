@@ -85,6 +85,7 @@
     <ClInclude Include="SOIL.h" />
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="targetver.h" />
+    <ClInclude Include="tinyxml.h" />
     <ClInclude Include="VectorLib.h" />
     <ClInclude Include="Weapon.h" />
   </ItemGroup>
