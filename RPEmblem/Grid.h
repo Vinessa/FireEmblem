@@ -276,6 +276,7 @@ public:
 	Weapon * weapon;
 	float mvmP = 100;
 	int turnOrder;
+	vector<Characters*> adjecentArray;
 	Characters(void){}
 	Characters(Characters* newChar)
 	{
@@ -549,6 +550,10 @@ public:
 		glDisable(GL_TEXTURE_2D);
 		glEnd();
 	}
+	virtual bool load()
+	{
+		return true;
+	}
 	virtual bool load(char * file)
 	{
 		texture = SOIL_load_OGL_texture
@@ -577,6 +582,52 @@ public:
 class HPickup:Items
 {
 public:
+	virtual void init(vector2 change)
+	{
+		alive = true;
+		cord = change;
+
+		position.x = (0.11) * cord.x + (0.11);
+		position.y = (0.11) * cord.y;
+		load();
+	}
+	virtual void draw()
+	{
+		glEnable(GL_TEXTURE_2D);
+		glBindTexture(GL_TEXTURE_2D, texture);
+		glBegin(GL_QUADS);
+		glPushMatrix();
+
+		glLoadIdentity();
+		glColor3f(1, 1, 1);
+		glTexCoord2f(0, 0); glVertex3f(position.x - 1.11, position.y + 0.11 - 1, 0);
+		glTexCoord2f(1, 0); glVertex3f(position.x - 1, position.y + 0.11 - 1, 0);
+		glTexCoord2f(1, 1); glVertex3f(position.x - 1, position.y - 1, 0);
+		glTexCoord2f(0, 1); glVertex3f(position.x - 1.11, position.y - 1, 0);
+		glPopMatrix();
+		glDisable(GL_TEXTURE_2D);
+		glEnd();
+	}
+	virtual bool load()
+	{
+		texture = SOIL_load_OGL_texture
+			(
+			"health.png",
+			SOIL_LOAD_AUTO,
+			SOIL_CREATE_NEW_ID, 0
+			/*SOIL_FLAG_INVERT_Y*/
+			);
+
+		if (texture == 0)
+			return false;
+
+		// Typical Texture Generation Using Data From The Bitmap
+		glBindTexture(GL_TEXTURE_2D, texture);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+
+		return true;
+	}
 	virtual void effect(Characters*& character)
 	{
 		character->health += 20;
@@ -845,14 +896,15 @@ public:
 	PlayCard card;
 	Selection sel;//The selected tile
 	Characters * selCharacter;//The selected character
+	XmlLoader xml;
+	Screens scr;
 	enum STATE { SPLASH, MENU, GAME, EXIT, OPTIONS };//Game states
 	STATE curr;//The current state
 	bool move;
 	bool paused;
 	bool filling;
 	int turn;//Controls who can act and who cannot
-	XmlLoader xml;
-	Screens scr;
+	HPickup hPick;
 
 	void init(int x/*18*/, int y/*18*/)
 	{
@@ -905,15 +957,12 @@ public:
 		curr = STATE::SPLASH;
 		keyState[' '] = false;
 
-
-
-
-		HPickup newPickHP;
-		newPickHP.effect(playable[1]);
+		//newPickHP.effect(playable[1]);
 		//playable[1] = newPickHP.effect(playable[1]);
 		//playable[1] = (Characters*)chara;
-		int bob = 5;
-
+		//int bob = 5;
+		hPick.init(vector2(3,3));
+		//hPick.load();
 	}
 	void draw()
 	{
