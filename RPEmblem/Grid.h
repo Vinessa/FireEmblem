@@ -101,8 +101,8 @@ public:
 			(
 			"wall.png",
 			SOIL_LOAD_AUTO,
-			SOIL_CREATE_NEW_ID,
-			SOIL_FLAG_INVERT_Y
+			SOIL_CREATE_NEW_ID, 0
+			/*SOIL_FLAG_INVERT_Y*/
 			);
 
 		if (texture == 0)
@@ -184,8 +184,8 @@ public:
 			(
 			"dirt.png",
 			SOIL_LOAD_AUTO,
-			SOIL_CREATE_NEW_ID,
-			SOIL_FLAG_INVERT_Y
+			SOIL_CREATE_NEW_ID, 0
+			/*SOIL_FLAG_INVERT_Y*/
 			);
 
 		if (texture == 0)
@@ -247,8 +247,8 @@ public:
 			(
 			"select.png",
 			SOIL_LOAD_AUTO,
-			SOIL_CREATE_NEW_ID,
-			SOIL_FLAG_INVERT_Y
+			SOIL_CREATE_NEW_ID, 0
+			/*SOIL_FLAG_INVERT_Y*/
 			);
 
 		if (texture == 0)
@@ -307,10 +307,10 @@ public:
 		//glColor3f(1, 0, 0);
 		glLoadIdentity();
 		glColor3f(1, 1, 1);
-		glTexCoord2f(0, 0); glVertex3f(position.x - 1, position.y + 0.11 - 1, 0);
-		glTexCoord2f(1,0); glVertex3f(position.x - 1.11, position.y + 0.11 - 1, 0);
-		glTexCoord2f(1, 1); glVertex3f(position.x - 1.11, position.y - 1, 0);
-		glTexCoord2f(0,1); glVertex3f(position.x - 1, position.y - 1, 0);
+		glTexCoord2f(0, 0); glVertex3f(position.x - 1.11, position.y + 0.11 - 1, 0);
+		glTexCoord2f(1,0); glVertex3f(position.x - 1, position.y + 0.11 - 1, 0);
+		glTexCoord2f(1, 1); glVertex3f(position.x - 1, position.y - 1, 0);
+		glTexCoord2f(0,1); glVertex3f(position.x - 1.11, position.y - 1, 0);
 		glPopMatrix();
 		glDisable(GL_TEXTURE_2D);
 		glEnd();
@@ -388,8 +388,8 @@ class HeavyMace : Characters
 			(
 			"rock.png",
 			SOIL_LOAD_AUTO,
-			SOIL_CREATE_NEW_ID,
-			SOIL_FLAG_INVERT_Y
+			SOIL_CREATE_NEW_ID, 0
+			/*SOIL_FLAG_INVERT_Y*/
 			);
 
 		if (texture == 0)
@@ -427,8 +427,8 @@ class Swordsman : Characters
 			(
 			"Paper.png",
 			SOIL_LOAD_AUTO,
-			SOIL_CREATE_NEW_ID,
-			SOIL_FLAG_INVERT_Y
+			SOIL_CREATE_NEW_ID, 0
+			/*SOIL_FLAG_INVERT_Y*/
 			);
 
 		if (texture == 0)
@@ -467,8 +467,8 @@ class Axeman : Characters
 			(
 			"emblem.png",
 			SOIL_LOAD_AUTO,
-			SOIL_CREATE_NEW_ID,
-			SOIL_FLAG_INVERT_Y
+			SOIL_CREATE_NEW_ID, 0
+			/*SOIL_FLAG_INVERT_Y*/
 			);
 
 		if (texture == 0)
@@ -556,8 +556,8 @@ public:
 			(
 			"card.png",
 			SOIL_LOAD_AUTO,
-			SOIL_CREATE_NEW_ID,
-			SOIL_FLAG_INVERT_Y
+			SOIL_CREATE_NEW_ID, 0
+			/*SOIL_FLAG_INVERT_Y*/
 			);
 
 		if (texture == 0)
@@ -702,7 +702,7 @@ public:
 		glBindTexture(GL_TEXTURE_2D, texture);
 		glBegin(GL_QUADS);
 		glPushMatrix();
-		glRotatef(180, 1, 0, 0);
+		//glRotatef(180, 1, 0, 0);
 		glLoadIdentity();
 		glColor3f(1, 1, 1);
 		glTexCoord2f(0, 0); glVertex3f(-1, 1, 0);
@@ -711,7 +711,7 @@ public:
 		glTexCoord2f(0, 1); glVertex3f(-1, -1, 0);
 		glPopMatrix();
 		glEnd();
-		glRotatef(-180, 1, 0, 0);
+		//glRotatef(-180, 1, 0, 0);
 		glDisable(GL_TEXTURE_2D);
 	}
 	virtual bool load(char file)
@@ -720,8 +720,8 @@ public:
 			(
 			"splash.png",
 			SOIL_LOAD_AUTO,
-			SOIL_CREATE_NEW_ID,
-			SOIL_FLAG_INVERT_Y
+			SOIL_CREATE_NEW_ID,0
+			/*SOIL_FLAG_INVERT_Y*/
 			);
 
 		if (texture == 0)
