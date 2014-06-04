@@ -537,6 +537,8 @@ public:
 	{
 		glEnable(GL_TEXTURE_2D);
 		glBindTexture(GL_TEXTURE_2D, texture);
+		glEnable(GL_BLEND);
+		glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 		glBegin(GL_QUADS);
 		glPushMatrix();
 
@@ -578,8 +580,9 @@ public:
 	{
 		character->health += 10;
 	}
+	virtual void update(vector2 playercord){}
 };
-class HPickup:Items
+class HPickup :Items
 {
 public:
 	virtual void init(vector2 change)
@@ -595,6 +598,8 @@ public:
 	{
 		glEnable(GL_TEXTURE_2D);
 		glBindTexture(GL_TEXTURE_2D, texture);
+		glEnable(GL_BLEND);
+		glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 		glBegin(GL_QUADS);
 		glPushMatrix();
 
@@ -631,6 +636,70 @@ public:
 	virtual void effect(Characters*& character)
 	{
 		character->health += 20;
+	}
+	virtual void update(vector2 playercord)
+	{
+		alive = playercord == cord;
+	}
+};
+class HTrap :Items
+{
+public:
+	virtual void init(vector2 change)
+	{
+		alive = true;
+		cord = change;
+
+		position.x = (0.11) * cord.x + (0.11);
+		position.y = (0.11) * cord.y;
+		load();
+	}
+	virtual void draw()
+	{
+		glEnable(GL_TEXTURE_2D);
+		glBindTexture(GL_TEXTURE_2D, texture);
+		glEnable(GL_BLEND);
+		glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+		glBegin(GL_QUADS);
+		glPushMatrix();
+
+		glLoadIdentity();
+		glColor3f(1, 1, 1);
+		glTexCoord2f(0, 0); glVertex3f(position.x - 1.11, position.y + 0.11 - 1, 0);
+		glTexCoord2f(1, 0); glVertex3f(position.x - 1, position.y + 0.11 - 1, 0);
+		glTexCoord2f(1, 1); glVertex3f(position.x - 1, position.y - 1, 0);
+		glTexCoord2f(0, 1); glVertex3f(position.x - 1.11, position.y - 1, 0);
+		glPopMatrix();
+		glDisable(GL_TEXTURE_2D);
+		glEnd();
+	}
+	virtual bool load()
+	{
+		texture = SOIL_load_OGL_texture
+			(
+			"trap.png",
+			SOIL_LOAD_AUTO,
+			SOIL_CREATE_NEW_ID, 0
+			/*SOIL_FLAG_INVERT_Y*/
+			);
+
+		if (texture == 0)
+			return false;
+
+		// Typical Texture Generation Using Data From The Bitmap
+		glBindTexture(GL_TEXTURE_2D, texture);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+
+		return true;
+	}
+	virtual void effect(Characters*& character)
+	{
+		character->health += 20;
+	}
+	virtual void update(vector2 playercord)
+	{
+		alive = playercord == cord;
 	}
 };
 
@@ -893,6 +962,7 @@ public:
 	map<int, Characters*> playable;//List of all the character player
 	map<int, Characters*> unplayable;//List of all the non-character players
 	vector<vector<Land*>> nodes;//Each tile
+	vector<Items*> items;
 	PlayCard card;
 	Selection sel;//The selected tile
 	Characters * selCharacter;//The selected character
@@ -904,7 +974,7 @@ public:
 	bool paused;
 	bool filling;
 	int turn;//Controls who can act and who cannot
-	HPickup hPick;
+	//HPickup hPick;
 
 	void init(int x/*18*/, int y/*18*/)
 	{
@@ -961,21 +1031,15 @@ public:
 		//playable[1] = newPickHP.effect(playable[1]);
 		//playable[1] = (Characters*)chara;
 		//int bob = 5;
-		hPick.init(vector2(3,3));
+		HPickup* hPick = new HPickup();
+		hPick->init(vector2(3, 3));
+		items = vector<Items*>(1);
+		items[0] = (Items*)hPick;
+		//items.insert(hPick);
 		//hPick.load();
 	}
 	void draw()
 	{
-		//drawSquare(vector2(0,0));
-		//int x = 0,y = 0;
-		//for (auto & i : nodes)
-
-		//vector<vector<Land*>>::iterator i;
-		//vector<Land*>::iterator ii;
-		/*int testturn = 4 - turn;
-		testturn--;
-		if (testturn < 1)
-		testturn = 3;*/
 		if (scr.show)
 		{
 			scr.draw();
@@ -1028,6 +1092,13 @@ public:
 		playable[2]->draw();
 		playable[3]->draw();
 		card.draw();
+		for (auto & element : items)
+		{
+			//it->second->draw();
+			element->draw();
+			//it->second->draw();
+		}
+		//hPick.draw();
 	}
 	void drawSquare(vector2 pos)
 	{
@@ -1115,6 +1186,22 @@ public:
 			}
 			it->second->alive = it->second->health > 0;
 			it->second->waiting = false;
+			int itemTrackVal = 0;
+			if (!items.empty())
+				for (auto & element : items)
+				{
+					//it->second->draw();
+					element->update(it->second->cord);
+					if (element->alive)
+					{
+						element->effect(it->second);
+						items.erase(items.begin() + itemTrackVal);
+						itemTrackVal++;
+					}
+					if (items.empty())
+						break;
+					//it->second->draw();
+				}
 		}
 		if (turn > 3)
 			turn = 1;

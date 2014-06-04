@@ -94,6 +94,9 @@
     <Image Include="splash.png">
       <Filter>Resource Files</Filter>
     </Image>
+    <Image Include="health.png">
+      <Filter>Source Files</Filter>
+    </Image>
   </ItemGroup>
   <ItemGroup>
     <Xml Include="LevelData.xml">

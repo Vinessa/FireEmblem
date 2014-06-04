@@ -112,6 +112,7 @@
     <Image Include="card.png" />
     <Image Include="dirt.png" />
     <Image Include="emblem.png" />
+    <Image Include="health.png" />
     <Image Include="paper.png" />
     <Image Include="rock.png" />
     <Image Include="select.png" />
