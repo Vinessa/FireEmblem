@@ -117,6 +117,7 @@
     <Image Include="rock.png" />
     <Image Include="select.png" />
     <Image Include="splash.png" />
+    <Image Include="trap.png" />
     <Image Include="wall.png" />
   </ItemGroup>
   <ItemGroup>

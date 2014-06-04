@@ -378,26 +378,26 @@ public:
 	}
 	/*void operator = (Characters* newChar)
 	{
-		this->alive = newChar->alive;
-		this->health = newChar->health;
-		this->maxHealth = newChar->maxHealth;
-		this->waiting = newChar->waiting;
-		this->texture = newChar->texture;
-		this->position = newChar->position;
-		this->cord = newChar->cord;
-		this->name = newChar->name;
-		this->weapon = newChar->weapon;
-		this->mvmP = newChar->mvmP;
-		this->turnOrder = newChar->turnOrder;
-		
+	this->alive = newChar->alive;
+	this->health = newChar->health;
+	this->maxHealth = newChar->maxHealth;
+	this->waiting = newChar->waiting;
+	this->texture = newChar->texture;
+	this->position = newChar->position;
+	this->cord = newChar->cord;
+	this->name = newChar->name;
+	this->weapon = newChar->weapon;
+	this->mvmP = newChar->mvmP;
+	this->turnOrder = newChar->turnOrder;
+
 	}*/
-		//void operator *= (float change);
+	//void operator *= (float change);
 };
 class HeavyMace : Characters
 {
 public:
 	HeavyMace(void){}
-//private:
+	//private:
 	virtual void init(vector2 change, string newName)
 	{
 		alive = health > 0;
@@ -695,7 +695,7 @@ public:
 	}
 	virtual void effect(Characters*& character)
 	{
-		character->health += 20;
+		character->health -= 5;
 	}
 	virtual void update(vector2 playercord)
 	{
@@ -1033,8 +1033,11 @@ public:
 		//int bob = 5;
 		HPickup* hPick = new HPickup();
 		hPick->init(vector2(3, 3));
-		items = vector<Items*>(1);
+		HTrap* hTrap = new HTrap();
+		hTrap->init(vector2(3, 5));
+		items = vector<Items*>(2);
 		items[0] = (Items*)hPick;
+		items[1] = (Items*)hTrap;
 		//items.insert(hPick);
 		//hPick.load();
 	}
@@ -1196,10 +1199,9 @@ public:
 					{
 						element->effect(it->second);
 						items.erase(items.begin() + itemTrackVal);
-						itemTrackVal++;
-					}
-					if (items.empty())
 						break;
+					}
+					itemTrackVal++;
 					//it->second->draw();
 				}
 		}
