@@ -3,35 +3,47 @@
 
 ChoiceMenu::ChoiceMenu(void)
 {
-	for (int i = 0; i < (sizeof(Options) / sizeof(*Options)); i++)
-	{
-		Options[i].texture = 1;
-	}
-	for (int i = 0; i < (sizeof(Options) / sizeof(*Options)); i++)
-	{
-		HiOptions[i].texture = 5;
-	}
-	
+	curr = MENU;
+	Options.iHeight = 50;
+	Options.iWidth = 50;
+	Options.texture = 3;
+	Options.HoldTexture = Options.texture;
+	HiOptions.texture = 1;
+	Options.Position.x = 0;
+	Options.Position.y = 0;
+
+
 }
 ChoiceMenu::~ChoiceMenu(void)
 {
 
 }
 
-void ChoiceMenu::ChangeSelection(MousePositon &Position)
+void ChoiceMenu::ChangeSelection(Mouse &Position)
 {
 	int fullX;
 	int fullY;
-	int size = (sizeof(Options) / sizeof(*Options));
-	for ( int i = 0; i < size ; i++)
-	{
-		fullX = Options[i].iWidth;
-		fullY = Options[i].iHeight;
-		if (fullX > Position.x && Options[i].Position.x < Position.x &&
-			fullY > Position.y && Options[i].Position.y < Position.y)
+
+		fullX = Options.iWidth;
+		fullY = Options.iHeight;
+		if (fullX > Position.x && Options.Position.x < Position.x &&
+			fullY > Position.y && Options.Position.y < Position.y)
 		{
-			Options[i].texture = HiOptions[i].texture;
+			Options.texture = HiOptions.texture;
+			
+			bHighlited = true;
+
+		}
+		else{
+			bHighlited = false;
+			Options.texture = Options.HoldTexture; 
 		}
 
+}
+
+void ChoiceMenu::Select(Mouse Click){
+
+	if (Click.click == true && bHighlited == true){
+		curr = GAME;
 	}
 }

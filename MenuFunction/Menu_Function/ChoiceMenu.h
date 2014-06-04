@@ -1,19 +1,20 @@
 #ifndef _ChoiceMenu_H
 #define _ChoiecMenu_H
-
-struct MousePositon{
+struct Mouse{
+	bool click;
 	int x, y;
 };
 
 struct Vector2{
-	int x = 0;
-	int y = 0;
+	int x;
+	int y;
 };
 struct Sprite{
-	int texture = 0;
-	int iWidth = 50;
-	int iHeight = 50;
+	int texture;
+	int iWidth;
+	int iHeight;
 	Vector2 Position;
+	int HoldTexture;
 
 };
 class ChoiceMenu
@@ -32,14 +33,16 @@ public:
 	C
 	/*
 	/*Texture needs to change to */
-
-	Sprite Options[3];
+	enum state{MENU,GAME};
+	state curr;
+	Sprite Options;
 
 	/*highlightedChoice is just a place holder when chaning text*/
-	Sprite HiOptions[3];
+	Sprite HiOptions;
+	bool bHighlited;
 
-
-	void ChangeSelection(MousePositon &Position);
+	void ChangeSelection(Mouse &Position);
+	void Select(Mouse Click);
 	ChoiceMenu(void);
 	~ChoiceMenu(void);
 };
