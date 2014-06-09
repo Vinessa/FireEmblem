@@ -100,6 +100,12 @@
     <Image Include="trap.png">
       <Filter>Resource Files</Filter>
     </Image>
+    <Image Include="button.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="menu.png">
+      <Filter>Resource Files</Filter>
+    </Image>
   </ItemGroup>
   <ItemGroup>
     <Xml Include="LevelData.xml">

@@ -269,6 +269,7 @@ public:
 	float xp;
 	bool alive;
 	bool waiting;
+	bool isEnemy = false;
 	GLint texture;
 	vector2 position;//The actual value between -2 and 2
 	vector2 cord;//The cords on the grid
@@ -330,6 +331,11 @@ public:
 	}
 	virtual bool load()
 	{
+		return false;
+	}
+	virtual bool loadAsEnemy()
+	{
+		isEnemy = true;
 		return false;
 	}
 	virtual void updatePos(vector2 newCord)
@@ -433,6 +439,27 @@ public:
 
 		return true;
 	}
+	virtual bool loadAsEnemy()
+	{
+		isEnemy = true;
+		texture = SOIL_load_OGL_texture
+			(
+			"erock.png",
+			SOIL_LOAD_AUTO,
+			SOIL_CREATE_NEW_ID, 0
+			/*SOIL_FLAG_INVERT_Y*/
+			);
+
+		if (texture == 0)
+			return false;
+
+		// Typical Texture Generation Using Data From The Bitmap
+		glBindTexture(GL_TEXTURE_2D, texture);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+
+		return true;
+	}
 };
 class Swordsman : Characters
 {
@@ -457,7 +484,28 @@ public:
 	{
 		texture = SOIL_load_OGL_texture
 			(
-			"Paper.png",
+			"paper.png",
+			SOIL_LOAD_AUTO,
+			SOIL_CREATE_NEW_ID, 0
+			/*SOIL_FLAG_INVERT_Y*/
+			);
+
+		if (texture == 0)
+			return false;
+
+		// Typical Texture Generation Using Data From The Bitmap
+		glBindTexture(GL_TEXTURE_2D, texture);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+
+		return true;
+	}
+	virtual bool loadAsEnemy()
+	{
+		isEnemy = true;
+		texture = SOIL_load_OGL_texture
+			(
+			"epaper.png",
 			SOIL_LOAD_AUTO,
 			SOIL_CREATE_NEW_ID, 0
 			/*SOIL_FLAG_INVERT_Y*/
@@ -498,6 +546,27 @@ public:
 		texture = SOIL_load_OGL_texture
 			(
 			"emblem.png",
+			SOIL_LOAD_AUTO,
+			SOIL_CREATE_NEW_ID, 0
+			/*SOIL_FLAG_INVERT_Y*/
+			);
+
+		if (texture == 0)
+			return false;
+
+		// Typical Texture Generation Using Data From The Bitmap
+		glBindTexture(GL_TEXTURE_2D, texture);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+
+		return true;
+	}
+	virtual bool loadAsEnemy()
+	{
+		isEnemy = true;
+		texture = SOIL_load_OGL_texture
+			(
+			"eemblem.png",
 			SOIL_LOAD_AUTO,
 			SOIL_CREATE_NEW_ID, 0
 			/*SOIL_FLAG_INVERT_Y*/
@@ -897,11 +966,68 @@ public:
 		landNodes = newNode;
 	}
 };
+
+class Button
+{
+public:
+	GLint texture;
+	bool show;
+	vector2 maxSize = vector2(600, 450);
+	vector2 minSize = vector2(200, 150);
+	Button(void)
+	{
+		show = true;
+	}
+	~Button(){}
+	virtual void draw()
+	{
+		if (!show)
+			return;
+		glEnable(GL_TEXTURE_2D);
+
+		glBindTexture(GL_TEXTURE_2D, texture);
+		glBegin(GL_QUADS);
+		glPushMatrix();
+		//glRotatef(180, 1, 0, 0);
+		glLoadIdentity();
+		glColor3f(1, 1, 1);
+		glTexCoord2f(0, 0); glVertex3f(-0.5, 0.5, 0);
+		glTexCoord2f(1, 0); glVertex3f(0.5, 0.5, 0);
+		glTexCoord2f(1, 1); glVertex3f(0.5, -0.5, 0);
+		glTexCoord2f(0, 1); glVertex3f(-0.5, -0.5, 0);
+		glPopMatrix();
+		glEnd();
+		//glRotatef(-180, 1, 0, 0);
+		glDisable(GL_TEXTURE_2D);
+	}
+	virtual bool load(char * file)
+	{
+		texture = SOIL_load_OGL_texture
+			(
+			file,
+			SOIL_LOAD_AUTO,
+			SOIL_CREATE_NEW_ID, 0
+			/*SOIL_FLAG_INVERT_Y*/
+			);
+
+		if (texture == 0)
+			//throw std::bad_exception("Failure to load image");
+			return false;
+
+		// Typical Texture Generation Using Data From The Bitmap
+		glBindTexture(GL_TEXTURE_2D, texture);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+
+		return true;
+	}
+}; 
 class Screens
 {
 public:
 	GLint texture;
 	bool show;
+	vector<Button> buttons;
 	Screens(void)
 	{
 		show = true;
@@ -928,11 +1054,11 @@ public:
 		//glRotatef(-180, 1, 0, 0);
 		glDisable(GL_TEXTURE_2D);
 	}
-	virtual bool load(char file)
+	virtual bool load(char * file)
 	{
 		texture = SOIL_load_OGL_texture
 			(
-			"splash.png",
+			file,
 			SOIL_LOAD_AUTO,
 			SOIL_CREATE_NEW_ID, 0
 			/*SOIL_FLAG_INVERT_Y*/
@@ -950,6 +1076,7 @@ public:
 		return true;
 	}
 };
+
 class Grid
 {
 public:
@@ -970,9 +1097,11 @@ public:
 	Screens scr;
 	enum STATE { SPLASH, MENU, GAME, EXIT, OPTIONS };//Game states
 	STATE curr;//The current state
+	float updateHalt = 0;
 	bool move;
 	bool paused;
 	bool filling;
+	bool click = false;
 	int turn;//Controls who can act and who cannot
 	//HPickup hPick;
 
@@ -986,6 +1115,17 @@ public:
 		playable[1]->init(vector2(9, 9), "HeavyMace");
 		playable[2]->init(vector2(9, 12), "Swordsman");
 		playable[3]->init(vector2(12, 9), "Axeman");
+
+
+		unplayable[1] = (Characters*)new HeavyMace();
+		unplayable[2] = (Characters*)new Swordsman;
+		unplayable[3] = (Characters*)new Axeman;
+		unplayable[1]->init(vector2(15, 15), "HeavyMace");
+		unplayable[2]->init(vector2(15, 12), "Swordsman");
+		unplayable[3]->init(vector2(12, 15), "Axeman");
+		unplayable[1]->turnOrder = 4;
+		unplayable[2]->turnOrder = 5;
+		unplayable[3]->turnOrder = 6;
 		selectedNode = vector2(-1, -1);
 		//sel.init();
 		sel.load();
@@ -1023,7 +1163,7 @@ public:
 		}
 		nodes = newNode;*/
 		xml.loadNodes(nodes, 1);
-		scr.load((const char)"splash");
+		scr.load("splash.png");
 		curr = STATE::SPLASH;
 		keyState[' '] = false;
 
@@ -1046,6 +1186,18 @@ public:
 		if (scr.show)
 		{
 			scr.draw();
+			updateHalt++;
+			if (!scr.buttons.empty())
+				scr.buttons[0].draw();
+			if (updateHalt >= 1500)
+			{
+				curr = MENU;
+				scr = Screens();
+				scr.load("menu.png");
+				Button newButton;
+				newButton.load("button.png");
+				scr.buttons.push_back(newButton);
+			}
 			return;
 		}
 		for (int i = 0; i < 18; i++) {
@@ -1094,6 +1246,10 @@ public:
 		playable[1]->draw();
 		playable[2]->draw();
 		playable[3]->draw();
+
+		unplayable[1]->draw();
+		unplayable[2]->draw();
+		unplayable[3]->draw();
 		card.draw();
 		for (auto & element : items)
 		{
@@ -1205,7 +1361,68 @@ public:
 					//it->second->draw();
 				}
 		}
-		if (turn > 3)
+		//AI TIME
+		if (turn > 3 && updateHalt == 0)
+		{
+			for (map<int, Characters*>::iterator it = unplayable.begin(); it != unplayable.end(); it++)
+			{
+				if (turn == it->second->turnOrder)
+				{
+					card.sel = (Characters*)it->second;
+					if (move && unplayable[turn - 3]->calculateCost(nodes[selectedNode.x][selectedNode.y], 4, selectedNode))
+					{
+						updateHalt = 0.1; 
+						/*for (map<int, Characters*>::iterator itt = unplayable.begin(); itt != unplayable.end(); itt++)
+						{
+						if (itt->second->cord == selectedNode)
+						{
+						move = false;
+						}
+						}
+						if (move)
+						{
+						it->second->waiting = false;
+						it->second->updatePos(selectedNode);
+						turn++;
+						move = false;
+						}
+						selectedNode = vector2(-1, -1);*/
+					}
+					else if (move)
+						move = false;
+				}
+				it->second->alive = it->second->health > 0;
+				it->second->waiting = false;
+				int itemTrackVal = 0;
+				if (!items.empty())
+					for (auto & element : items)
+					{
+						//it->second->draw();
+						element->update(it->second->cord);
+						if (element->alive)
+						{
+							element->effect(it->second);
+							items.erase(items.begin() + itemTrackVal);
+							break;
+						}
+						itemTrackVal++;
+						//it->second->draw();
+					}
+			}
+		}
+		else if (turn > 3 && updateHalt != 100)
+		{
+			updateHalt++;
+			if (updateHalt >= 100)
+			{
+				unplayable[turn - 3]->updatePos(selectedNode);
+				turn++;
+				updateHalt = 0;
+				selectedNode = vector2(-1, -1);
+				move = false;
+			}
+		}
+		if (turn > 6)
 			turn = 1;
 	}
 };
