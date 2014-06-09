@@ -221,15 +221,15 @@ void mouseClick(int button, int state, int x, int y)
 		}
 		else if (maps.paused && y > (screen.y / 2) - (screen.y / 5) && y < (screen.y / 2) + (screen.y / 5) && x > screen.x / 4 && x < (screen.x / 2) + (screen.x / 4))
 		exit(0);*/
-	
+
 	//float x_tran = x - (screen.x / 2);
 	//float y_tran = y - (screen.y / 2);
 	if (grid.curr == grid.MENU && state == GLUT_UP)
 	{
 		/*if (fullX > Position.x && Options.Position.x < Position.x &&
 			fullY > Position.y && Options.Position.y < Position.y)
-		{
-		}*/
+			{
+			}*/
 		if (x >= grid.scr.buttons[0].minSize.x && x <= grid.scr.buttons[0].maxSize.x &&
 			y >= grid.scr.buttons[0].minSize.y && y <= grid.scr.buttons[0].maxSize.y)
 		{

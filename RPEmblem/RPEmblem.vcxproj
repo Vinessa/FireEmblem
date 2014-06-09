@@ -80,6 +80,7 @@
     <Text Include="ReadMe.txt" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Attacks.h" />
     <ClInclude Include="glut.h" />
     <ClInclude Include="Grid.h" />
     <ClInclude Include="SOIL.h" />
@@ -89,6 +90,7 @@
     <ClInclude Include="Weapon.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Attacks.cpp" />
     <ClCompile Include="Grid.cpp" />
     <ClCompile Include="RPEmblem.cpp" />
     <ClCompile Include="stdafx.cpp">

@@ -15,6 +15,7 @@ public:
 	int durability;
 	virtual int Compare(Weapon* Weapon2) = 0;
 	virtual std::string type() = 0;
+	float damage = 0;
 };
 
 class SWORD : public Weapon{

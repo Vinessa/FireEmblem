@@ -267,6 +267,8 @@ public:
 	int health;
 	int maxHealth;
 	float xp;
+	float xp2NextLevel; // Added by Vinessa - xp to next level - scales xp requirements to characters progression
+	int Level; //Added by Vinessa
 	bool alive;
 	bool waiting;
 	bool isEnemy = false;
@@ -284,6 +286,8 @@ public:
 		health = newChar->health;
 		maxHealth = newChar->maxHealth;
 		xp = newChar->xp;
+		Level = newChar->Level; // added by Vinessa
+		xp2NextLevel = newChar->xp2NextLevel;
 		alive = newChar->alive;
 		waiting = newChar->waiting;
 		texture = newChar->texture;
@@ -300,6 +304,9 @@ public:
 		waiting = false;
 		health = 1;
 		cord = change;
+
+		xp = 50;
+		xp2NextLevel = ((((Level + 1) * 100)) * 0.1);
 
 		position.x = (0.11) * cord.x + (0.11);
 		position.y = (0.11) * cord.y;
@@ -395,7 +402,6 @@ public:
 	this->weapon = newChar->weapon;
 	this->mvmP = newChar->mvmP;
 	this->turnOrder = newChar->turnOrder;
-
 	}*/
 	//void operator *= (float change);
 };
@@ -411,6 +417,9 @@ public:
 		turnOrder = 1;
 		health = 10;
 		cord = change;
+
+		xp = 50;
+		xp2NextLevel = ((((Level + 1) * 100)) * 0.1);
 
 		position.x = (0.11) * cord.x + (0.11);
 		position.y = (0.11) * cord.y;
@@ -473,6 +482,9 @@ public:
 		health = 10;
 		cord = change;
 
+		xp = 50;
+		xp2NextLevel = ((((Level + 1) * 100)) * 0.1);
+
 		position.x = (0.11) * cord.x + (0.11);
 		position.y = (0.11) * cord.y;
 		name = newName;
@@ -533,6 +545,9 @@ public:
 		turnOrder = 3;
 		health = 10;
 		cord = change;
+
+		xp = 50;
+		xp2NextLevel = ((((Level + 1) * 100)) * 0.1);
 
 		position.x = (0.11) * cord.x + (0.11);
 		position.y = (0.11) * cord.y;
@@ -1021,7 +1036,7 @@ public:
 
 		return true;
 	}
-}; 
+};
 class Screens
 {
 public:
@@ -1098,6 +1113,7 @@ public:
 	enum STATE { SPLASH, MENU, GAME, EXIT, OPTIONS };//Game states
 	STATE curr;//The current state
 	float updateHalt = 0;
+	int maxTurns = 6;
 	bool move;
 	bool paused;
 	bool filling;
@@ -1115,7 +1131,6 @@ public:
 		playable[1]->init(vector2(9, 9), "HeavyMace");
 		playable[2]->init(vector2(9, 12), "Swordsman");
 		playable[3]->init(vector2(12, 9), "Axeman");
-
 
 		unplayable[1] = (Characters*)new HeavyMace();
 		unplayable[2] = (Characters*)new Swordsman;
@@ -1202,7 +1217,7 @@ public:
 		}
 		for (int i = 0; i < 18; i++) {
 			for (int ii = 0; ii < 18; ii++) {
-				if (turn <= 3)
+				if (turn <= playable.size())
 				{
 					/*int checkturn = turn + 1;
 					if (checkturn > 3)
@@ -1242,22 +1257,17 @@ public:
 				}*/
 			}
 		}
+		for (auto & element : playable)
+			element.second->draw();
 
-		playable[1]->draw();
-		playable[2]->draw();
-		playable[3]->draw();
+		for (auto & element : playable)
+			element.second->draw();
 
-		unplayable[1]->draw();
-		unplayable[2]->draw();
-		unplayable[3]->draw();
 		card.draw();
 		for (auto & element : items)
 		{
-			//it->second->draw();
 			element->draw();
-			//it->second->draw();
 		}
-		//hPick.draw();
 	}
 	void drawSquare(vector2 pos)
 	{
@@ -1369,9 +1379,9 @@ public:
 				if (turn == it->second->turnOrder)
 				{
 					card.sel = (Characters*)it->second;
-					if (move && unplayable[turn - 3]->calculateCost(nodes[selectedNode.x][selectedNode.y], 4, selectedNode))
+					if (move && unplayable[turn - unplayable.size()]->calculateCost(nodes[selectedNode.x][selectedNode.y], 4, selectedNode))
 					{
-						updateHalt = 0.1; 
+						updateHalt = 0.1;
 						/*for (map<int, Characters*>::iterator itt = unplayable.begin(); itt != unplayable.end(); itt++)
 						{
 						if (itt->second->cord == selectedNode)
@@ -1410,7 +1420,7 @@ public:
 					}
 			}
 		}
-		else if (turn > 3 && updateHalt != 100)
+		else if (turn > playable.size()  && updateHalt != 100)
 		{
 			updateHalt++;
 			if (updateHalt >= 100)
@@ -1422,7 +1432,7 @@ public:
 				move = false;
 			}
 		}
-		if (turn > 6)
+		if (turn > maxTurns)
 			turn = 1;
 	}
 };
