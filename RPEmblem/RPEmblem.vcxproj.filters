@@ -112,6 +112,12 @@
     <Image Include="menu.png">
       <Filter>Resource Files</Filter>
     </Image>
+    <Image Include="exit.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="play.png">
+      <Filter>Resource Files</Filter>
+    </Image>
   </ItemGroup>
   <ItemGroup>
     <Xml Include="LevelData.xml">

@@ -35,7 +35,7 @@ Attacks::~Attacks(void)
 void Attacks::ExecuteBattle(Characters* ActiveCharacter) // goes through the array of adjacent characters and resolves battles
 {
 	vector<Characters*> Opponents(ActiveCharacter->adjecentArray); //copies the vector containing the possible opponents
-	for (int i = 0; i < Opponents.size(); i++)
+	for (int i = 0; i < (int)Opponents.size(); i++)
 	{
 		Characters* Opponent = Opponents[i];
 		ResolveAttacks(ActiveCharacter, Opponent);
@@ -135,7 +135,7 @@ float Attacks::DetermineDamage(Characters* ActiveCharacter, Characters* TargetCh
 			break;
 		}
 			}
-
+	return BuffDebuff;
 }
 
 

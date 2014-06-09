@@ -902,7 +902,6 @@ public:
 			nDirt->init();
 			landNodes.at(y) = (Land*)nDirt;
 		}
-		int bob = 5;
 		landNodes.at(y)->load();
 		landNodes.at(y)->position.x = (0.11) * i + (0.11);
 
@@ -987,13 +986,48 @@ class Button
 public:
 	GLint texture;
 	bool show;
-	vector2 maxSize = vector2(600, 450);
-	vector2 minSize = vector2(200, 150);
+	vector2 maxSize = vector2(0, 0);
+	vector2 minSize = vector2(0, 0);
+	vector2 position;
+	vector2 drawSize;
 	Button(void)
 	{
 		show = true;
 	}
 	~Button(){}
+	virtual void updatePos(vector2 screen)
+	{
+		/*float x_norm = minSize.x / (screen.x / 2);
+		float y_norm = minSize.y / (screen.y / 2);
+
+		int counterx = 0;
+		for (float i = -2; i <= 2; i += 0.11)
+		{
+			if (x_norm - 2 >= i && x_norm - 2 <= i + 0.11)
+			{
+				break;
+			}
+			counterx++;
+		}
+		int countery = 0;
+		for (float i = -2; i <= 2; i += 0.11)
+		{
+			if (y_norm - 2 >= i && y_norm - 2 <= i + 0.11)
+			{
+				break;
+			}
+			countery++;
+		}
+		countery = 17 - countery;
+
+		position.x = (0.11) * counterx + (0.11);
+		position.y = (0.11) * countery;*/
+		drawSize.x = ((minSize.x + 200) / (screen.x / 2)) - 1;
+		drawSize.y = ((minSize.y + 100) / (screen.y / 2)) - 1;
+		position.x = (minSize.x / (screen.x / 2)) - 1;
+		position.y = (minSize.y / (screen.y / 2)) - 1;
+		
+	}
 	virtual void draw()
 	{
 		if (!show)
@@ -1006,10 +1040,16 @@ public:
 		//glRotatef(180, 1, 0, 0);
 		glLoadIdentity();
 		glColor3f(1, 1, 1);
-		glTexCoord2f(0, 0); glVertex3f(-0.5, 0.5, 0);
-		glTexCoord2f(1, 0); glVertex3f(0.5, 0.5, 0);
-		glTexCoord2f(1, 1); glVertex3f(0.5, -0.5, 0);
-		glTexCoord2f(0, 1); glVertex3f(-0.5, -0.5, 0);
+		glTexCoord2f(0, 0); glVertex3f(position.x, drawSize.y, 0);
+		glTexCoord2f(1, 0); glVertex3f(drawSize.x, drawSize.y, 0);
+		glTexCoord2f(1, 1); glVertex3f(drawSize.x, position.y, 0);
+		glTexCoord2f(0, 1); glVertex3f(position.x, position.y, 0);
+		/*
+		glTexCoord2f(0, 0); glVertex3f(position.x - 1.11, position.y + 0.11 - 1, 0);
+		glTexCoord2f(1, 0); glVertex3f(position.x - 1, position.y + 0.11 - 1, 0);
+		glTexCoord2f(1, 1); glVertex3f(position.x - 1, position.y - 1, 0);
+		glTexCoord2f(0, 1); glVertex3f(position.x - 1.11, position.y - 1, 0);
+		*/
 		glPopMatrix();
 		glEnd();
 		//glRotatef(-180, 1, 0, 0);
@@ -1117,7 +1157,7 @@ public:
 	bool move;
 	bool paused;
 	bool filling;
-	bool click = false;
+	//bool click = false;
 	int turn;//Controls who can act and who cannot
 	//HPickup hPick;
 
@@ -1196,28 +1236,55 @@ public:
 		//items.insert(hPick);
 		//hPick.load();
 	}
-	void draw()
+	void draw(vector2 screen)
 	{
 		if (scr.show)
 		{
 			scr.draw();
 			updateHalt++;
-			if (!scr.buttons.empty())
-				scr.buttons[0].draw();
-			if (updateHalt >= 1500)
+			/*if (!scr.buttons.empty())
+				scr.buttons[0].draw();*/
+				for (auto & element : scr.buttons)
+				{
+					element.draw();
+				}
+			if (updateHalt >= 1500 && curr != MENU)
 			{
 				curr = MENU;
 				scr = Screens();
 				scr.load("menu.png");
-				Button newButton;
-				newButton.load("button.png");
-				scr.buttons.push_back(newButton);
+				Button newPlay;
+				Button newExit;
+				newPlay.load("play.png");
+				newPlay.minSize = vector2(screen.x / 4, 400);
+				newPlay.maxSize = vector2(screen.x - (screen.x / 4), 500);
+				newPlay.updatePos(screen);
+				newPlay.minSize = vector2(screen.x / 4, 100);
+				newPlay.maxSize = vector2(screen.x - (screen.x / 4), 200);
+				scr.buttons.push_back(newPlay);
+				newExit.load("exit.png");
+				newExit.minSize = vector2(screen.x / 4, 100);
+				newExit.maxSize = vector2(screen.x - (screen.x / 4), 200);
+				newExit.updatePos(screen);
+				newExit.minSize = vector2(screen.x / 4, 400);
+				newExit.maxSize = vector2(screen.x - (screen.x / 4), 500);
+				scr.buttons.push_back(newExit);
+
+				/*
+		newPlay.minSize = vector2(screen.x / 4, 400);
+		newPlay.maxSize = vector2(screen.x - (screen.x / 4), 500);
+		newPlay.updatePos(screen);
+		grid.scr.buttons.push_back(newPlay);
+		newExit.load("exit.png");
+		newExit.minSize = vector2(screen.x / 4, 100);
+		newExit.maxSize = vector2(screen.x - (screen.x / 4), 200);
+				*/
 			}
 			return;
 		}
 		for (int i = 0; i < 18; i++) {
 			for (int ii = 0; ii < 18; ii++) {
-				if (turn <= playable.size())
+				if ((int)playable.size() >= turn)
 				{
 					/*int checkturn = turn + 1;
 					if (checkturn > 3)
@@ -1260,7 +1327,7 @@ public:
 		for (auto & element : playable)
 			element.second->draw();
 
-		for (auto & element : playable)
+		for (auto & element : unplayable)
 			element.second->draw();
 
 		card.draw();
@@ -1420,10 +1487,10 @@ public:
 					}
 			}
 		}
-		else if (turn > playable.size()  && updateHalt != 100)
+		else if (turn > (int)playable.size()  && updateHalt != 100)
 		{
 			updateHalt++;
-			if (updateHalt >= 100)
+			if (updateHalt >= 500)//The time between each AI movement
 			{
 				unplayable[turn - 3]->updatePos(selectedNode);
 				turn++;
@@ -1432,6 +1499,7 @@ public:
 				move = false;
 			}
 		}
+		//End of the round
 		if (turn > maxTurns)
 			turn = 1;
 	}

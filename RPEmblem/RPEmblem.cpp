@@ -172,7 +172,7 @@ void display(void)
 	//glMatrixMode(GL_MODELVIEW);
 	glLoadIdentity();
 	glViewport(0, 0, screen.x, screen.y);
-	grid.draw();
+	grid.draw(screen);
 	///<summary>Draw commands </summary>
 	//glutStrokeCharacter(GLUT_STROKE_ROMAN,player.position.y);
 
@@ -236,6 +236,13 @@ void mouseClick(int button, int state, int x, int y)
 			grid.scr.show = false;
 			grid.curr = grid.GAME;
 			grid.updateHalt = 0;
+			//int bob = 5;
+		}
+		else if (x >= grid.scr.buttons[1].minSize.x && x <= grid.scr.buttons[1].maxSize.x &&
+			y >= grid.scr.buttons[1].minSize.y && y <= grid.scr.buttons[1].maxSize.y)
+		{
+			exit(1);
+			//int bob = 5;
 		}
 		return;
 	}if (grid.curr == grid.SPLASH && state == GLUT_UP)
@@ -243,9 +250,18 @@ void mouseClick(int button, int state, int x, int y)
 		grid.curr = grid.MENU;
 		grid.scr = Screens();
 		grid.scr.load("menu.png");
-		Button newButton;
-		newButton.load("button.png");
-		grid.scr.buttons.push_back(newButton);
+		Button newPlay;
+		Button newExit;
+		newPlay.load("play.png");
+		newPlay.minSize = vector2(screen.x / 4, 400);
+		newPlay.maxSize = vector2(screen.x - (screen.x / 4), 500);
+		newPlay.updatePos(screen);
+		grid.scr.buttons.push_back(newPlay);
+		newExit.load("exit.png");
+		newExit.minSize = vector2(screen.x / 4, 100);
+		newExit.maxSize = vector2(screen.x - (screen.x / 4), 200);
+		newExit.updatePos(screen);
+		grid.scr.buttons.push_back(newExit);
 		return;
 	}
 	float x_norm = x / (screen.x / 2);
@@ -254,10 +270,8 @@ void mouseClick(int button, int state, int x, int y)
 	int counterx = 0;
 	for (float i = -2; i <= 2; i += 0.11)
 	{
-		int bob = 0;
 		if (x_norm - 2 >= i && x_norm - 2 <= i + 0.11)
 		{
-			bob = 5;
 			break;
 		}
 		counterx++;
@@ -265,10 +279,8 @@ void mouseClick(int button, int state, int x, int y)
 	int countery = 0;
 	for (float i = -2; i <= 2; i += 0.11)
 	{
-		int bob = 0;
 		if (y_norm - 2 >= i && y_norm - 2 <= i + 0.11)
 		{
-			bob = 5;
 			break;
 		}
 		countery++;
@@ -294,9 +306,9 @@ void mouseClick(int button, int state, int x, int y)
 				grid.selectedNode = vector2(counterx, countery);
 			}
 		}
-		catch (const std::out_of_range& oor)
+		catch (const std::out_of_range & oor)
 		{
-			std::cerr << "Out of Range";
+			std::cerr << "Out of Range" << oor.what();
 		}
 	}
 }
