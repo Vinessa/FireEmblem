@@ -3,6 +3,6 @@
 #include "Tile.h"
 
 int main(){
-	DoorHouse HouseDoor;
+	House house(.12,.3);
 	return 0;
 };
