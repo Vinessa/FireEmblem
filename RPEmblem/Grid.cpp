@@ -1,7 +1,6 @@
 #include "stdafx.h"
 #include "Grid.h"
 
-
 Grid::Grid(){}
 Grid::~Grid(){}
 
@@ -22,6 +21,8 @@ void Grid::init(int x/*18*/, int y/*18*/)
 	unplayable[1]->init(vector2(15, 15), "HeavyMace");
 	unplayable[2]->init(vector2(15, 12), "Swordsman");
 	unplayable[3]->init(vector2(12, 15), "Axeman");
+	for (auto & element : unplayable)
+		element.second->loadAsEnemy();
 	unplayable[1]->turnOrder = 4;
 	unplayable[2]->turnOrder = 5;
 	unplayable[3]->turnOrder = 6;
@@ -31,6 +32,11 @@ void Grid::init(int x/*18*/, int y/*18*/)
 	card.load();
 	card.sel = (Characters*)playable[1];
 	xml.loadNodes(nodes, 1);
+	for (auto & element : nodes)
+		for (auto & elem : element)
+			elem->init();
+
+
 	scr.load("splash.png");
 	curr = STATE::SPLASH;
 	keyState[' '] = false;
@@ -180,7 +186,29 @@ void Grid::update()
 			}
 	}
 	//AI TIME
-	if (turn > 3 && updateHalt == 0)
+
+	for (auto & element : unplayable)
+	{
+		if (selectedNode == element.second->cord)
+		{
+			selCharacter = (Characters*)element.second;
+			card.opSel = (Characters*)selCharacter;
+			card.showOpSel = true;
+		}
+		else if (selectedNode == vector2(-1, -1))
+		{
+			card.showOpSel = false;
+			selCharacter = (Characters*)new Characters;
+		}
+		else
+		{
+			selCharacter = (Characters*)new Characters;
+		}
+	}
+
+
+
+	if (turn > playable.size() && updateHalt == 0)
 	{
 		for (map<int, Characters*>::iterator it = unplayable.begin(); it != unplayable.end(); it++)
 		{

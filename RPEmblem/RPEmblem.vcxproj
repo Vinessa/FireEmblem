@@ -121,18 +121,25 @@
     <Library Include="SOIL.lib" />
   </ItemGroup>
   <ItemGroup>
+    <Image Include="axeA.png" />
+    <Image Include="axeE.png" />
     <Image Include="button.png" />
     <Image Include="card.png" />
+    <Image Include="cornerB.png" />
+    <Image Include="cornerT.png" />
     <Image Include="dirt.png" />
-    <Image Include="emblem.png" />
     <Image Include="exit.png" />
     <Image Include="health.png" />
+    <Image Include="houseB.png" />
+    <Image Include="houseT.png" />
+    <Image Include="maceA.png" />
+    <Image Include="maceE.png" />
     <Image Include="menu.png" />
-    <Image Include="paper.png" />
     <Image Include="play.png" />
-    <Image Include="rock.png" />
     <Image Include="select.png" />
     <Image Include="splash.png" />
+    <Image Include="swordA.png" />
+    <Image Include="swordE.png" />
     <Image Include="trap.png" />
     <Image Include="wall.png" />
   </ItemGroup>

@@ -10,6 +10,8 @@
 #include <sstream>
 #include <string>
 
+using namespace std;
+
 class Land
 {
 public:
@@ -19,10 +21,13 @@ public:
 	bool blueHighLight;
 	bool redHighLight;
 	vector2 position;
+	bool invertX = false;
+	bool invertY = false;
 	void init();
 	virtual void draw();
 	virtual void draw(bool triggerColors);
 	virtual bool load();
+	virtual bool load(int part);
 };
 class Wall :Land
 {
@@ -34,6 +39,19 @@ public:
 	virtual void draw();
 	virtual void draw(bool triggerColors);
 	virtual bool load();
+	virtual bool load(int part);
+};
+class House :Land
+{
+public:
+	int health;
+	House(void);
+	~House();
+	void init();
+	virtual void draw();
+	virtual void draw(bool triggerColors);
+	virtual bool load();
+	virtual bool load(int part);
 };
 class Dirt :Land
 {
@@ -44,6 +62,7 @@ public:
 	virtual void draw();
 	virtual void draw(bool triggerColors);
 	virtual bool load();
+	virtual bool load(int part);
 };
 class Selection :Land
 {
@@ -52,4 +71,5 @@ public:
 	virtual void draw();
 	virtual void draw(bool triggerColors);
 	virtual bool load();
+	virtual bool load(int part);
 };

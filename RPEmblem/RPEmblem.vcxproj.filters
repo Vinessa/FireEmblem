@@ -115,15 +115,6 @@
     <Image Include="wall.png">
       <Filter>Resource Files</Filter>
     </Image>
-    <Image Include="emblem.png">
-      <Filter>Resource Files</Filter>
-    </Image>
-    <Image Include="paper.png">
-      <Filter>Resource Files</Filter>
-    </Image>
-    <Image Include="rock.png">
-      <Filter>Resource Files</Filter>
-    </Image>
     <Image Include="card.png">
       <Filter>Resource Files</Filter>
     </Image>
@@ -146,6 +137,36 @@
       <Filter>Resource Files</Filter>
     </Image>
     <Image Include="play.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="axeA.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="axeE.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="maceA.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="maceE.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="swordA.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="swordE.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="cornerB.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="cornerT.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="houseB.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="houseT.png">
       <Filter>Resource Files</Filter>
     </Image>
   </ItemGroup>

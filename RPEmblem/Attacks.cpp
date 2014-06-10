@@ -1,18 +1,18 @@
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-// Attacks.cpp 
+// Attacks.cpp
 // Created by Vinessa Mayer - June 2014
 // Vinessa.Mayer@gmail.com
 
 // This Attack Class was created for RPEmblem - a class assignment for first year programming.
 // It calls on the Grid class by Jacob "Darth" Miller as well as a Weapons class by louie Escalera
 //
-// This class handles the battle step of the game. It determines the bettle outcome of all enemy 
+// This class handles the battle step of the game. It determines the bettle outcome of all enemy
 // characters within' an array of active characters within' range of the character.
 // To use, you'll need to call ExecuteBattle() with the active Character as an argument, this will
 // check each opponent's fighting style to determine the rock paper sissors effect, as well as if the attack
 // was executed well enough to either not be effected, be normally effected or be very effected by that advantage
 // Characters take damage from each other except in the case of where the damage would kill them. In this case
-// the character that would survive would be granted first strike and would not take damage from the 
+// the character that would survive would be granted first strike and would not take damage from the
 // opposing character. In the case that both Character's would perish one of them is randomly selected for first strike.
 // This class also handles exp gains and leveling up and health scaling with level.
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -22,7 +22,6 @@
 Attacks::Attacks(void)
 {
 }
-
 
 Attacks::~Attacks(void)
 {
@@ -43,7 +42,6 @@ int Attacks::ConvertWeaponStringToInt(Weapon* a_Weapon)
 	//Weapon* WeaponType = a_Weapon->type;
 	if (a_Weapon->type() == "Sword")
 	{
-
 		return 1;
 	}
 	else if (a_Weapon->type() == "Axe")
@@ -105,7 +103,6 @@ float Attacks::DetermineDamage(Characters* ActiveCharacter, Characters* TargetCh
 
 		default:
 			break;
-
 		}
 		}
 		else
@@ -132,10 +129,7 @@ float Attacks::DetermineDamage(Characters* ActiveCharacter, Characters* TargetCh
 	return 1;
 }
 
-
-
-
-float Attacks::ShakeItUp() // adds an element of randomness to the battle and prevents stalemates. Chooses a random int: 0, 1 or 2 and stores it. This number will be used as a scaler for the BuffDebuff bonus stat. 
+float Attacks::ShakeItUp() // adds an element of randomness to the battle and prevents stalemates. Chooses a random int: 0, 1 or 2 and stores it. This number will be used as a scaler for the BuffDebuff bonus stat.
 {
 	//Seeding Random
 	srand(time(NULL));
@@ -157,7 +151,6 @@ void Attacks::CheckforLevelup(Characters* aCharacter)
 	{
 		aCharacter->Level = aCharacter->Level + 1;
 		CalculateNextLevelStats(aCharacter);
-
 	}
 }
 
@@ -167,10 +160,7 @@ void Attacks::CalculateNextLevelStats(Characters* aCharacter)
 	float HealthDifference = ((aCharacter->maxHealth + HealthBonus) - aCharacter->maxHealth);
 	aCharacter->maxHealth = (aCharacter->maxHealth + HealthBonus);
 	aCharacter->health = (aCharacter->health + HealthDifference);
-
 }
-
-
 
 void Attacks::ResolveAttacks(Characters* ActiveCharacter, Characters* TargetCharacter)
 {
@@ -200,7 +190,6 @@ void Attacks::ResolveAttacks(Characters* ActiveCharacter, Characters* TargetChar
 			ActiveCharacter->xp = (ActiveCharacter->xp + TargetCharacter->xp);
 			CheckforLevelup(ActiveCharacter);
 			}
-
 	}
 	else //in the event that the active character will die and the target character will not
 		if ((GrossDamageTarget > ActiveCharacter->health) && (GrossDamageActive < TargetCharacter->health))

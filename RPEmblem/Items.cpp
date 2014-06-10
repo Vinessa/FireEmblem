@@ -1,8 +1,6 @@
 #include "stdafx.h"
 #include "Items.h"
 
-
-
 Items::Items(){}
 Items::~Items(){}
 void Items::init(vector2 change)
@@ -63,7 +61,6 @@ void Items::effect(Characters*& character)
 }
 void Items::update(vector2 playercord){}
 
-
 void HPickup::init(vector2 change)
 {
 	alive = true;
@@ -120,7 +117,6 @@ void HPickup::update(vector2 playercord)
 {
 	alive = playercord == cord;
 }
-
 
 void HTrap::init(vector2 change)
 {

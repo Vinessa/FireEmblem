@@ -121,8 +121,6 @@ bool Characters::calculateAtLand(Land* node, int /*5*/ dist, vector2 newCord)
 		//return rtV;
 }
 
-
-
 HeavyMace::HeavyMace(void){}
 //private:
 void HeavyMace::init(vector2 change, string newName)
@@ -147,7 +145,7 @@ bool HeavyMace::load()
 {
 	texture = SOIL_load_OGL_texture
 		(
-		"rock.png",
+		"maceA.png",
 		SOIL_LOAD_AUTO,
 		SOIL_CREATE_NEW_ID, 0
 		/*SOIL_FLAG_INVERT_Y*/
@@ -168,7 +166,7 @@ bool HeavyMace::loadAsEnemy()
 	isEnemy = true;
 	texture = SOIL_load_OGL_texture
 		(
-		"erock.png",
+		"maceE.png",
 		SOIL_LOAD_AUTO,
 		SOIL_CREATE_NEW_ID, 0
 		/*SOIL_FLAG_INVERT_Y*/
@@ -184,7 +182,6 @@ bool HeavyMace::loadAsEnemy()
 
 	return true;
 }
-
 
 Swordsman::Swordsman(void){}
 void Swordsman::init(vector2 change, string newName)
@@ -209,7 +206,7 @@ bool Swordsman::load()
 {
 	texture = SOIL_load_OGL_texture
 		(
-		"paper.png",
+		"swordA.png",
 		SOIL_LOAD_AUTO,
 		SOIL_CREATE_NEW_ID, 0
 		/*SOIL_FLAG_INVERT_Y*/
@@ -230,7 +227,7 @@ bool Swordsman::loadAsEnemy()
 	isEnemy = true;
 	texture = SOIL_load_OGL_texture
 		(
-		"epaper.png",
+		"swordE.png",
 		SOIL_LOAD_AUTO,
 		SOIL_CREATE_NEW_ID, 0
 		/*SOIL_FLAG_INVERT_Y*/
@@ -246,8 +243,6 @@ bool Swordsman::loadAsEnemy()
 
 	return true;
 }
-
-
 
 Axeman::Axeman(void){}
 void Axeman::init(vector2 change, string newName)
@@ -272,7 +267,7 @@ bool Axeman::load()
 {
 	texture = SOIL_load_OGL_texture
 		(
-		"emblem.png",
+		"axeA.png",
 		SOIL_LOAD_AUTO,
 		SOIL_CREATE_NEW_ID, 0
 		/*SOIL_FLAG_INVERT_Y*/
@@ -293,7 +288,7 @@ bool Axeman::loadAsEnemy()
 	isEnemy = true;
 	texture = SOIL_load_OGL_texture
 		(
-		"eemblem.png",
+		"axeE.png",
 		SOIL_LOAD_AUTO,
 		SOIL_CREATE_NEW_ID, 0
 		/*SOIL_FLAG_INVERT_Y*/

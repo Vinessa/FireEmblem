@@ -1,7 +1,6 @@
 #include "stdafx.h"
 #include "Screens.h"
 
-
 Button::Button(void)
 {
 	show = true;
@@ -62,7 +61,6 @@ bool Button::load(char * file)
 
 	return true;
 }
-
 
 Screens::Screens(void)
 {

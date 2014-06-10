@@ -1,7 +1,6 @@
 // RPEmblem.cpp : Defines the entry point for the console application.
 //
 
-
 #include "stdafx.h"
 #include <iostream>
 #include <windows.h>
@@ -14,7 +13,6 @@
 #include <math.h>
 #include "VectorLib.h"
 #include "Grid.h"
-
 
 vector2 mouse(0, 0);
 vector2 screen(800, 600);

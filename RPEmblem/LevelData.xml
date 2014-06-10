@@ -28,7 +28,7 @@
     <Tile name = "4" type ="Dirt" />
     <Tile name = "5" type ="Dirt" />
     <Tile name = "6" type ="Dirt" />
-    <Tile name = "7" type ="Dirt" />
+    <Tile name = "7" type ="House1" />
     <Tile name = "8" type ="Dirt" />
     <Tile name = "9" type ="Dirt" />
     <Tile name = "10" type ="Dirt" />
