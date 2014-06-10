@@ -17,14 +17,14 @@
 // This class also handles exp gains and leveling up and health scaling with level.
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-#ifndef _ATTACKS_H_
+/*#ifndef _ATTACKS_H_
 #define _ATTACKS_H_
 
 #include <string>
 #include <stdlib.h>
 #include <time.h>
 #include "Grid.h"
-
+class Characters;
 class Attacks
 {
 public:
@@ -53,4 +53,4 @@ public:
 
 };
 
-#endif //_ATTACKS_H_
+#endif //_ATTACKS_H_*/

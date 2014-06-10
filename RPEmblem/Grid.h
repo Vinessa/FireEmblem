@@ -1,4 +1,10 @@
 #pragma once
+
+
+//#ifndef _CHARACTERS_H_
+//#define _CHARACTERS_H_
+
+
 #include "VectorLib.h"
 #include <iostream>
 #include <map>
@@ -12,9 +18,12 @@
 #include <tinystr.h>
 #include <iostream>
 #include <sstream>
+#include <string>
+#include <stdlib.h>
+#include <time.h>
+//#include "Attacks.h"
 
 using namespace std;
-
 class Land
 {
 public:
@@ -366,6 +375,16 @@ public:
 			else return false;
 			return false;
 			//return rtV;
+	}
+	virtual vector<Characters*> getAdj(map<int,Characters*> characters)
+	{
+		adjecentArray = vector<Characters*>();
+		for (auto & element : characters)
+			if ((element.second->cord.x == cord.x || element.second->cord.x == cord.x - 1 || element.second->cord.x == cord.x + 1) &&
+				(element.second->cord.y == cord.y || element.second->cord.y == cord.y - 1 || element.second->cord.y == cord.y + 1))
+				adjecentArray.push_back(element.second);
+
+		return adjecentArray;
 	}
 	//Gets the land next to the land you are currently on
 	virtual bool calculateAtLand(Land* node, int /*5*/ dist, vector2 newCord)
@@ -997,36 +1016,10 @@ public:
 	~Button(){}
 	virtual void updatePos(vector2 screen)
 	{
-		/*float x_norm = minSize.x / (screen.x / 2);
-		float y_norm = minSize.y / (screen.y / 2);
-
-		int counterx = 0;
-		for (float i = -2; i <= 2; i += 0.11)
-		{
-			if (x_norm - 2 >= i && x_norm - 2 <= i + 0.11)
-			{
-				break;
-			}
-			counterx++;
-		}
-		int countery = 0;
-		for (float i = -2; i <= 2; i += 0.11)
-		{
-			if (y_norm - 2 >= i && y_norm - 2 <= i + 0.11)
-			{
-				break;
-			}
-			countery++;
-		}
-		countery = 17 - countery;
-
-		position.x = (0.11) * counterx + (0.11);
-		position.y = (0.11) * countery;*/
 		drawSize.x = ((minSize.x + 200) / (screen.x / 2)) - 1;
 		drawSize.y = ((minSize.y + 100) / (screen.y / 2)) - 1;
 		position.x = (minSize.x / (screen.x / 2)) - 1;
 		position.y = (minSize.y / (screen.y / 2)) - 1;
-		
 	}
 	virtual void draw()
 	{
@@ -1130,6 +1123,34 @@ public:
 
 		return true;
 	}
+};
+
+class Attacks
+{
+public:
+	Attacks(void);
+	~Attacks(void);
+
+	Weapon* MyWeapon;
+	Weapon* TheirWeapon;
+
+	int BuffDebuff;
+	int Equalizer;
+	float GrossDamageActive;
+	float GrossDamageTarget;
+	int WeaponTypeInt;
+	int FirstStrike;
+
+
+	float DetermineDamage(Characters* ActiveCharacter, Characters* TargetCharacter);
+	float ShakeItUp();
+	int ConvertWeaponStringToInt(Weapon* a_Weapon); // The Weapon class returns a string, but string can't be used in a switch statement so I'm converting to an int. 1 = Sword, 2 = Axe and 3 = Mace
+	void ResolveAttacks(Characters* ActiveCharacter, Characters* TargetCharacter);
+	void ExecuteBattle(Characters* ActiveCharacter); //goes through the array of adjacent characters and resolves battles
+	void CheckforLevelup(Characters* aCharacter);
+	float FindNextLevelXP(Characters* aCharacter);
+	void CalculateNextLevelStats(Characters* aCharacter);
+
 };
 
 class Grid
@@ -1501,6 +1522,31 @@ public:
 		}
 		//End of the round
 		if (turn > maxTurns)
+		{
+			for (auto & element : playable)
+			{
+				element.second->getAdj(unplayable);
+
+				Attacks * attk = new Attacks();
+				attk->ExecuteBattle(element.second);
+			}
+			for (auto & element : unplayable)
+			{
+				element.second->getAdj(playable);
+
+				Attacks * attk = new Attacks();
+				attk->ExecuteBattle(element.second);
+			}
+
+			//attk.ShakeItUp();
+			//attk.
+
+
+
+
+			//Reset the turn order
 			turn = 1;
+		}
 	}
 };
+//#endif

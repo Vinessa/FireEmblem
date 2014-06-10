@@ -1,6 +1,7 @@
 // RPEmblem.cpp : Defines the entry point for the console application.
 //
 
+
 #include "stdafx.h"
 #include <iostream>
 #include <windows.h>
@@ -13,6 +14,7 @@
 #include <math.h>
 #include "VectorLib.h"
 #include "Grid.h"
+
 
 vector2 mouse(0, 0);
 vector2 screen(800, 600);
@@ -256,11 +258,15 @@ void mouseClick(int button, int state, int x, int y)
 		newPlay.minSize = vector2(screen.x / 4, 400);
 		newPlay.maxSize = vector2(screen.x - (screen.x / 4), 500);
 		newPlay.updatePos(screen);
+		newPlay.minSize = vector2(screen.x / 4, 100);
+		newPlay.maxSize = vector2(screen.x - (screen.x / 4), 200);
 		grid.scr.buttons.push_back(newPlay);
 		newExit.load("exit.png");
 		newExit.minSize = vector2(screen.x / 4, 100);
 		newExit.maxSize = vector2(screen.x - (screen.x / 4), 200);
 		newExit.updatePos(screen);
+		newExit.minSize = vector2(screen.x / 4, 400);
+		newExit.maxSize = vector2(screen.x - (screen.x / 4), 500);
 		grid.scr.buttons.push_back(newExit);
 		return;
 	}

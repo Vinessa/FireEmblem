@@ -14,8 +14,8 @@ public:
 	//has to use itself
 	int durability;
 	virtual int Compare(Weapon* Weapon2) = 0;
-	virtual std::string type() = 0;
-	float damage = 0;
+	virtual std::string type(){ return "Sword"; }
+	float damage = 3;
 };
 
 class SWORD : public Weapon{

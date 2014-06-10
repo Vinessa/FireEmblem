@@ -17,8 +17,9 @@
 // This class also handles exp gains and leveling up and health scaling with level.
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-#include "StdAfx.h"
+#include "StdAfx.h"/*
 #include "Attacks.h"
+#include "Grid.h"
 
 
 
@@ -232,3 +233,4 @@ void Attacks::ResolveAttacks(Characters* ActiveCharacter, Characters* TargetChar
 				ActiveCharacter->health = ActiveCharacter->health - GrossDamageTarget;
 			}
 }
+*/
