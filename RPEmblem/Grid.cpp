@@ -1,240 +1,247 @@
 #include "stdafx.h"
 #include "Grid.h"
 
-Grid::Grid()
+
+Grid::Grid(){}
+Grid::~Grid(){}
+
+void Grid::init(int x/*18*/, int y/*18*/)
 {
+	paused = false;
+	turn = 1;
+	playable[1] = (Characters*)new HeavyMace();
+	playable[2] = (Characters*)new Swordsman;
+	playable[3] = (Characters*)new Axeman;
+	playable[1]->init(vector2(9, 9), "HeavyMace");
+	playable[2]->init(vector2(9, 12), "Swordsman");
+	playable[3]->init(vector2(12, 9), "Axeman");
+
+	unplayable[1] = (Characters*)new HeavyMace();
+	unplayable[2] = (Characters*)new Swordsman;
+	unplayable[3] = (Characters*)new Axeman;
+	unplayable[1]->init(vector2(15, 15), "HeavyMace");
+	unplayable[2]->init(vector2(15, 12), "Swordsman");
+	unplayable[3]->init(vector2(12, 15), "Axeman");
+	unplayable[1]->turnOrder = 4;
+	unplayable[2]->turnOrder = 5;
+	unplayable[3]->turnOrder = 6;
+	selectedNode = vector2(-1, -1);
+	//sel.init();
+	sel.load();
+	card.load();
+	card.sel = (Characters*)playable[1];
+	xml.loadNodes(nodes, 1);
+	scr.load("splash.png");
+	curr = STATE::SPLASH;
+	keyState[' '] = false;
+
+	HPickup* hPick = new HPickup();
+	hPick->init(vector2(3, 3));
+	HTrap* hTrap = new HTrap();
+	hTrap->init(vector2(3, 5));
+	items = vector<Items*>(2);
+	items[0] = (Items*)hPick;
+	items[1] = (Items*)hTrap;
 }
-
-Grid::~Grid()
+void Grid::draw(vector2 screen)
 {
-}
-
-
-
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-// Attacks.cpp 
-// Created by Vinessa Mayer - June 2014
-// Vinessa.Mayer@gmail.com
-
-// This Attack Class was created for RPEmblem - a class assignment for first year programming.
-// It calls on the Grid class by Jacob "Darth" Miller as well as a Weapons class by louie Escalera
-//
-// This class handles the battle step of the game. It determines the bettle outcome of all enemy 
-// characters within' an array of active characters within' range of the character.
-// To use, you'll need to call ExecuteBattle() with the active Character as an argument, this will
-// check each opponent's fighting style to determine the rock paper sissors effect, as well as if the attack
-// was executed well enough to either not be effected, be normally effected or be very effected by that advantage
-// Characters take damage from each other except in the case of where the damage would kill them. In this case
-// the character that would survive would be granted first strike and would not take damage from the 
-// opposing character. In the case that both Character's would perish one of them is randomly selected for first strike.
-// This class also handles exp gains and leveling up and health scaling with level.
-////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-
-Attacks::Attacks(void)
-{
-}
-
-
-Attacks::~Attacks(void)
-{
-}
-
-void Attacks::ExecuteBattle(Characters* ActiveCharacter) // goes through the array of adjacent characters and resolves battles
-{
-	vector<Characters*> Opponents(ActiveCharacter->adjecentArray); //copies the vector containing the possible opponents
-	for (int i = 0; i < (int)Opponents.size(); i++)
+	if (scr.show)
 	{
-		Characters* Opponent = Opponents[i];
-		ResolveAttacks(ActiveCharacter, Opponent);
-	}
-}
-
-int Attacks::ConvertWeaponStringToInt(Weapon* a_Weapon)
-{
-	//Weapon* WeaponType = a_Weapon->type;
-	if (a_Weapon->type() == "Sword")
-	{
-
-		return 1;
-	}
-	else if (a_Weapon->type() == "Axe")
-	{
-		return 2;
-	}
-	else if (a_Weapon->type() == "Mace")
-	{
-		return 3;
-	}
-}
-
-//feeds in the type to determine rock paper sissors
-float Attacks::DetermineDamage(Characters* ActiveCharacter, Characters* TargetCharacter)
-{
-	int ActiveCharacterWeaponType = (ConvertWeaponStringToInt(ActiveCharacter->weapon));
-	int TargetCharacterWeaponType = (ConvertWeaponStringToInt(TargetCharacter->weapon));
-
-	if (ActiveCharacterWeaponType = 1) //1 = Sword - Sword is weak against Axe and strong against Mace
-	{
+		scr.draw();
+		updateHalt++;
+		for (auto & element : scr.buttons)
 		{
-			ShakeItUp();
-			switch (TargetCharacterWeaponType)
+			element.draw();
+		}
+		if (updateHalt >= 1500 && curr != MENU)
+		{
+			curr = MENU;
+			scr = Screens();
+			scr.load("menu.png");
+			Button newPlay;
+			Button newExit;
+			newPlay.load("play.png");
+			newPlay.minSize = vector2(screen.x / 4, 400);
+			newPlay.maxSize = vector2(screen.x - (screen.x / 4), 500);
+			newPlay.updatePos(screen);
+			newPlay.minSize = vector2(screen.x / 4, 100);
+			newPlay.maxSize = vector2(screen.x - (screen.x / 4), 200);
+			scr.buttons.push_back(newPlay);
+			newExit.load("exit.png");
+			newExit.minSize = vector2(screen.x / 4, 100);
+			newExit.maxSize = vector2(screen.x - (screen.x / 4), 200);
+			newExit.updatePos(screen);
+			newExit.minSize = vector2(screen.x / 4, 400);
+			newExit.maxSize = vector2(screen.x - (screen.x / 4), 500);
+			scr.buttons.push_back(newExit);
+		}
+		return;
+	}
+	for (int i = 0; i < 18; i++) {
+		for (int ii = 0; ii < 18; ii++) {
+			if ((int)playable.size() >= turn)
 			{
-			case 1:
-				BuffDebuff = (0 * Equalizer);
-				return BuffDebuff;
-				break;
-
-			case 2:
-				BuffDebuff = (-2 * Equalizer); // Will have a function that adds an interger to their damage regardless of being a buff or debuff. This is why debuff is listed as a negative number.
-				return BuffDebuff;
-				break;
-
-			case 3:
-				BuffDebuff = (2 * Equalizer);
-				return BuffDebuff;
-				break;
+				if (playable[turn]->calculateCost(nodes[i][ii], 4, vector2(i, ii)))
+				{
+					nodes[i][ii]->blueHighLight = true;
+					nodes[i][ii]->redHighLight = false;
+				}
+				else if (playable[turn]->calculateAtLand(nodes[i][ii], 4, vector2(i, ii)))
+				{
+					nodes[i][ii]->blueHighLight = false;
+					nodes[i][ii]->redHighLight = true;
+				}
+				else
+				{
+					nodes[i][ii]->blueHighLight = false;
+					nodes[i][ii]->redHighLight = false;
+				}
+				nodes[i][ii]->draw(true);
 			}
+			else
+				nodes[i][ii]->draw();
 		}
 	}
-	else
-		if (ActiveCharacterWeaponType = 2) //2 = Axe. Axe is strong against Sword but weak against Mace
+	for (auto & element : playable)
+		element.second->draw();
 
+	for (auto & element : unplayable)
+		element.second->draw();
+
+	card.draw();
+	for (auto & element : items)
+	{
+		element->draw();
+	}
+}
+
+void Grid::update()
+{
+	if (curr == STATE::GAME)
+		scr.show = false;
+	if (scr.show)
+		return;
+
+	for (map<int, Characters*>::iterator it = playable.begin(); it != playable.end(); it++)
+	{
+		if (turn == it->second->turnOrder)
 		{
-		switch (TargetCharacterWeaponType)
-		{
-		case 1:
-			BuffDebuff = (2 * Equalizer);
-			return BuffDebuff;
-
-		case 2:
-			BuffDebuff = (0 * Equalizer);
-			return BuffDebuff;
-
-		case 3:
-			BuffDebuff = (-2 * Equalizer);
-			return BuffDebuff;
-
-		default:
-			break;
-
+			card.sel = (Characters*)it->second;
+			if (move && playable[turn]->calculateCost(nodes[selectedNode.x][selectedNode.y], 4, selectedNode))
+			{
+				for (map<int, Characters*>::iterator itt = playable.begin(); itt != playable.end(); itt++)
+				{
+					if (itt->second->cord == selectedNode)
+					{
+						move = false;
+					}
+				}
+				if (move)
+				{
+					it->second->waiting = false;
+					it->second->updatePos(selectedNode);
+					turn++;
+					move = false;
+				}
+				selectedNode = vector2(-1, -1);
+			}
+			else if (move)
+				move = false;
 		}
+		if (selectedNode == it->second->cord)
+		{
+			selCharacter = (Characters*)it->second;
+			card.opSel = (Characters*)selCharacter;
+			card.showOpSel = true;
+		}
+		else if (selectedNode == vector2(-1, -1))
+		{
+			card.showOpSel = false;
+			selCharacter = (Characters*)new Characters;
 		}
 		else
-			if (ActiveCharacterWeaponType = 3) // 3 = Mace. Mace is weak against Sword but strong against Axe
-			{
-		switch (TargetCharacterWeaponType)
 		{
-		case 0:
-			BuffDebuff = (-2 * Equalizer);
-			return BuffDebuff;
-			break;
-
-		case 2:
-			BuffDebuff = (0 * Equalizer);
-			return BuffDebuff;
-			break;
-
-		case 1:
-			BuffDebuff = (2 * Equalizer);
-			return BuffDebuff;
-			break;
+			selCharacter = (Characters*)new Characters;
 		}
+		it->second->alive = it->second->health > 0;
+		it->second->waiting = false;
+		int itemTrackVal = 0;
+		if (!items.empty())
+			for (auto & element : items)
+			{
+			element->update(it->second->cord);
+			if (element->alive)
+			{
+				element->effect(it->second);
+				items.erase(items.begin() + itemTrackVal);
+				break;
 			}
-	return 1;
-}
-
-
-
-
-float Attacks::ShakeItUp() // adds an element of randomness to the battle and prevents stalemates. Chooses a random int: 0, 1 or 2 and stores it. This number will be used as a scaler for the BuffDebuff bonus stat. 
-{
-	//Seeding Random
-	srand(time(NULL));
-	//Creating an Equalizer to return a random number of 0,1 or 2
-	Equalizer = rand() % 2;
-	return Equalizer;
-}
-
-float Attacks::FindNextLevelXP(Characters* aCharacter)
-{
-	aCharacter->xp2NextLevel = ((((aCharacter->Level + 1) * 100)) * 0.1);
-	return aCharacter->xp2NextLevel;
-}
-
-void Attacks::CheckforLevelup(Characters* aCharacter)
-{
-	FindNextLevelXP(aCharacter);
-	if (aCharacter->xp >= aCharacter->xp2NextLevel)
-	{
-		aCharacter->Level = aCharacter->Level + 1;
-		CalculateNextLevelStats(aCharacter);
-
+			itemTrackVal++;
+			}
 	}
-}
-
-void Attacks::CalculateNextLevelStats(Characters* aCharacter)
-{
-	float HealthBonus = (((ceil(aCharacter->maxHealth + 1) / 100)) * 20);
-	float HealthDifference = ((aCharacter->maxHealth + HealthBonus) - aCharacter->maxHealth);
-	aCharacter->maxHealth = (aCharacter->maxHealth + HealthBonus);
-	aCharacter->health = (aCharacter->health + HealthDifference);
-
-}
-
-
-
-void Attacks::ResolveAttacks(Characters* ActiveCharacter, Characters* TargetCharacter)
-{
-	//Checking for FirstStrike
-	GrossDamageActive = (ActiveCharacter->weapon->damage + (DetermineDamage(ActiveCharacter, TargetCharacter)));
-	GrossDamageTarget = (TargetCharacter->weapon->damage + (DetermineDamage(ActiveCharacter, TargetCharacter)));
-	// in the event of a tie
-	if ((GrossDamageTarget > ActiveCharacter->health) && (GrossDamageActive > TargetCharacter->health))
+	//AI TIME
+	if (turn > 3 && updateHalt == 0)
 	{
-		//Seeding random for random choice
-		srand(time(NULL));
-		FirstStrike = rand() % 1;
-
-		if (FirstStrike = 0)
+		for (map<int, Characters*>::iterator it = unplayable.begin(); it != unplayable.end(); it++)
 		{
-			ActiveCharacter->health = 0; //Active character dies
-			ActiveCharacter->alive = false;
-			TargetCharacter->xp = (TargetCharacter->xp + ActiveCharacter->xp);
-			CheckforLevelup(TargetCharacter);
-			//Possibly put the part about moving onto next adjasent target here, or leaving the battle state
-		}
-		else
-			if (FirstStrike = 1)
+			if (turn == it->second->turnOrder)
 			{
-			TargetCharacter->health = 0;
-			TargetCharacter->alive = false;
-			ActiveCharacter->xp = (ActiveCharacter->xp + TargetCharacter->xp);
-			CheckforLevelup(ActiveCharacter);
+				card.sel = (Characters*)it->second;
+				if (move && unplayable[turn - unplayable.size()]->calculateCost(nodes[selectedNode.x][selectedNode.y], 4, selectedNode))
+				{
+					updateHalt = 0.1;
+				}
+				else if (move)
+					move = false;
 			}
-
+			it->second->alive = it->second->health > 0;
+			it->second->waiting = false;
+			int itemTrackVal = 0;
+			if (!items.empty())
+				for (auto & element : items)
+				{
+				element->update(it->second->cord);
+				if (element->alive)
+				{
+					element->effect(it->second);
+					items.erase(items.begin() + itemTrackVal);
+					break;
+				}
+				itemTrackVal++;
+				}
+		}
 	}
-	else //in the event that the active character will die and the target character will not
-		if ((GrossDamageTarget > ActiveCharacter->health) && (GrossDamageActive < TargetCharacter->health))
+	else if (turn > (int)playable.size() && updateHalt != 100)
+	{
+		updateHalt++;
+		if (updateHalt >= 500)//The time between each AI movement
 		{
-		ActiveCharacter->health = 0;
-		ActiveCharacter->alive = false;
-		TargetCharacter->xp = (TargetCharacter->xp + ActiveCharacter->xp);
-		CheckforLevelup(TargetCharacter);
-		//move on?
+			unplayable[turn - 3]->updatePos(selectedNode);
+			turn++;
+			updateHalt = 0;
+			selectedNode = vector2(-1, -1);
+			move = false;
 		}
-		else // in the event that the target character will die and the active character will not
-			if ((GrossDamageTarget < ActiveCharacter->health) && (GrossDamageActive > TargetCharacter->health))
-			{
-		TargetCharacter->health = 0;
-		TargetCharacter->alive = false;
-		ActiveCharacter->xp = (ActiveCharacter->xp + TargetCharacter->xp);
-		CheckforLevelup(ActiveCharacter);
-			}
+	}
+	//End of the round
+	if (turn > maxTurns)
+	{
+		for (auto & element : playable)
+		{
+			element.second->getAdj(unplayable);
 
-			else // in the event they both survive, both take damage equal to the other's weapon
-			{
-				TargetCharacter->health = TargetCharacter->health - GrossDamageActive;
-				ActiveCharacter->health = ActiveCharacter->health - GrossDamageTarget;
-			}
+			Attacks * attk = new Attacks();
+			attk->ExecuteBattle(element.second);
+		}
+		for (auto & element : unplayable)
+		{
+			element.second->getAdj(playable);
+
+			Attacks * attk = new Attacks();
+			attk->ExecuteBattle(element.second);
+		}
+
+		//Reset the turn order
+		turn = 1;
+	}
 }

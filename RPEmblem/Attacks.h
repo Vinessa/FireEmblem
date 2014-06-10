@@ -1,5 +1,5 @@
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-// Attacks.cpp 
+// Attacks.h
 // Created by Vinessa Mayer - June 2014
 // Vinessa.Mayer@gmail.com
 
@@ -17,13 +17,14 @@
 // This class also handles exp gains and leveling up and health scaling with level.
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-/*#ifndef _ATTACKS_H_
+#ifndef _ATTACKS_H_
 #define _ATTACKS_H_
 
 #include <string>
 #include <stdlib.h>
 #include <time.h>
-#include "Grid.h"
+//#include "Grid.h"
+#include "Characters.h"
 class Characters;
 class Attacks
 {
@@ -53,4 +54,4 @@ public:
 
 };
 
-#endif //_ATTACKS_H_*/
+#endif //_ATTACKS_H_

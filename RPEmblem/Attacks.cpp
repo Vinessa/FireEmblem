@@ -16,13 +16,8 @@
 // opposing character. In the case that both Character's would perish one of them is randomly selected for first strike.
 // This class also handles exp gains and leveling up and health scaling with level.
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-#include "StdAfx.h"/*
+#include "stdafx.h"
 #include "Attacks.h"
-#include "Grid.h"
-
-
-
 
 Attacks::Attacks(void)
 {
@@ -51,16 +46,14 @@ int Attacks::ConvertWeaponStringToInt(Weapon* a_Weapon)
 
 		return 1;
 	}
-	else
-		if (a_Weapon->type() == "Axe")
-		{
+	else if (a_Weapon->type() == "Axe")
+	{
 		return 2;
-		}
-		else
-			if (a_Weapon->type() == "Mace")
-			{
+	}
+	else if (a_Weapon->type() == "Mace")
+	{
 		return 3;
-			}
+	}
 }
 
 //feeds in the type to determine rock paper sissors
@@ -136,7 +129,7 @@ float Attacks::DetermineDamage(Characters* ActiveCharacter, Characters* TargetCh
 			break;
 		}
 			}
-	return BuffDebuff;
+	return 1;
 }
 
 
@@ -233,4 +226,3 @@ void Attacks::ResolveAttacks(Characters* ActiveCharacter, Characters* TargetChar
 				ActiveCharacter->health = ActiveCharacter->health - GrossDamageTarget;
 			}
 }
-*/
