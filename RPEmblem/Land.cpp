@@ -203,18 +203,24 @@ bool House::load(int part)
 	{
 	case 1:
 		file = "cornerT";
+		break;
 	case 2:
 		file = "houseT";
+		break;
 	case 3:
 		invertX = true;
 		file = "cornerT";
+		break;
 	case 4:
 		invertX = true;
 		file = "cornerB";
+		break;
 	case 5:
 		file = "houseB";
+		break;
 	case 6:
 		file = "cornerB";
+		break;
 	default:
 		break;
 	}
@@ -223,8 +229,8 @@ bool House::load(int part)
 		(
 		file.c_str(),
 		SOIL_LOAD_AUTO,
-		SOIL_CREATE_NEW_ID, 0
-		/*SOIL_FLAG_INVERT_Y*/
+		SOIL_CREATE_NEW_ID,
+		0
 		);
 
 	if (texture == 0)

@@ -27,8 +27,8 @@
     <Tile name = "3" type ="Dirt" />
     <Tile name = "4" type ="Dirt" />
     <Tile name = "5" type ="Dirt" />
-    <Tile name = "6" type ="Dirt" />
-    <Tile name = "7" type ="House1" />
+    <Tile name = "6" type ="House" side ="6" />
+    <Tile name = "7" type ="House" side ="1" />
     <Tile name = "8" type ="Dirt" />
     <Tile name = "9" type ="Dirt" />
     <Tile name = "10" type ="Dirt" />
@@ -47,8 +47,8 @@
     <Tile name = "3" type ="Dirt" />
     <Tile name = "4" type ="Dirt" />
     <Tile name = "5" type ="Dirt" />
-    <Tile name = "6" type ="Dirt" />
-    <Tile name = "7" type ="Dirt" />
+    <Tile name = "6" type ="House" side ="5" />
+    <Tile name = "7" type ="House" side ="2" />
     <Tile name = "8" type ="Dirt" />
     <Tile name = "9" type ="Dirt" />
     <Tile name = "10" type ="Dirt" />
@@ -67,8 +67,8 @@
     <Tile name = "3" type ="Dirt" />
     <Tile name = "4" type ="Dirt" />
     <Tile name = "5" type ="Dirt" />
-    <Tile name = "6" type ="Dirt" />
-    <Tile name = "7" type ="Dirt" />
+    <Tile name = "6" type ="House" side ="4" />
+    <Tile name = "7" type ="House" side ="3"/>
     <Tile name = "8" type ="Dirt" />
     <Tile name = "9" type ="Dirt" />
     <Tile name = "10" type ="Dirt" />

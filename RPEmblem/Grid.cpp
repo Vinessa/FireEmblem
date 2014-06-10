@@ -32,9 +32,9 @@ void Grid::init(int x/*18*/, int y/*18*/)
 	card.load();
 	card.sel = (Characters*)playable[1];
 	xml.loadNodes(nodes, 1);
-	for (auto & element : nodes)
+	/*for (auto & element : nodes)
 		for (auto & elem : element)
-			elem->init();
+			elem->init();*/
 
 
 	scr.load("splash.png");
