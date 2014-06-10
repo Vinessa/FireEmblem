@@ -25,7 +25,7 @@ void update();
 
 void init(void)
 {
-	glClearColor(0.0, 0.0, 0.2, 0.0);
+	//glClearColor(0.0, 0.0, 0.2, 0.0);
 	glShadeModel(GL_SMOOTH);
 	glViewport(0, 0, screen.x, screen.y);
 	//glMatrixMode(GL_2D);

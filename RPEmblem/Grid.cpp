@@ -91,16 +91,19 @@ void Grid::draw(vector2 screen)
 				{
 					nodes[i][ii]->blueHighLight = true;
 					nodes[i][ii]->redHighLight = false;
+					nodes[i][ii]->normal = false; //Added by Vinessa for color blending
 				}
 				else if (playable[turn]->calculateAtLand(nodes[i][ii], 4, vector2(i, ii)))
 				{
 					nodes[i][ii]->blueHighLight = false;
 					nodes[i][ii]->redHighLight = true;
+					nodes[i][ii]->normal = false; //Added by Vinessa for color blending
 				}
 				else
 				{
 					nodes[i][ii]->blueHighLight = false;
 					nodes[i][ii]->redHighLight = false;
+					nodes[i][ii]->normal = true; //Added by Vinessa for color blending
 				}
 				nodes[i][ii]->draw(true);
 			}

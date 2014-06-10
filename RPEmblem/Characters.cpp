@@ -145,7 +145,7 @@ bool HeavyMace::load()
 {
 	texture = SOIL_load_OGL_texture
 		(
-		"maceA.png",
+		"MaceKnight_W.png",
 		SOIL_LOAD_AUTO,
 		SOIL_CREATE_NEW_ID, 0
 		/*SOIL_FLAG_INVERT_Y*/
@@ -206,7 +206,7 @@ bool Swordsman::load()
 {
 	texture = SOIL_load_OGL_texture
 		(
-		"swordA.png",
+		"SwordKnight_W.png",
 		SOIL_LOAD_AUTO,
 		SOIL_CREATE_NEW_ID, 0
 		/*SOIL_FLAG_INVERT_Y*/
@@ -267,7 +267,7 @@ bool Axeman::load()
 {
 	texture = SOIL_load_OGL_texture
 		(
-		"axeA.png",
+		"AxeKnight_W.png",
 		SOIL_LOAD_AUTO,
 		SOIL_CREATE_NEW_ID, 0
 		/*SOIL_FLAG_INVERT_Y*/

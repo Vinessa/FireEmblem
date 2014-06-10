@@ -20,6 +20,7 @@ public:
 	bool walkable;
 	bool blueHighLight;
 	bool redHighLight;
+	bool normal; //Added by Vinessa for color blending.
 	vector2 position;
 	bool invertX = false;
 	bool invertY = false;
@@ -64,6 +65,43 @@ public:
 	virtual bool load();
 	virtual bool load(int part);
 };
+
+class Tree :Land
+{
+public:
+	int health;
+	Tree(void);
+	~Tree();
+	void init();
+	virtual void draw();
+	virtual void draw(bool triggerColors);
+	virtual bool load();
+};
+
+class Grass :Land
+{
+public:
+	int health;
+	Grass(void);
+	~Grass();
+	void init();
+	virtual void draw();
+	virtual void draw(bool triggerColors);
+	virtual bool load();
+};
+
+class Water :Land
+{
+public:
+	int health;
+	Water(void);
+	~Water();
+	void init();
+	virtual void draw();
+	virtual void draw(bool triggerColors);
+	virtual bool load();
+};
+
 class Selection :Land
 {
 public:
