@@ -24,6 +24,8 @@ public:
 	GLint texture;
 	Characters * sel;
 	Characters * opSel;
+	Land * selLand;
+	Land * opselLand;
 	bool showOpSel;
 	PlayCard(void);
 	~PlayCard();

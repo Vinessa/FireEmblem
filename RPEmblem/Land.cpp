@@ -16,6 +16,9 @@ bool Land::load()
 	return false;
 }
 bool Land::load(int part){ return false; }
+Land * Land::getBottom() { return this; }
+bool Land::isBottom(){ return false; }
+
 Wall::Wall(void){}
 Wall::~Wall(){}
 void Wall::init()
@@ -35,6 +38,7 @@ void Wall::draw()
 	glBegin(GL_QUADS);
 	glPushMatrix();
 
+	color = vector3(1, 1, 1);
 	//glColor3f(1, 0, 0);
 	glLoadIdentity();
 	glColor3f(1, 1, 1);
@@ -57,8 +61,9 @@ void Wall::draw(bool triggerColors)
 	glPushMatrix();
 
 	//glColor3f(1, 0, 0);
+
+	color = vector3(1, 1, 1);
 	glLoadIdentity();
-	vector3 color(1, 1, 1);
 	//if (redHighLight)
 	//	color = vector3(1, 0.2, 0.2);
 	//if (blueHighLight)
@@ -151,8 +156,8 @@ void Tree::draw(bool triggerColors)
 	glPushMatrix();
 
 	//glColor3f(1, 0, 0);
+	color = vector3(1, 1, 1);
 	glLoadIdentity();
-	vector3 color(1, 1, 1);
 	//if (redHighLight)
 	//	color = vector3(1, 0.2, 0.2);
 	//if (blueHighLight)
@@ -239,7 +244,6 @@ void Grass::draw(bool triggerColors)
 
 	//glColor3f(1, 0, 0);
 	glLoadIdentity();
-	vector3 color(1, 1, 1);
 	if (redHighLight)
 		color = vector3(1, 0.2, 0.2);
 	if (blueHighLight)
@@ -305,6 +309,7 @@ void Water::draw()
 	glPushMatrix();
 
 	//glColor3f(1, 0, 0);
+	color = vector3(1, 1, 1);
 	glLoadIdentity();
 	glColor3f(1, 1, 1);
 
@@ -331,8 +336,8 @@ void Water::draw(bool triggerColors)
 	glPushMatrix();
 
 	//glColor3f(1, 0, 0);
+	color = vector3(1, 1, 1);
 	glLoadIdentity();
-	vector3 color(1, 1, 1);
 	//if (redHighLight)
 	//	color = vector3(1, 0.2, 0.2);
 	//if (blueHighLight)
@@ -434,7 +439,6 @@ void House::draw(bool triggerColors)
 
 	//glColor3f(1, 0, 0);
 	glLoadIdentity();
-	vector3 color(1, 1, 1);
 	//if (redHighLight)
 	//	color = vector3(1, 0.2, 0.2);
 	//if (blueHighLight)
@@ -581,7 +585,6 @@ void Dirt::draw(bool triggerColors)
 
 	//glColor3f(1, 0, 0);
 	glLoadIdentity();
-	vector3 color(1, 1, 1);
 	if (redHighLight)
 		color = vector3(1, 0.2, 0.2);
 	if (blueHighLight)
@@ -636,39 +639,42 @@ bool Dirt::load(int part)
 
 void Selection::draw()
 {
-	resistance = belowContent->resistance;
-	if (blueHighLight)
-		belowContent->draw(false);
-	else if (redHighLight)
-		belowContent->draw(true);
-	else
-		belowContent->draw();
-	glEnable(GL_TEXTURE_2D);
-	glBindTexture(GL_TEXTURE_2D, texture);
-	glEnable(GL_BLEND);
-	//glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-	glBegin(GL_QUADS);
-	glPushMatrix();
+	try{
+		resistance = belowContent->resistance;
+		if (blueHighLight)
+			belowContent->draw(false);
+		else if (redHighLight)
+			belowContent->draw(true);
+		else
+			belowContent->draw();
+		glEnable(GL_TEXTURE_2D);
+		glBindTexture(GL_TEXTURE_2D, texture);
+		glEnable(GL_BLEND);
+		//glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+		glBegin(GL_QUADS);
+		glPushMatrix();
 
-	glColor3f(1, 0, 0);
-	glLoadIdentity();
+		glColor3f(1, 0, 0);
+		glLoadIdentity();
 
-	glTexCoord2f(0, 0); glVertex3f(belowContent->position.x - 1, belowContent->position.y + 0.11 - 1, 0);
-	//glColor3f(0, 1, 0);
-	glTexCoord2f(0, 1); glVertex3f(belowContent->position.x - 1.11, belowContent->position.y + 0.11 - 1, 0);
-	//glColor3f(0, 0, 1);
-	glTexCoord2f(1, 1); glVertex3f(belowContent->position.x - 1.11, belowContent->position.y - 1, 0);
-	//glColor3f(0, 0, 0);
-	glTexCoord2f(1, 0); glVertex3f(belowContent->position.x - 1, belowContent->position.y - 1, 0);
-	glPopMatrix();
-	glDisable(GL_BLEND);
-	glDisable(GL_TEXTURE_2D);
-	glEnd();
-	//belowContent->draw();
+		glTexCoord2f(0, 0); glVertex3f(belowContent->position.x - 1, belowContent->position.y + 0.11 - 1, 0);
+		//glColor3f(0, 1, 0);
+		glTexCoord2f(0, 1); glVertex3f(belowContent->position.x - 1.11, belowContent->position.y + 0.11 - 1, 0);
+		//glColor3f(0, 0, 1);
+		glTexCoord2f(1, 1); glVertex3f(belowContent->position.x - 1.11, belowContent->position.y - 1, 0);
+		//glColor3f(0, 0, 0);
+		glTexCoord2f(1, 0); glVertex3f(belowContent->position.x - 1, belowContent->position.y - 1, 0);
+		glPopMatrix();
+		glDisable(GL_BLEND);
+		glDisable(GL_TEXTURE_2D);
+		glEnd();
+		//belowContent->draw();
+	}
+	catch (exception e){}
 }
 void Selection::draw(bool triggerColors)
 {
-	resistance = belowContent->resistance;
+	//resistance = belowContent->resistance;
 	draw();
 }
 bool Selection::load()
@@ -691,7 +697,52 @@ bool Selection::load()
 
 	return true;
 }
+bool Selection::load(vector2 change,vector2 screen)
+{
+	texture = SOIL_load_OGL_texture
+		(
+		"select.png",
+		SOIL_LOAD_AUTO,
+		SOIL_CREATE_NEW_ID, 0
+		/*SOIL_FLAG_INVERT_Y*/
+		);
+
+	if (texture == 0)
+		return false;
+
+	// Typical Texture Generation Using Data From The Bitmap
+	glBindTexture(GL_TEXTURE_2D, texture);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+
+	/*float x_norm = change.x / (screen.x / 2);
+	float y_norm = change.y / (screen.y / 2);
+
+	int counterx = 0;
+	for (float i = -2; i <= 2; i += 0.11)
+	{
+		if (x_norm - 2 >= i && x_norm - 2 <= i + 0.11)
+		{
+			break;
+		}
+		counterx++;
+	}
+	int countery = 0;
+	for (float i = -2; i <= 2; i += 0.11)
+	{
+		if (y_norm - 2 >= i && y_norm - 2 <= i + 0.11)
+		{
+			break;
+		}
+		countery++;
+	}
+	countery = 17 - countery;*/
+	cord = change;//= vector2(counterx, countery);
+	return true;
+}
 bool Selection::load(int part)
 {
 	return false;
 }
+Land * Selection::getBottom(){ return belowContent; }
+bool Selection::isBottom(){ return true; }

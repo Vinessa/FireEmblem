@@ -123,6 +123,7 @@
   <ItemGroup>
     <Image Include="axeA.png" />
     <Image Include="axeE.png" />
+    <Image Include="AxeKnight_B.png" />
     <Image Include="AxeKnight_W.png" />
     <Image Include="BlackKnightAxe.png" />
     <Image Include="BlackKnightMace.png" />
@@ -141,6 +142,7 @@
     <Image Include="houseT.png" />
     <Image Include="maceA.png" />
     <Image Include="maceE.png" />
+    <Image Include="MaceKnight_B.png" />
     <Image Include="MaceKnight_W.png" />
     <Image Include="menu.png" />
     <Image Include="paper.png" />
@@ -150,6 +152,7 @@
     <Image Include="splash.png" />
     <Image Include="swordA.png" />
     <Image Include="swordE.png" />
+    <Image Include="SwordKnight_B.png" />
     <Image Include="SwordKnight_W.png" />
     <Image Include="trap.png" />
     <Image Include="VM_DirtGrassBlend_East.png" />

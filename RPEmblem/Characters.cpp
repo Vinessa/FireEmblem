@@ -55,6 +55,19 @@ void Characters::draw()
 	glPopMatrix();
 	glDisable(GL_TEXTURE_2D);
 	glEnd();
+
+	glLineWidth(2.5);
+	glBegin(GL_LINES);
+
+	glColor3f(1, 0, 0);
+	glLoadIdentity();
+	glColor3f(1, 1, 1);
+	float healthleft;
+	healthleft = maxHealth - health;
+	healthleft = 0.01*health;
+	glVertex3f(position.x - 1.11, position.y + 0.11 - 1, 0);
+	glVertex3f(position.x - 1.11 + healthleft, position.y + 0.11 - 1, 0);
+	glEnd();
 	//glRotatef(-90, 0, 0, 1);
 }
 bool Characters::load()
@@ -122,7 +135,6 @@ bool Characters::calculateAtLand(Land* node, int /*5*/ dist, vector2 newCord)
 }
 
 HeavyMace::HeavyMace(void){}
-//private:
 void HeavyMace::init(vector2 change, string newName)
 {
 	alive = health > 0;
@@ -130,6 +142,8 @@ void HeavyMace::init(vector2 change, string newName)
 	turnOrder = 1;
 	health = 10;
 	cord = change;
+
+	maxHealth = 10;
 
 	xp = 50;
 	xp2NextLevel = ((((Level + 1) * 100)) * 0.1);
@@ -166,7 +180,7 @@ bool HeavyMace::loadAsEnemy()
 	isEnemy = true;
 	texture = SOIL_load_OGL_texture
 		(
-		"maceE.png",
+		"MaceKnight_B.png",
 		SOIL_LOAD_AUTO,
 		SOIL_CREATE_NEW_ID, 0
 		/*SOIL_FLAG_INVERT_Y*/
@@ -194,6 +208,8 @@ void Swordsman::init(vector2 change, string newName)
 
 	xp = 50;
 	xp2NextLevel = ((((Level + 1) * 100)) * 0.1);
+
+	maxHealth = 10;
 
 	position.x = (0.11) * cord.x + (0.11);
 	position.y = (0.11) * cord.y;
@@ -227,7 +243,7 @@ bool Swordsman::loadAsEnemy()
 	isEnemy = true;
 	texture = SOIL_load_OGL_texture
 		(
-		"swordE.png",
+		"SwordKnight_B.png",
 		SOIL_LOAD_AUTO,
 		SOIL_CREATE_NEW_ID, 0
 		/*SOIL_FLAG_INVERT_Y*/
@@ -255,6 +271,8 @@ void Axeman::init(vector2 change, string newName)
 
 	xp = 50;
 	xp2NextLevel = ((((Level + 1) * 100)) * 0.1);
+
+	maxHealth = 10;
 
 	position.x = (0.11) * cord.x + (0.11);
 	position.y = (0.11) * cord.y;
@@ -288,7 +306,7 @@ bool Axeman::loadAsEnemy()
 	isEnemy = true;
 	texture = SOIL_load_OGL_texture
 		(
-		"axeE.png",
+		"AxeKnight_B.png",
 		SOIL_LOAD_AUTO,
 		SOIL_CREATE_NEW_ID, 0
 		/*SOIL_FLAG_INVERT_Y*/

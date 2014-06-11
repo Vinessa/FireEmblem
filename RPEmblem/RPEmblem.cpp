@@ -318,56 +318,100 @@ void mouseClick(int button, int state, int x, int y)
 }
 void mouseMotion(int x, int y)
 {
-	/*if (!maps.paused)
-	{
-	static bool warped = false;
-	bool capture = false;
-	if (warped)
-	{
-	warped = false;
-	return;
-	}
+	float x_norm = x / (screen.x / 2);
+	float y_norm = y / (screen.y / 2);
 
-	mouse.x = x;
-	mouse.y = y;
-	if (x != screen.x || y != screen.y)
-	capture = true;
-	if (capture)
+	int counterx = 0;
+	for (float i = -2; i <= 2; i += 0.11)
 	{
-	warped = true;
-	if (x > screen.x / 2)
+		if (x_norm - 2 >= i && x_norm - 2 <= i + 0.11)
+		{
+			break;
+		}
+		counterx++;
+	}
+	int countery = 0;
+	for (float i = -2; i <= 2; i += 0.11)
 	{
-	player.angle -= 0.05f;
-	player.lx = sin(player.angle);
-	player.lz = -cos(player.angle);
-	glutWarpPointer(screen.x / 2, screen.y / 2);
+		if (y_norm - 2 >= i && y_norm - 2 <= i + 0.11)
+		{
+			break;
+		}
+		countery++;
 	}
-	else if (x < screen.x / 2)
+	countery = 17 - countery;//Inverts the y to select the right node(it counts upside down, shhhhhhh)
+	try{
+		//grid.selWhite.c
+		//if ((counterx == grid.selWhite.cord.x || countery == grid.selWhite.cord.y))// && dynamic_cast<Selection*>(grid.nodes.at(counterx).at(countery)) != NULL){
+		//{//if ()
+			if (!grid.nodes.at(counterx).at(countery)->isBottom())
+			{
+				grid.selWhite.belowContent = grid.nodes.at(counterx).at(countery);
+				Selection * changeup = new Selection(grid.selWhite);
+				grid.nodes.at(counterx).at(countery) = (Land*)changeup;
+				//grid.selWhite.cord = vector2(counterx, countery);
+			}
+			else
+			{
+				Land * changeup = grid.selWhite.belowContent;
+				grid.nodes.at(grid.selWhite.cord.x).at(grid.selWhite.cord.y) = changeup;
+				grid.selWhite.cord = vector2(counterx, countery);
+
+			}
+
+
+			//grid.selWhite.belowContent = grid.nodes.at(counterx).at(countery);
+			//Selection * changeup = new Selection(grid.selWhite.belowContent);
+			//Land * changeup = grid.selWhite.belowContent->getBottom();
+			//grid.nodes.at(grid.selWhite.cord.x).at(grid.selWhite.cord.y) = (Land*)changeup;
+
+
+			//grid.nodes.at(counterx).at(countery) = grid.selWhite.belowContent->getBottom();
+
+
+		//}
+		/*else if (dynamic_cast<Selection*>(grid.nodes.at(counterx).at(countery)) == NULL)
+		{
+			Land * changeup = grid.selWhite.belowContent;
+			grid.nodes.at(counterx).at(countery) = (Land*)changeup;
+			//grid.nodes.at(grid.selWhite.cord.x).at(grid.selWhite.cord.y) = grid.selWhite.belowContent;
+		}*/
+		/*if (counterx != grid.selWhite.cord.x || countery != grid.selWhite.cord.y){
+			grid.selWhite.belowContent = grid.nodes.at(counterx).at(countery);
+			Selection * changeup = new Selection(grid.selWhite);
+			grid.nodes.at(counterx).at(countery) = (Land*)changeup;
+			grid.nodes.at(grid.selWhite.cord.x).at(grid.selWhite.cord.y) = grid.selWhite.belowContent;
+			grid.selWhite.cord = vector2(counterx, countery);
+		}
+		else
+		{
+
+			grid.selWhite.cord = vector2(counterx, countery);
+		}*/
+			/*if (grid.selWhite.cord != vector2(counterx, countery))
+			{
+				grid.nodes.at(grid.selWhite.cord.x).at(grid.selWhite.cord.y) = grid.selWhite.belowContent;
+			}
+			grid.selWhite.cord = vector2(counterx, countery);*/
+			/*if (grid.selWhite.belowContent == NULL)
+				grid.selWhite.belowContent = grid.nodes.at(grid.selWhite.cord.x).at(grid.selWhite.cord.y);
+			else {
+				grid.selWhite.cord = vector2(counterx, countery);
+				Selection * changeup = new Selection(grid.selWhite);
+				grid.nodes[counterx][countery] = (Land*)changeup;// .belowContent;// = *Land(grid.selWhite.belowContent);// grid.selWhite.belowContent;
+				grid.selWhite.belowContent = NULL;
+			}
+			grid.selWhite.belowContent = grid.nodes.at(counterx).at(countery); // Failsafe will activate if its out of bounds here.
+			Selection * changeup = new Selection(grid.selWhite);
+			grid.nodes.at(counterx).at(countery) = (Land*)changeup;*/
+		
+		//grid.selectedNode = vector2(counterx, countery);
+			
+	}
+	catch (const std::out_of_range & oor)
 	{
-	player.angle += 0.05f;
-	//if (player.vertAngle < 0)
-	//player.vertAngle = 0;
-	player.lx = sin(player.angle);
-	player.lz = -cos(player.angle);
-	glutWarpPointer(screen.x / 2, screen.y / 2);
+		std::cerr << "Out of Range" << oor.what();
 	}
-	if (y < screen.y / 2 && player.vertAngle < 0.8)
-	{
-	player.vertAngle += 0.05f;
-	player.ly = sin(player.vertAngle);
-	glutWarpPointer(screen.x / 2, screen.y / 2);
-	}
-	else if (y > screen.y / 2 && player.vertAngle > -0.8)
-	{
-	player.vertAngle -= 0.05f;
-	//if (player.vertAngle > 360)
-	//player.vertAngle = 360;
-	player.ly = sin(player.vertAngle);
-	glutWarpPointer(screen.x / 2, screen.y / 2);
-	}
-	}
-	}
-	//glutWarpPointer(screen.x/2,screen.y/2);*/
 }
 int main(int argc, char** argv)
 {
@@ -383,7 +427,7 @@ int main(int argc, char** argv)
 	glutKeyboardFunc(keyboard);
 	glutKeyboardUpFunc(keyboard_up);
 	glutSpecialFunc(keyboard_s);
-	glutPassiveMotionFunc(mouseMotion);
+	//glutPassiveMotionFunc(mouseMotion);
 	glutMouseFunc(mouseClick);
 	init();
 	glutMainLoop();

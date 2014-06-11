@@ -262,6 +262,15 @@
     <Image Include="WhiteKnightSword.png">
       <Filter>Resource Files</Filter>
     </Image>
+    <Image Include="AxeKnight_B.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="MaceKnight_B.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="SwordKnight_B.png">
+      <Filter>Resource Files</Filter>
+    </Image>
   </ItemGroup>
   <ItemGroup>
     <Xml Include="LevelData.xml">

@@ -29,13 +29,18 @@ void Grid::init(int x/*18*/, int y/*18*/)
 	selectedNode = vector2(-1, -1);
 	//sel.init();
 	sel.load();
-	card.load();
-	card.sel = (Characters*)playable[1];
 	xml.loadNodes(nodes, 1);
 	/*for (auto & element : nodes)
 		for (auto & elem : element)
 			elem->init();*/
 
+	//selWhite = new Selection(sel);
+	selWhite.load(vector2(2,2),screen);
+	selWhite.belowContent = nodes[2][2];
+
+	card.load();
+	card.sel = (Characters*)playable[1];
+	card.selLand = (Land*)nodes[playable[1]->cord.x][playable[1]->cord.y];
 
 	scr.load("splash.png");
 	curr = STATE::SPLASH;
@@ -109,6 +114,9 @@ void Grid::draw(vector2 screen)
 			}
 			else
 				nodes[i][ii]->draw();
+
+			//if (nodes[i][ii]->isBottom)
+			//	nodes[i][ii] = test->belowContent;
 		}
 	}
 	for (auto & element : playable)
@@ -122,6 +130,8 @@ void Grid::draw(vector2 screen)
 	{
 		element->draw();
 	}
+	int bob = 5;
+	//selWhite.draw();
 }
 
 void Grid::update()
@@ -136,6 +146,7 @@ void Grid::update()
 		if (turn == it->second->turnOrder)
 		{
 			card.sel = (Characters*)it->second;
+			card.selLand = (Land*)nodes[it->second->cord.x][it->second->cord.y];
 			if (move && playable[turn]->calculateCost(nodes[selectedNode.x][selectedNode.y], 4, selectedNode))
 			{
 				for (map<int, Characters*>::iterator itt = playable.begin(); itt != playable.end(); itt++)
@@ -161,6 +172,7 @@ void Grid::update()
 		{
 			selCharacter = (Characters*)it->second;
 			card.opSel = (Characters*)selCharacter;
+			card.opselLand = (Land*)nodes[it->second->cord.x][it->second->cord.y];
 			card.showOpSel = true;
 		}
 		else if (selectedNode == vector2(-1, -1))
@@ -196,6 +208,7 @@ void Grid::update()
 		{
 			selCharacter = (Characters*)element.second;
 			card.opSel = (Characters*)selCharacter;
+			card.opselLand = (Land*)nodes[element.second->cord.x][element.second->cord.y];
 			card.showOpSel = true;
 		}
 		else if (selectedNode == vector2(-1, -1))
@@ -218,6 +231,7 @@ void Grid::update()
 			if (turn == it->second->turnOrder)
 			{
 				card.sel = (Characters*)it->second;
+				card.selLand = (Land*)nodes[it->second->cord.x][it->second->cord.y];
 				if (move && unplayable[turn - unplayable.size()]->calculateCost(nodes[selectedNode.x][selectedNode.y], 4, selectedNode))
 				{
 					updateHalt = 0.1;

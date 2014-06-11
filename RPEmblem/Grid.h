@@ -34,6 +34,7 @@ public:
 	PlayCard card;
 	Selection sel;//The selected tile
 	Characters * selCharacter;//The selected character
+	Selection selWhite;
 	XmlLoader xml;
 	Screens scr;
 	enum STATE { SPLASH, MENU, GAME, EXIT, OPTIONS };//Game states
@@ -43,9 +44,7 @@ public:
 	bool move;
 	bool paused;
 	bool filling;
-	//bool click = false;
 	int turn;//Controls who can act and who cannot
-	//HPickup hPick;
 
 	void init(int x/*18*/, int y/*18*/);
 	void draw(vector2 screen);
