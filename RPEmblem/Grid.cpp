@@ -6,6 +6,8 @@ Grid::~Grid(){}
 
 void Grid::init(int x/*18*/, int y/*18*/)
 {
+	//PlaySound((LPCWSTR)"C:\\Users\\Jacob\\Documents\\GitHub\\FireEmblem\\RPEmblem\\Sound\\Music\\Butterfly_Tea_Loop.wav", NULL, SND_FILENAME);
+	PlaySound(L"Sound\\Music\\Butterfly_Tea_Loop.wav", NULL, SND_ASYNC | SND_LOOP);
 	paused = false;
 	turn = 1;
 	playable[1] = (Characters*)new HeavyMace();

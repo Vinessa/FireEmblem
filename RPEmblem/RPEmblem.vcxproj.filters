@@ -13,6 +13,12 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
+    <Filter Include="Resource Files\Images">
+      <UniqueIdentifier>{da549288-3ee0-4293-ae2a-90d8795fd9cc}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Resource Files\Sound">
+      <UniqueIdentifier>{680cd226-389c-46c2-8b3b-8881199dd020}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <Text Include="ReadMe.txt" />
@@ -106,175 +112,186 @@
     <Library Include="SOIL.lib" />
   </ItemGroup>
   <ItemGroup>
-    <Image Include="dirt.png">
-      <Filter>Resource Files</Filter>
-    </Image>
-    <Image Include="select.png">
-      <Filter>Resource Files</Filter>
-    </Image>
-    <Image Include="wall.png">
-      <Filter>Resource Files</Filter>
-    </Image>
-    <Image Include="card.png">
-      <Filter>Resource Files</Filter>
-    </Image>
-    <Image Include="splash.png">
-      <Filter>Resource Files</Filter>
-    </Image>
     <Image Include="health.png">
       <Filter>Source Files</Filter>
     </Image>
-    <Image Include="trap.png">
-      <Filter>Resource Files</Filter>
-    </Image>
-    <Image Include="button.png">
-      <Filter>Resource Files</Filter>
-    </Image>
-    <Image Include="menu.png">
-      <Filter>Resource Files</Filter>
-    </Image>
-    <Image Include="exit.png">
-      <Filter>Resource Files</Filter>
-    </Image>
-    <Image Include="play.png">
-      <Filter>Resource Files</Filter>
-    </Image>
     <Image Include="axeA.png">
-      <Filter>Resource Files</Filter>
+      <Filter>Resource Files\Images</Filter>
     </Image>
     <Image Include="axeE.png">
-      <Filter>Resource Files</Filter>
-    </Image>
-    <Image Include="maceA.png">
-      <Filter>Resource Files</Filter>
-    </Image>
-    <Image Include="maceE.png">
-      <Filter>Resource Files</Filter>
-    </Image>
-    <Image Include="swordA.png">
-      <Filter>Resource Files</Filter>
-    </Image>
-    <Image Include="swordE.png">
-      <Filter>Resource Files</Filter>
-    </Image>
-    <Image Include="cornerB.png">
-      <Filter>Resource Files</Filter>
-    </Image>
-    <Image Include="cornerT.png">
-      <Filter>Resource Files</Filter>
-    </Image>
-    <Image Include="houseB.png">
-      <Filter>Resource Files</Filter>
-    </Image>
-    <Image Include="houseT.png">
-      <Filter>Resource Files</Filter>
-    </Image>
-    <Image Include="AxeKnight_W.png">
-      <Filter>Resource Files</Filter>
-    </Image>
-    <Image Include="BlackKnightAxe.png">
-      <Filter>Resource Files</Filter>
-    </Image>
-    <Image Include="BlackKnightMace.png">
-      <Filter>Resource Files</Filter>
-    </Image>
-    <Image Include="BlackKnightSword.png">
-      <Filter>Resource Files</Filter>
-    </Image>
-    <Image Include="DirtG.png">
-      <Filter>Resource Files</Filter>
-    </Image>
-    <Image Include="emblem.png">
-      <Filter>Resource Files</Filter>
-    </Image>
-    <Image Include="GrassTest.png">
-      <Filter>Resource Files</Filter>
-    </Image>
-    <Image Include="MaceKnight_W.png">
-      <Filter>Resource Files</Filter>
-    </Image>
-    <Image Include="paper.png">
-      <Filter>Resource Files</Filter>
-    </Image>
-    <Image Include="rock.png">
-      <Filter>Resource Files</Filter>
-    </Image>
-    <Image Include="SwordKnight_W.png">
-      <Filter>Resource Files</Filter>
-    </Image>
-    <Image Include="VM_DirtGrassBlend_East.png">
-      <Filter>Resource Files</Filter>
-    </Image>
-    <Image Include="VM_DirtGrassBlend_NECorner.png">
-      <Filter>Resource Files</Filter>
-    </Image>
-    <Image Include="VM_DirtGrassBlend_North.png">
-      <Filter>Resource Files</Filter>
-    </Image>
-    <Image Include="VM_DirtGrassBlend_NWCorner.png">
-      <Filter>Resource Files</Filter>
-    </Image>
-    <Image Include="VM_DirtGrassBlend_SECorner.png">
-      <Filter>Resource Files</Filter>
-    </Image>
-    <Image Include="VM_DirtGrassBlend_South.png">
-      <Filter>Resource Files</Filter>
-    </Image>
-    <Image Include="VM_DirtGrassBlend_SWCorner.png">
-      <Filter>Resource Files</Filter>
-    </Image>
-    <Image Include="VM_DirtGrassBlend_West.png">
-      <Filter>Resource Files</Filter>
-    </Image>
-    <Image Include="VM_GrassDirt.png">
-      <Filter>Resource Files</Filter>
-    </Image>
-    <Image Include="VM_GrassTerrain.png">
-      <Filter>Resource Files</Filter>
-    </Image>
-    <Image Include="VM_StoneWall.png">
-      <Filter>Resource Files</Filter>
-    </Image>
-    <Image Include="VM_Tree.png">
-      <Filter>Resource Files</Filter>
-    </Image>
-    <Image Include="Water.png">
-      <Filter>Resource Files</Filter>
-    </Image>
-    <Image Include="WaterTest.png">
-      <Filter>Resource Files</Filter>
-    </Image>
-    <Image Include="WhiteKnighAxe.png">
-      <Filter>Resource Files</Filter>
-    </Image>
-    <Image Include="WhiteKnighAxe2.png">
-      <Filter>Resource Files</Filter>
-    </Image>
-    <Image Include="WhiteKnight_Mace.png">
-      <Filter>Resource Files</Filter>
-    </Image>
-    <Image Include="WhiteKnightAxe2.png">
-      <Filter>Resource Files</Filter>
-    </Image>
-    <Image Include="WhiteKnightMace.png">
-      <Filter>Resource Files</Filter>
-    </Image>
-    <Image Include="WhiteKnightSword.png">
-      <Filter>Resource Files</Filter>
+      <Filter>Resource Files\Images</Filter>
     </Image>
     <Image Include="AxeKnight_B.png">
-      <Filter>Resource Files</Filter>
+      <Filter>Resource Files\Images</Filter>
+    </Image>
+    <Image Include="AxeKnight_W.png">
+      <Filter>Resource Files\Images</Filter>
+    </Image>
+    <Image Include="BlackKnightAxe.png">
+      <Filter>Resource Files\Images</Filter>
+    </Image>
+    <Image Include="BlackKnightMace.png">
+      <Filter>Resource Files\Images</Filter>
+    </Image>
+    <Image Include="BlackKnightSword.png">
+      <Filter>Resource Files\Images</Filter>
+    </Image>
+    <Image Include="button.png">
+      <Filter>Resource Files\Images</Filter>
+    </Image>
+    <Image Include="card.png">
+      <Filter>Resource Files\Images</Filter>
+    </Image>
+    <Image Include="cornerB.png">
+      <Filter>Resource Files\Images</Filter>
+    </Image>
+    <Image Include="cornerT.png">
+      <Filter>Resource Files\Images</Filter>
+    </Image>
+    <Image Include="dirt.png">
+      <Filter>Resource Files\Images</Filter>
+    </Image>
+    <Image Include="DirtG.png">
+      <Filter>Resource Files\Images</Filter>
+    </Image>
+    <Image Include="emblem.png">
+      <Filter>Resource Files\Images</Filter>
+    </Image>
+    <Image Include="exit.png">
+      <Filter>Resource Files\Images</Filter>
+    </Image>
+    <Image Include="GrassTest.png">
+      <Filter>Resource Files\Images</Filter>
+    </Image>
+    <Image Include="houseB.png">
+      <Filter>Resource Files\Images</Filter>
+    </Image>
+    <Image Include="houseT.png">
+      <Filter>Resource Files\Images</Filter>
+    </Image>
+    <Image Include="maceA.png">
+      <Filter>Resource Files\Images</Filter>
+    </Image>
+    <Image Include="maceE.png">
+      <Filter>Resource Files\Images</Filter>
     </Image>
     <Image Include="MaceKnight_B.png">
-      <Filter>Resource Files</Filter>
+      <Filter>Resource Files\Images</Filter>
+    </Image>
+    <Image Include="MaceKnight_W.png">
+      <Filter>Resource Files\Images</Filter>
+    </Image>
+    <Image Include="menu.png">
+      <Filter>Resource Files\Images</Filter>
+    </Image>
+    <Image Include="paper.png">
+      <Filter>Resource Files\Images</Filter>
+    </Image>
+    <Image Include="play.png">
+      <Filter>Resource Files\Images</Filter>
+    </Image>
+    <Image Include="rock.png">
+      <Filter>Resource Files\Images</Filter>
+    </Image>
+    <Image Include="select.png">
+      <Filter>Resource Files\Images</Filter>
+    </Image>
+    <Image Include="splash.png">
+      <Filter>Resource Files\Images</Filter>
+    </Image>
+    <Image Include="swordA.png">
+      <Filter>Resource Files\Images</Filter>
+    </Image>
+    <Image Include="swordE.png">
+      <Filter>Resource Files\Images</Filter>
     </Image>
     <Image Include="SwordKnight_B.png">
-      <Filter>Resource Files</Filter>
+      <Filter>Resource Files\Images</Filter>
+    </Image>
+    <Image Include="SwordKnight_W.png">
+      <Filter>Resource Files\Images</Filter>
+    </Image>
+    <Image Include="trap.png">
+      <Filter>Resource Files\Images</Filter>
+    </Image>
+    <Image Include="VM_DirtGrassBlend_East.png">
+      <Filter>Resource Files\Images</Filter>
+    </Image>
+    <Image Include="VM_DirtGrassBlend_NECorner.png">
+      <Filter>Resource Files\Images</Filter>
+    </Image>
+    <Image Include="VM_DirtGrassBlend_North.png">
+      <Filter>Resource Files\Images</Filter>
+    </Image>
+    <Image Include="VM_DirtGrassBlend_NWCorner.png">
+      <Filter>Resource Files\Images</Filter>
+    </Image>
+    <Image Include="VM_DirtGrassBlend_SECorner.png">
+      <Filter>Resource Files\Images</Filter>
+    </Image>
+    <Image Include="VM_DirtGrassBlend_South.png">
+      <Filter>Resource Files\Images</Filter>
+    </Image>
+    <Image Include="VM_DirtGrassBlend_SWCorner.png">
+      <Filter>Resource Files\Images</Filter>
+    </Image>
+    <Image Include="VM_DirtGrassBlend_West.png">
+      <Filter>Resource Files\Images</Filter>
+    </Image>
+    <Image Include="VM_GrassDirt.png">
+      <Filter>Resource Files\Images</Filter>
+    </Image>
+    <Image Include="VM_GrassTerrain.png">
+      <Filter>Resource Files\Images</Filter>
+    </Image>
+    <Image Include="VM_StoneWall.png">
+      <Filter>Resource Files\Images</Filter>
+    </Image>
+    <Image Include="VM_Tree.png">
+      <Filter>Resource Files\Images</Filter>
+    </Image>
+    <Image Include="wall.png">
+      <Filter>Resource Files\Images</Filter>
+    </Image>
+    <Image Include="Water.png">
+      <Filter>Resource Files\Images</Filter>
+    </Image>
+    <Image Include="WaterTest.png">
+      <Filter>Resource Files\Images</Filter>
+    </Image>
+    <Image Include="WhiteKnighAxe.png">
+      <Filter>Resource Files\Images</Filter>
+    </Image>
+    <Image Include="WhiteKnighAxe2.png">
+      <Filter>Resource Files\Images</Filter>
+    </Image>
+    <Image Include="WhiteKnight_Mace.png">
+      <Filter>Resource Files\Images</Filter>
+    </Image>
+    <Image Include="WhiteKnightAxe2.png">
+      <Filter>Resource Files\Images</Filter>
+    </Image>
+    <Image Include="WhiteKnightMace.png">
+      <Filter>Resource Files\Images</Filter>
+    </Image>
+    <Image Include="WhiteKnightSword.png">
+      <Filter>Resource Files\Images</Filter>
     </Image>
   </ItemGroup>
   <ItemGroup>
     <Xml Include="LevelData.xml">
       <Filter>Resource Files</Filter>
     </Xml>
+  </ItemGroup>
+  <ItemGroup>
+    <Media Include="Sound\Music\Butterfly_Tea_Loop.mp3">
+      <Filter>Resource Files\Sound</Filter>
+    </Media>
+    <Media Include="Sound\Music\Butterfly_Tea_Loop.wav">
+      <Filter>Resource Files\Sound</Filter>
+    </Media>
+    <Media Include="Sound\Music\test.wav">
+      <Filter>Resource Files\Sound</Filter>
+    </Media>
   </ItemGroup>
 </Project>

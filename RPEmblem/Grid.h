@@ -1,6 +1,8 @@
 #pragma once
 
 #include "VectorLib.h"
+#include <windows.h>
+#include <mmsystem.h>
 #include <iostream>
 #include <map>
 #include <vector>
