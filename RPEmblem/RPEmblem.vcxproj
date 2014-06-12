@@ -86,6 +86,7 @@
     <ClInclude Include="Grid.h" />
     <ClInclude Include="Items.h" />
     <ClInclude Include="Land.h" />
+    <ClInclude Include="Text.h" />
     <ClInclude Include="Screens.h" />
     <ClInclude Include="SOIL.h" />
     <ClInclude Include="stdafx.h" />
@@ -100,6 +101,7 @@
     <ClCompile Include="Grid.cpp" />
     <ClCompile Include="Items.cpp" />
     <ClCompile Include="Land.cpp" />
+    <ClCompile Include="Text.cpp" />
     <ClCompile Include="RPEmblem.cpp" />
     <ClCompile Include="Screens.cpp" />
     <ClCompile Include="stdafx.cpp">
@@ -145,6 +147,7 @@
     <Image Include="MaceKnight_B.png" />
     <Image Include="MaceKnight_W.png" />
     <Image Include="menu.png" />
+    <Image Include="numbers.png" />
     <Image Include="paper.png" />
     <Image Include="play.png" />
     <Image Include="rock.png" />
@@ -181,6 +184,9 @@
     <Xml Include="LevelData.xml" />
   </ItemGroup>
   <ItemGroup>
+    <Media Include="Sound\Music\215033__taira-komori__katana1.wav" />
+    <Media Include="Sound\Music\215037__taira-komori__sword-battle-loop.wav" />
+    <Media Include="Sound\Music\258__hanstimm__argh1.wav" />
     <Media Include="Sound\Music\Butterfly_Tea_Loop.mp3" />
     <Media Include="Sound\Music\Butterfly_Tea_Loop.wav" />
     <Media Include="Sound\Music\test.wav" />

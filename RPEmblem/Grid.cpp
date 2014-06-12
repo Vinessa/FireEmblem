@@ -7,7 +7,11 @@ Grid::~Grid(){}
 void Grid::init(int x/*18*/, int y/*18*/)
 {
 	//PlaySound((LPCWSTR)"C:\\Users\\Jacob\\Documents\\GitHub\\FireEmblem\\RPEmblem\\Sound\\Music\\Butterfly_Tea_Loop.wav", NULL, SND_FILENAME);
-	PlaySound(L"Sound\\Music\\Butterfly_Tea_Loop.wav", NULL, SND_ASYNC | SND_LOOP);
+	PlaySound(L"Sound\\Music\\Butterfly_Tea_Loop.wav", NULL, SND_ASYNC |SND_LOOP);
+
+	//mciOpenParms.lpstrDeviceType = "waveaudio";
+	//mciOpenParms.lpstrElementName = "C:\\Users\\NickDMax\\Pictures\\web stuffs\\chickens.wav";
+
 	paused = false;
 	turn = 1;
 	playable[1] = (Characters*)new HeavyMace();
@@ -55,6 +59,10 @@ void Grid::init(int x/*18*/, int y/*18*/)
 	items = vector<Items*>(2);
 	items[0] = (Items*)hPick;
 	items[1] = (Items*)hTrap;
+
+	Text testText;
+	text = vector<Text>(1);
+	text[0] = testText;
 }
 void Grid::draw(vector2 screen)
 {
@@ -90,6 +98,7 @@ void Grid::draw(vector2 screen)
 		}
 		return;
 	}
+	
 	for (int i = 0; i < 18; i++) {
 		for (int ii = 0; ii < 18; ii++) {
 			bool checkTurn = false;
@@ -139,6 +148,7 @@ void Grid::draw(vector2 screen)
 		element->draw();
 	}
 	int bob = 5;
+	text[0].display(0,playable[1]->position);
 	//selWhite.draw();
 }
 
@@ -166,6 +176,7 @@ void Grid::update()
 			//element->effect(it.second);
 			//playable.erase()
 			delList.push_back(it);
+			//if (it->first != 4)
 			break;
 			///it++;
 			//playable.erase(it->first);// .push_back(it);
@@ -330,6 +341,7 @@ void Grid::update()
 			Attacks * attk = new Attacks();
 			attk->ExecuteBattle(element.second);
 		}
+		PlaySound(L"Sound\\Music\\215037__taira-komori__sword-battle-loop.wav", NULL, SND_NOSTOP);
 
 		//Reset the turn order
 		turn = 1;

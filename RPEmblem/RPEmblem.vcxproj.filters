@@ -63,6 +63,9 @@
     <ClInclude Include="XmlLoader.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="Text.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -96,6 +99,9 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Land.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Text.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -277,6 +283,9 @@
     <Image Include="WhiteKnightSword.png">
       <Filter>Resource Files\Images</Filter>
     </Image>
+    <Image Include="numbers.png">
+      <Filter>Resource Files\Images</Filter>
+    </Image>
   </ItemGroup>
   <ItemGroup>
     <Xml Include="LevelData.xml">
@@ -291,6 +300,15 @@
       <Filter>Resource Files\Sound</Filter>
     </Media>
     <Media Include="Sound\Music\test.wav">
+      <Filter>Resource Files\Sound</Filter>
+    </Media>
+    <Media Include="Sound\Music\258__hanstimm__argh1.wav">
+      <Filter>Resource Files\Sound</Filter>
+    </Media>
+    <Media Include="Sound\Music\215033__taira-komori__katana1.wav">
+      <Filter>Resource Files\Sound</Filter>
+    </Media>
+    <Media Include="Sound\Music\215037__taira-komori__sword-battle-loop.wav">
       <Filter>Resource Files\Sound</Filter>
     </Media>
   </ItemGroup>

@@ -18,6 +18,7 @@
 #include "Screens.h"
 #include "Attacks.h"
 #include "XmlLoader.h"
+#include "Text.h"
 #include <list>
 
 using namespace std;
@@ -35,6 +36,7 @@ public:
 	map<int, Characters*> unplayable;//List of all the non-character players
 	vector<vector<Land*>> nodes;//Each tile
 	vector<Items*> items;
+	vector<Text> text;
 	vector<int> turnSkips;
 	PlayCard card;
 	Selection sel;//The selected tile
