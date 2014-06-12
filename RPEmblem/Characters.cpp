@@ -137,10 +137,10 @@ bool Characters::calculateAtLand(Land* node, int /*5*/ dist, vector2 newCord)
 HeavyMace::HeavyMace(void){}
 void HeavyMace::init(vector2 change, string newName)
 {
-	alive = health > 0;
 	waiting = false;
 	turnOrder = 1;
 	health = 10;
+	alive = health > 0;
 	cord = change;
 
 	maxHealth = 10;
@@ -200,10 +200,10 @@ bool HeavyMace::loadAsEnemy()
 Swordsman::Swordsman(void){}
 void Swordsman::init(vector2 change, string newName)
 {
-	alive = health > 0;
 	waiting = false;
 	turnOrder = 2;
 	health = 10;
+	alive = health > 0;
 	cord = change;
 
 	xp = 50;
@@ -263,10 +263,10 @@ bool Swordsman::loadAsEnemy()
 Axeman::Axeman(void){}
 void Axeman::init(vector2 change, string newName)
 {
-	alive = health > 0;
 	waiting = false;
 	turnOrder = 3;
 	health = 10;
+	alive = health > 0;
 	cord = change;
 
 	xp = 50;

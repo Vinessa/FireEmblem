@@ -90,7 +90,13 @@ void Grid::draw(vector2 screen)
 	}
 	for (int i = 0; i < 18; i++) {
 		for (int ii = 0; ii < 18; ii++) {
-			if ((int)playable.size() >= turn)
+			bool checkTurn = false;
+			for (auto & element : playable)
+			{
+				if (turn == element.first)
+					checkTurn = true;
+			}
+			if (checkTurn)
 			{
 				if (playable[turn]->calculateCost(nodes[i][ii], 4, vector2(i, ii)))
 				{
@@ -141,65 +147,100 @@ void Grid::update()
 	if (scr.show)
 		return;
 
-	for (map<int, Characters*>::iterator it = playable.begin(); it != playable.end(); it++)
+	for (auto & element : turnSkips){
+		if (element == turn)
+		{
+			turn++;
+			return;
+		}
+	}
+
+	playable[4] = new Characters();
+	for (std::map<int, Characters*>::iterator it = playable.begin(); /*bob <= playable.size() ||*/it != playable.cend() /* not hoisted */; /* no increment */)
+	//for (const auto it : playable)
 	{
-		if (turn == it->second->turnOrder)
+		if (it->second->health <= 0)
 		{
-			card.sel = (Characters*)it->second;
-			card.selLand = (Land*)nodes[it->second->cord.x][it->second->cord.y];
-			if (move && playable[turn]->calculateCost(nodes[selectedNode.x][selectedNode.y], 4, selectedNode))
-			{
-				for (map<int, Characters*>::iterator itt = playable.begin(); itt != playable.end(); itt++)
-				{
-					if (itt->second->cord == selectedNode)
-					{
-						move = false;
-					}
-				}
-				if (move)
-				{
-					it->second->waiting = false;
-					it->second->updatePos(selectedNode);
-					turn++;
-					move = false;
-				}
-				selectedNode = vector2(-1, -1);
-			}
-			else if (move)
-				move = false;
-		}
-		if (selectedNode == it->second->cord)
-		{
-			selCharacter = (Characters*)it->second;
-			card.opSel = (Characters*)selCharacter;
-			card.opselLand = (Land*)nodes[it->second->cord.x][it->second->cord.y];
-			card.showOpSel = true;
-		}
-		else if (selectedNode == vector2(-1, -1))
-		{
-			card.showOpSel = false;
-			selCharacter = (Characters*)new Characters;
+			//element->effect(it.second);
+			//playable.erase()
+			delList.push_back(it);
+			break;
+			///it++;
+			//playable.erase(it->first);// .push_back(it);
+			//it++;
+			//break;
 		}
 		else
 		{
-			selCharacter = (Characters*)new Characters;
+			if (turn == it->second->turnOrder)
+			{
+				card.sel = (Characters*)it->second;
+				card.selLand = (Land*)nodes[it->second->cord.x][it->second->cord.y];
+				if (move && playable[turn]->calculateCost(nodes[selectedNode.x][selectedNode.y], 4, selectedNode))
+				{
+					for (auto iit : playable)
+					{
+						if (iit.second->cord == selectedNode)
+						{
+							move = false;
+						}
+					}
+					if (move)
+					{
+						it->second->waiting = false;
+						it->second->updatePos(selectedNode);
+						if (it->first != 4)
+						turn++;
+						move = false;
+					}
+					selectedNode = vector2(-1, -1);
+				}
+				else if (move)
+					move = false;
+			}
+			if (selectedNode == it->second->cord)
+			{
+				selCharacter = (Characters*)it->second;
+				card.opSel = (Characters*)selCharacter;
+				card.opselLand = (Land*)nodes[it->second->cord.x][it->second->cord.y];
+				card.showOpSel = true;
+			}
+			else if (selectedNode == vector2(-1, -1))
+			{
+				card.showOpSel = false;
+				selCharacter = (Characters*)new Characters;
+			}
+			else
+			{
+				selCharacter = (Characters*)new Characters;
+			}
+			it->second->alive = it->second->health > 0;
+			it->second->waiting = false;
+			int itemTrackVal = 0;
+			if (!items.empty())
+				for (auto & element : items)
+				{
+				element->update(it->second->cord);
+				if (element->alive)
+				{
+					element->effect(it->second);
+					items.erase(items.begin() + itemTrackVal);
+					break;
+				}
+				itemTrackVal++;
+				}
+			//if (it->first + 1 >= 4)
+			++it;
 		}
-		it->second->alive = it->second->health > 0;
-		it->second->waiting = false;
-		int itemTrackVal = 0;
-		if (!items.empty())
-			for (auto & element : items)
-			{
-			element->update(it->second->cord);
-			if (element->alive)
-			{
-				element->effect(it->second);
-				items.erase(items.begin() + itemTrackVal);
-				break;
-			}
-			itemTrackVal++;
-			}
 	}
+///	delList.push_back(playable.rend);
+
+	for (auto i : delList){
+		if (i->first != 4)
+			turnSkips.push_back(i->first);
+		playable.erase(i);
+	}
+	delList.clear();
 	//AI TIME
 
 	for (auto & element : unplayable)
@@ -224,8 +265,10 @@ void Grid::update()
 
 
 
+	//if (((turn > playable.size())|| (playable.size() == 4 && turn == 4) && updateHalt == 0))
 	if (turn > playable.size() && updateHalt == 0)
 	{
+		//if (turn == 4)
 		for (map<int, Characters*>::iterator it = unplayable.begin(); it != unplayable.end(); it++)
 		{
 			if (turn == it->second->turnOrder)

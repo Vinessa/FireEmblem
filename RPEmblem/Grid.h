@@ -16,6 +16,7 @@
 #include "Screens.h"
 #include "Attacks.h"
 #include "XmlLoader.h"
+#include <list>
 
 using namespace std;
 
@@ -28,9 +29,11 @@ public:
 	vector2 selectedNode;//The cords for the selected node
 	map<unsigned char, bool> keyState;//State of each key
 	map<int, Characters*> playable;//List of all the character player
+	std::list< std::map<int, Characters*>::iterator > delList;
 	map<int, Characters*> unplayable;//List of all the non-character players
 	vector<vector<Land*>> nodes;//Each tile
 	vector<Items*> items;
+	vector<int> turnSkips;
 	PlayCard card;
 	Selection sel;//The selected tile
 	Characters * selCharacter;//The selected character
