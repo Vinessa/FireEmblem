@@ -1,7 +1,6 @@
 #include "stdafx.h"
 #include "Text.h"
 
-
 Text::Text()
 {
 	texture = SOIL_load_OGL_texture
@@ -22,7 +21,6 @@ Text::Text()
 	deathTime = 1000;
 }
 
-
 Text::~Text()
 {
 }
@@ -37,7 +35,7 @@ void Text::display()
 	glBegin(GL_QUADS);
 	glPushMatrix();
 	float modifier = number * 0.1;
-	
+
 	//glColor3f(1, 0, 0);
 	glLoadIdentity();
 	glColor3f(1, 1, 1);

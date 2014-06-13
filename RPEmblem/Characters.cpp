@@ -133,6 +133,206 @@ bool Characters::calculateAtLand(Land* node, int /*5*/ dist, vector2 newCord)
 		return false;
 		//return rtV;
 }
+Characters* Characters::closestEnemy(map<int, Characters*> thePlayable)
+{
+	int bestCost = 100;
+	int bestCostValue = 1;
+	for (auto & element : thePlayable)
+	{
+		int currentCostX = 0;
+		currentCostX = this->cord.x - element.second->cord.x;
+		if (currentCostX < 0)
+			currentCostX *= -1;
+
+		int currentCostY = 0;
+		currentCostY = this->cord.y - element.second->cord.y;
+		if (currentCostY < 0)
+			currentCostY *= -1;
+
+		if (currentCostX + currentCostY <= bestCost)
+		{
+			bestCost = currentCostX + currentCostY;
+			bestCostValue = element.first;
+		}
+	}
+	return thePlayable[bestCostValue];
+}
+vector2 Characters::calculateWorth(vector2 target)
+{
+	int currentCostX = 0;
+	currentCostX = this->cord.x - target.x;
+	//if (currentCostX < 0)
+		//currentCostX *= -1;
+
+	int currentCostY = 0;
+	currentCostY = this->cord.y - target.y;
+	//if (currentCostY < 0)
+		//currentCostY *= -1;
+
+	if (abs(currentCostX) < abs(currentCostY))
+	{
+		if (currentCostX > 0)
+			return vector2(1, 0);
+		else
+			return vector2(-1, 0);
+	}
+	else
+	{
+		if (currentCostY > 0)
+			return vector2(1, 0);
+		else
+			return vector2(-1, 0);
+	}
+}
+vector2 Characters::calculateDist(vector2 target, vector2 enemy, vector<vector<Land*>> land)
+{
+	int x = cord.x;
+	int y = cord.y;
+	if (target.x == 1)
+	{
+		//for (auto & element : land)
+		while (x <= cord.x + 5)
+		{
+			try{
+				if (land.at(x + 1).at(y)->walkable && enemy != vector2(x + 1, y) && enemy.x != x + 1)
+					x++;
+				else
+				{
+					return vector2(x, y);
+				}
+			}
+			catch (std::out_of_range oor)
+			{
+				return vector2(x- 1, y);
+			}
+		}
+		//land.at(cord.x).at(cord.y);
+	}
+	else if (target.x == -1)
+	{
+		try{
+			while (x >= cord.x - 5)
+			{
+				if (land.at(x - 1).at(y)->walkable && enemy != vector2(x - 1, y) && enemy.x != x - 1)
+					x--;
+				else
+				{
+					return vector2(x + 1, y);
+				}
+			}
+		}
+		catch (std::out_of_range oor)
+		{
+			return vector2(x, y);
+		}
+	}
+
+	else if (target.y == -1)
+	{
+		try {
+			while (y >= cord.y - 5)
+			{
+				if (land.at(x).at(y - 1)->walkable && enemy != vector2(x, y - 1) && enemy.y != y - 1)
+					y--;
+				else
+				{
+					return vector2(x, y + 1);
+				}
+			}
+		}
+		catch (std::out_of_range oor)
+		{
+			return vector2(x, y);
+		}
+	}
+	else
+	{
+		try
+		{
+			while (y <= cord.y + 5)
+			{
+				if (land.at(x).at(y + 1)->walkable && enemy != vector2(x, y + 1) && enemy.y != y + 1)
+					y++;
+				else
+				{
+					return vector2(x, y - 1);
+				}
+			}
+		}
+		catch (std::out_of_range oor)
+		{
+			return vector2(x, y);
+		}
+	}
+	return vector2(x, y);
+}
+vector2 Characters::update(vector2 enemy, vector<vector<Land*>> land)
+{
+	int currentCostX = 0;
+	currentCostX = this->cord.x - enemy.x;
+
+	int currentCostY = 0;
+	currentCostY = this->cord.y - enemy.y;
+	vector2 carry;
+
+	if (abs(currentCostX) < abs(currentCostY))
+	{
+		if (currentCostX > 0)
+			carry = vector2(1, 0);
+		else
+			carry = vector2(-1, 0);
+	}
+	else
+	{
+		if (currentCostY > 0)
+			carry = vector2(1, 0);
+		else
+			carry = vector2(-1, 0);
+	}
+
+	vector2 newCord = cord;
+	if (enemy.x > cord.x)
+	{
+		while (enemy.x > newCord.x && (land.at(newCord.x+ 1).at(newCord.y)->walkable))
+		{
+			if (newCord.x >= cord.x + 4)
+				return newCord;
+			newCord.x++;
+		}
+	}
+
+	else if (enemy.x < cord.x)
+	{
+		while (enemy.x < newCord.x && (land.at(newCord.x - 1).at(newCord.y)->walkable))
+		{
+			if (newCord.x <= cord.x - 4)
+				return newCord;
+			newCord.x--;
+		}
+	}
+
+	else if (enemy.y > cord.y)
+	{
+		while (enemy.y > newCord.y && (land.at(newCord.x).at(newCord.y + 1)->walkable))
+		{
+			if (newCord.y >= cord.y + 4)
+				return newCord;
+			newCord.y++;
+		}
+	}
+
+	else if (enemy.y < cord.y)
+	{
+		while (enemy.y < newCord.y && (land.at(newCord.x).at(newCord.y - 1)->walkable))
+		{
+			if (newCord.y <= cord.y - 4)
+				return newCord;
+			newCord.y--;
+		}
+	}
+
+	return newCord;
+}
 
 HeavyMace::HeavyMace(void){}
 void HeavyMace::init(vector2 change, string newName)

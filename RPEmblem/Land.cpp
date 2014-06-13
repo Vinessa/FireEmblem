@@ -105,7 +105,6 @@ bool Wall::load(int part)
 	return false;
 }
 
-
 Tree::Tree(void){}
 Tree::~Tree(){}
 void Tree::init()
@@ -191,7 +190,6 @@ bool Tree::load()
 
 	return true;
 }
-
 
 Grass::Grass(void){}
 Grass::~Grass(){}
@@ -282,7 +280,6 @@ bool Grass::load()
 
 	return true;
 }
-
 
 Water::Water(void){}
 Water::~Water(){}
@@ -595,7 +592,7 @@ void Dirt::draw(bool triggerColors)
 		color = vector3(0.2, 1, 0.2);*/
 	glColor3f(color.x, color.y, color.z);
 	//if 11,00 then fliped on x and y
-	
+
 	glTexCoord2f(tcnew[0], tcnew[1]); glVertex3f(position.x - 1.11, position.y + 0.11 - 1, 0);
 	glTexCoord2f(tcnew[2], tcnew[3]); glVertex3f(position.x - 1, position.y + 0.11 - 1, 0);
 	glTexCoord2f(tcnew[4], tcnew[5]); glVertex3f(position.x - 1, position.y - 1, 0);
@@ -605,7 +602,7 @@ void Dirt::draw(bool triggerColors)
 	glTexCoord2f(1, 0); glVertex3f(position.x - 1.11, position.y + 0.11 - 1, 0);
 	glTexCoord2f(1, 1); glVertex3f(position.x - 1.11, position.y - 1, 0);
 	glTexCoord2f(0, 1); glVertex3f(position.x - 1, position.y - 1, 0);*/
-	
+
 	glPopMatrix();
 	glDisable(GL_TEXTURE_2D);
 	glEnd();
@@ -697,7 +694,7 @@ bool Selection::load()
 
 	return true;
 }
-bool Selection::load(vector2 change,vector2 screen)
+bool Selection::load(vector2 change, vector2 screen)
 {
 	texture = SOIL_load_OGL_texture
 		(
@@ -721,20 +718,20 @@ bool Selection::load(vector2 change,vector2 screen)
 	int counterx = 0;
 	for (float i = -2; i <= 2; i += 0.11)
 	{
-		if (x_norm - 2 >= i && x_norm - 2 <= i + 0.11)
-		{
-			break;
-		}
-		counterx++;
+	if (x_norm - 2 >= i && x_norm - 2 <= i + 0.11)
+	{
+	break;
+	}
+	counterx++;
 	}
 	int countery = 0;
 	for (float i = -2; i <= 2; i += 0.11)
 	{
-		if (y_norm - 2 >= i && y_norm - 2 <= i + 0.11)
-		{
-			break;
-		}
-		countery++;
+	if (y_norm - 2 >= i && y_norm - 2 <= i + 0.11)
+	{
+	break;
+	}
+	countery++;
 	}
 	countery = 17 - countery;*/
 	cord = change;//= vector2(counterx, countery);

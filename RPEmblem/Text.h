@@ -12,7 +12,7 @@ class Text
 public:
 
 	//Var
-	vector2 position = vector2(0,0);
+	vector2 position = vector2(0, 0);
 	vector3 color = vector3(0, 0, 0);
 	float deathTime = 0;
 	int number;
@@ -22,4 +22,3 @@ public:
 
 	void display();
 };
-

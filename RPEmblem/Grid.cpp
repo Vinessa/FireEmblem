@@ -7,7 +7,7 @@ Grid::~Grid(){}
 void Grid::init(int x/*18*/, int y/*18*/)
 {
 	//PlaySound((LPCWSTR)"C:\\Users\\Jacob\\Documents\\GitHub\\FireEmblem\\RPEmblem\\Sound\\Music\\Butterfly_Tea_Loop.wav", NULL, SND_FILENAME);
-	PlaySound(L"Sound\\Music\\Butterfly_Tea_Loop.wav", NULL, SND_ASYNC |SND_LOOP);
+	PlaySound(L"Sound\\Music\\Butterfly_Tea_Loop.wav", NULL, SND_ASYNC | SND_LOOP);
 
 	//mciOpenParms.lpstrDeviceType = "waveaudio";
 	//mciOpenParms.lpstrElementName = "C:\\Users\\NickDMax\\Pictures\\web stuffs\\chickens.wav";
@@ -38,10 +38,10 @@ void Grid::init(int x/*18*/, int y/*18*/)
 	xml.loadNodes(nodes, 1);
 	/*for (auto & element : nodes)
 		for (auto & elem : element)
-			elem->init();*/
+		elem->init();*/
 
 	//selWhite = new Selection(sel);
-	selWhite.load(vector2(2,2),screen);
+	selWhite.load(vector2(2, 2), screen);
 	selWhite.belowContent = nodes[2][2];
 
 	card.load();
@@ -98,7 +98,7 @@ void Grid::draw(vector2 screen)
 		}
 		return;
 	}
-	
+
 	for (int i = 0; i < 18; i++) {
 		for (int ii = 0; ii < 18; ii++) {
 			bool checkTurn = false;
@@ -109,6 +109,11 @@ void Grid::draw(vector2 screen)
 			}
 			if (checkTurn)
 			{
+				for (auto & element : playable)
+					nodes[element.second->cord.x][element.second->cord.y]->walkable = false;
+				for (auto & element : unplayable)
+					nodes[element.second->cord.x][element.second->cord.y]->walkable = false;
+
 				if (playable[turn]->calculateCost(nodes[i][ii], 4, vector2(i, ii)))
 				{
 					nodes[i][ii]->blueHighLight = true;
@@ -146,7 +151,6 @@ void Grid::draw(vector2 screen)
 	for (auto & element : items)
 	{
 		element->draw();
-	
 	}
 	for (auto & element : text)
 	{
@@ -181,11 +185,10 @@ void Grid::update()
 
 	playable[4] = new Characters();
 	for (std::map<int, Characters*>::iterator it = playable.begin(); /*bob <= playable.size() ||*/it != playable.cend() /* not hoisted */; /* no increment */)
-	//for (const auto it : playable)
+		//for (const auto it : playable)
 	{
 		if (it->second->health <= 0)
 		{
-
 			delList.push_back(it);
 			break;
 		}
@@ -209,7 +212,7 @@ void Grid::update()
 						it->second->waiting = false;
 						it->second->updatePos(selectedNode);
 						if (it->first != 4)
-						turn++;
+							turn++;
 						move = false;
 					}
 					selectedNode = vector2(-1, -1);
@@ -252,15 +255,15 @@ void Grid::update()
 			++it;
 		}
 	}
-///	delList.push_back(playable.rend);
+	///	delList.push_back(playable.rend);
 
 	for (auto i : delList){
 		if (i->first != 4)
 			turnSkips.push_back(i->first);
 		playable.erase(i);
 	}
-	delList.clear(); 
-	
+	delList.clear();
+
 	for (auto i : delUnList){
 		//if (i->first != 4)
 		turnSkips.push_back(i->first);
@@ -299,8 +302,6 @@ void Grid::update()
 		}
 	}
 
-
-
 	//if (((turn > playable.size())|| (playable.size() == 4 && turn == 4) && updateHalt == 0))
 	if (turn > playable.size() && updateHalt == 0)
 	{
@@ -320,7 +321,6 @@ void Grid::update()
 				}
 				else if (move)
 					move = false;
-				
 			}
 			it->second->alive = it->second->health > 0;
 			it->second->waiting = false;
@@ -346,10 +346,13 @@ void Grid::update()
 		{
 			if (unplayable.find(turn - 3) != unplayable.end())
 			{
-				unplayable[turn - 3]->updatePos(selectedNode);
+				//unplayable[turn - 3]->updatePos(selectedNode);
+				//unplayable[turn - 3]->updatePos(unplayable[turn - 3]->calculateDist(unplayable[turn - 3]->calculateWorth(unplayable[turn - 3]->closestEnemy(playable)->cord), unplayable[turn - 3]->closestEnemy(playable)->cord, nodes));
+				unplayable[turn - 3]->updatePos(unplayable[turn - 3]->update(unplayable[turn - 3]->closestEnemy(playable)->cord,nodes));
 				turn++;
 				updateHalt = 0;
 				selectedNode = vector2(-1, -1);
+				//selectedNode = 
 				move = false;
 			}
 			else
@@ -358,7 +361,7 @@ void Grid::update()
 	}
 	//End of the round
 	bool peopleLeft = 3 - unplayable.size() > 0;
-	if (turn > maxTurns || (peopleLeft && turn == 7 - ( 3 - unplayable.size())))
+	if (turn > maxTurns || (peopleLeft && turn == 7 - (3 - unplayable.size())))
 	{
 		for (auto & element : playable)
 		{

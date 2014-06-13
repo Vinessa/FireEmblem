@@ -344,37 +344,33 @@ void mouseMotion(int x, int y)
 		//grid.selWhite.c
 		//if ((counterx == grid.selWhite.cord.x || countery == grid.selWhite.cord.y))// && dynamic_cast<Selection*>(grid.nodes.at(counterx).at(countery)) != NULL){
 		//{//if ()
-			if (!grid.nodes.at(counterx).at(countery)->isBottom())
-			{
-				grid.selWhite.belowContent = grid.nodes.at(counterx).at(countery);
-				Selection * changeup = new Selection(grid.selWhite);
-				grid.nodes.at(counterx).at(countery) = (Land*)changeup;
-				//grid.selWhite.cord = vector2(counterx, countery);
-			}
-			else
-			{
-				Land * changeup = grid.selWhite.belowContent;
-				grid.nodes.at(grid.selWhite.cord.x).at(grid.selWhite.cord.y) = changeup;
-				grid.selWhite.cord = vector2(counterx, countery);
+		if (!grid.nodes.at(counterx).at(countery)->isBottom())
+		{
+			grid.selWhite.belowContent = grid.nodes.at(counterx).at(countery);
+			Selection * changeup = new Selection(grid.selWhite);
+			grid.nodes.at(counterx).at(countery) = (Land*)changeup;
+			//grid.selWhite.cord = vector2(counterx, countery);
+		}
+		else
+		{
+			Land * changeup = grid.selWhite.belowContent;
+			grid.nodes.at(grid.selWhite.cord.x).at(grid.selWhite.cord.y) = changeup;
+			grid.selWhite.cord = vector2(counterx, countery);
+		}
 
-			}
+		//grid.selWhite.belowContent = grid.nodes.at(counterx).at(countery);
+		//Selection * changeup = new Selection(grid.selWhite.belowContent);
+		//Land * changeup = grid.selWhite.belowContent->getBottom();
+		//grid.nodes.at(grid.selWhite.cord.x).at(grid.selWhite.cord.y) = (Land*)changeup;
 
-
-			//grid.selWhite.belowContent = grid.nodes.at(counterx).at(countery);
-			//Selection * changeup = new Selection(grid.selWhite.belowContent);
-			//Land * changeup = grid.selWhite.belowContent->getBottom();
-			//grid.nodes.at(grid.selWhite.cord.x).at(grid.selWhite.cord.y) = (Land*)changeup;
-
-
-			//grid.nodes.at(counterx).at(countery) = grid.selWhite.belowContent->getBottom();
-
+		//grid.nodes.at(counterx).at(countery) = grid.selWhite.belowContent->getBottom();
 
 		//}
 		/*else if (dynamic_cast<Selection*>(grid.nodes.at(counterx).at(countery)) == NULL)
 		{
-			Land * changeup = grid.selWhite.belowContent;
-			grid.nodes.at(counterx).at(countery) = (Land*)changeup;
-			//grid.nodes.at(grid.selWhite.cord.x).at(grid.selWhite.cord.y) = grid.selWhite.belowContent;
+		Land * changeup = grid.selWhite.belowContent;
+		grid.nodes.at(counterx).at(countery) = (Land*)changeup;
+		//grid.nodes.at(grid.selWhite.cord.x).at(grid.selWhite.cord.y) = grid.selWhite.belowContent;
 		}*/
 		/*if (counterx != grid.selWhite.cord.x || countery != grid.selWhite.cord.y){
 			grid.selWhite.belowContent = grid.nodes.at(counterx).at(countery);
@@ -382,31 +378,29 @@ void mouseMotion(int x, int y)
 			grid.nodes.at(counterx).at(countery) = (Land*)changeup;
 			grid.nodes.at(grid.selWhite.cord.x).at(grid.selWhite.cord.y) = grid.selWhite.belowContent;
 			grid.selWhite.cord = vector2(counterx, countery);
-		}
-		else
-		{
-
-			grid.selWhite.cord = vector2(counterx, countery);
-		}*/
-			/*if (grid.selWhite.cord != vector2(counterx, countery))
-			{
-				grid.nodes.at(grid.selWhite.cord.x).at(grid.selWhite.cord.y) = grid.selWhite.belowContent;
 			}
-			grid.selWhite.cord = vector2(counterx, countery);*/
-			/*if (grid.selWhite.belowContent == NULL)
-				grid.selWhite.belowContent = grid.nodes.at(grid.selWhite.cord.x).at(grid.selWhite.cord.y);
+			else
+			{
+			grid.selWhite.cord = vector2(counterx, countery);
+			}*/
+		/*if (grid.selWhite.cord != vector2(counterx, countery))
+		{
+		grid.nodes.at(grid.selWhite.cord.x).at(grid.selWhite.cord.y) = grid.selWhite.belowContent;
+		}
+		grid.selWhite.cord = vector2(counterx, countery);*/
+		/*if (grid.selWhite.belowContent == NULL)
+			grid.selWhite.belowContent = grid.nodes.at(grid.selWhite.cord.x).at(grid.selWhite.cord.y);
 			else {
-				grid.selWhite.cord = vector2(counterx, countery);
-				Selection * changeup = new Selection(grid.selWhite);
-				grid.nodes[counterx][countery] = (Land*)changeup;// .belowContent;// = *Land(grid.selWhite.belowContent);// grid.selWhite.belowContent;
-				grid.selWhite.belowContent = NULL;
+			grid.selWhite.cord = vector2(counterx, countery);
+			Selection * changeup = new Selection(grid.selWhite);
+			grid.nodes[counterx][countery] = (Land*)changeup;// .belowContent;// = *Land(grid.selWhite.belowContent);// grid.selWhite.belowContent;
+			grid.selWhite.belowContent = NULL;
 			}
 			grid.selWhite.belowContent = grid.nodes.at(counterx).at(countery); // Failsafe will activate if its out of bounds here.
 			Selection * changeup = new Selection(grid.selWhite);
 			grid.nodes.at(counterx).at(countery) = (Land*)changeup;*/
-		
+
 		//grid.selectedNode = vector2(counterx, countery);
-			
 	}
 	catch (const std::out_of_range & oor)
 	{

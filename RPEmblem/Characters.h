@@ -46,6 +46,10 @@ public:
 	virtual vector<Characters*> getAdj(map<int, Characters*> characters);
 	//Gets the land next to the land you are currently on
 	virtual bool calculateAtLand(Land* node, int /*5*/ dist, vector2 newCord);
+	virtual vector2 calculateWorth(vector2 target);
+	virtual vector2 calculateDist(vector2 target, vector2 enemy, vector<vector<Land*>> land);
+	virtual Characters* closestEnemy(map<int, Characters*> thePlayable);
+	virtual vector2 update(vector2 enemy, vector<vector<Land*>> land);
 };
 class HeavyMace : Characters
 {

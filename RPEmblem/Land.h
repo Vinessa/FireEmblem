@@ -22,7 +22,7 @@ public:
 	bool redHighLight;
 	bool normal; //Added by Vinessa for color blending.
 	vector2 position;
-	vector3 color = vector3(1,1,1);
+	vector3 color = vector3(1, 1, 1);
 	bool invertX = false;
 	bool invertY = false;
 	void init();
@@ -113,7 +113,7 @@ public:
 	virtual void draw();
 	virtual void draw(bool triggerColors);
 	virtual bool load();
-	bool load(vector2 change,vector2 screen);
+	bool load(vector2 change, vector2 screen);
 	virtual bool load(int part);
 	virtual Land * getBottom();
 	virtual bool isBottom();
