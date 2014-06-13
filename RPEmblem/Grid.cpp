@@ -263,7 +263,7 @@ void Grid::update()
 	
 	for (auto i : delUnList){
 		//if (i->first != 4)
-		turnSkips.push_back(i->first + 1);
+		turnSkips.push_back(i->first);
 		unplayable.erase(i);
 	}
 	delUnList.clear();
@@ -344,15 +344,21 @@ void Grid::update()
 		updateHalt++;
 		if (updateHalt >= 500)//The time between each AI movement
 		{
-			unplayable[turn - 3]->updatePos(selectedNode);
-			turn++;
-			updateHalt = 0;
-			selectedNode = vector2(-1, -1);
-			move = false;
+			if (unplayable.find(turn - 3) != unplayable.end())
+			{
+				unplayable[turn - 3]->updatePos(selectedNode);
+				turn++;
+				updateHalt = 0;
+				selectedNode = vector2(-1, -1);
+				move = false;
+			}
+			else
+				turn++;
 		}
 	}
 	//End of the round
-	if (turn > maxTurns)
+	bool peopleLeft = 3 - unplayable.size() > 0;
+	if (turn > maxTurns || (peopleLeft && turn == 7 - ( 3 - unplayable.size())))
 	{
 		for (auto & element : playable)
 		{
