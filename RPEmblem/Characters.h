@@ -20,6 +20,7 @@ class Characters
 public:
 	int health;
 	int maxHealth;
+	int healthLost;
 	float xp;
 	float xp2NextLevel; // Added by Vinessa - xp to next level - scales xp requirements to characters progression
 	int Level; //Added by Vinessa

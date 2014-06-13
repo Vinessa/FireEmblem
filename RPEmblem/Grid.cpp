@@ -60,9 +60,9 @@ void Grid::init(int x/*18*/, int y/*18*/)
 	items[0] = (Items*)hPick;
 	items[1] = (Items*)hTrap;
 
-	Text testText;
-	text = vector<Text>(1);
-	text[0] = testText;
+	//Text testText;
+	//text = vector<Text>(1);
+	//text[0] = testText;
 }
 void Grid::draw(vector2 screen)
 {
@@ -146,9 +146,12 @@ void Grid::draw(vector2 screen)
 	for (auto & element : items)
 	{
 		element->draw();
+	
 	}
-	int bob = 5;
-	text[0].display(0,playable[1]->position);
+	for (auto & element : text)
+	{
+		element.display();
+	}
 	//selWhite.draw();
 }
 
@@ -166,6 +169,15 @@ void Grid::update()
 			return;
 		}
 	}
+	auto i = std::begin(text);
+
+	while (i != std::end(text)) {
+		// do some stuff
+		if (i->deathTime <= 0)
+			i = text.erase(i);
+		else
+			++i;
+	}
 
 	playable[4] = new Characters();
 	for (std::map<int, Characters*>::iterator it = playable.begin(); /*bob <= playable.size() ||*/it != playable.cend() /* not hoisted */; /* no increment */)
@@ -173,15 +185,9 @@ void Grid::update()
 	{
 		if (it->second->health <= 0)
 		{
-			//element->effect(it.second);
-			//playable.erase()
+
 			delList.push_back(it);
-			//if (it->first != 4)
 			break;
-			///it++;
-			//playable.erase(it->first);// .push_back(it);
-			//it++;
-			//break;
 		}
 		else
 		{
@@ -253,11 +259,28 @@ void Grid::update()
 			turnSkips.push_back(i->first);
 		playable.erase(i);
 	}
-	delList.clear();
+	delList.clear(); 
+	
+	for (auto i : delUnList){
+		//if (i->first != 4)
+		turnSkips.push_back(i->first + 1);
+		unplayable.erase(i);
+	}
+	delUnList.clear();
 	//AI TIME
 
 	for (auto & element : unplayable)
 	{
+		if (element.second->health <= 0)
+		{
+			//Characters testChar = element.second;
+			//delUnList.
+			auto test = unplayable.begin();
+			while (test->first != element.first)
+				test++;// += (element.first - 1);
+			delUnList.push_back(test);
+			break;
+		}
 		if (selectedNode == element.second->cord)
 		{
 			selCharacter = (Characters*)element.second;
@@ -282,18 +305,22 @@ void Grid::update()
 	if (turn > playable.size() && updateHalt == 0)
 	{
 		//if (turn == 4)
+		int enemyTurn = 0;
 		for (map<int, Characters*>::iterator it = unplayable.begin(); it != unplayable.end(); it++)
 		{
+			enemyTurn++;
 			if (turn == it->second->turnOrder)
 			{
 				card.sel = (Characters*)it->second;
 				card.selLand = (Land*)nodes[it->second->cord.x][it->second->cord.y];
-				if (move && unplayable[turn - unplayable.size()]->calculateCost(nodes[selectedNode.x][selectedNode.y], 4, selectedNode))
+				//if (unplayable.find(turn - unplayable.size()) != unplayable.end()){
+				if (move && unplayable.at(turn - 3)->calculateCost(nodes[selectedNode.x][selectedNode.y], 4, selectedNode))
 				{
 					updateHalt = 0.1;
 				}
 				else if (move)
 					move = false;
+				
 			}
 			it->second->alive = it->second->health > 0;
 			it->second->waiting = false;
@@ -329,17 +356,35 @@ void Grid::update()
 	{
 		for (auto & element : playable)
 		{
+			element.second->healthLost = element.second->health;
 			element.second->getAdj(unplayable);
 
 			Attacks * attk = new Attacks();
 			attk->ExecuteBattle(element.second);
+			element.second->healthLost = element.second->healthLost - element.second->health;
+			if (element.second->healthLost > 0)
+			{
+				Text newText;
+				newText.position = element.second->position;
+				newText.number = element.second->healthLost;
+				text.push_back(newText);
+			}
 		}
 		for (auto & element : unplayable)
 		{
+			element.second->healthLost = element.second->health;
 			element.second->getAdj(playable);
 
 			Attacks * attk = new Attacks();
 			attk->ExecuteBattle(element.second);
+			element.second->healthLost = element.second->healthLost - element.second->health;
+			if (element.second->healthLost > 0)
+			{
+				Text newText;
+				newText.position = element.second->position;
+				newText.number = element.second->healthLost;
+				text.push_back(newText);
+			}
 		}
 		PlaySound(L"Sound\\Music\\215037__taira-komori__sword-battle-loop.wav", NULL, SND_NOSTOP);
 

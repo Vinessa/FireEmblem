@@ -34,6 +34,7 @@ public:
 	map<int, Characters*> playable;//List of all the character player
 	std::list< std::map<int, Characters*>::iterator > delList;
 	map<int, Characters*> unplayable;//List of all the non-character players
+	std::list< std::map<int, Characters*>::iterator > delUnList;
 	vector<vector<Land*>> nodes;//Each tile
 	vector<Items*> items;
 	vector<Text> text;
