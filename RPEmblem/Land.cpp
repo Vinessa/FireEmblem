@@ -23,6 +23,7 @@ Wall::Wall(void){}
 Wall::~Wall(){}
 void Wall::init()
 {
+	walkable = false;
 	resistance = 100000;
 	health = 10;
 	redHighLight = true;
@@ -109,6 +110,7 @@ Tree::Tree(void){}
 Tree::~Tree(){}
 void Tree::init()
 {
+	walkable = false;
 	resistance = 100000;
 	health = 10;
 	redHighLight = true;
@@ -195,6 +197,7 @@ Grass::Grass(void){}
 Grass::~Grass(){}
 void Grass::init()
 {
+	walkable = true;
 	resistance = 20;
 	health = 10;
 	redHighLight = true;
@@ -285,6 +288,7 @@ Water::Water(void){}
 Water::~Water(){}
 void Water::init()
 {
+	walkable = false;
 	resistance = 100000;
 	health = 10;
 	redHighLight = true;
@@ -375,6 +379,7 @@ House::House(void){}
 House::~House(){}
 void House::init()
 {
+	walkable = false;
 	resistance = 100000;
 	health = 10;
 	redHighLight = true;
@@ -521,6 +526,7 @@ Dirt::Dirt(void){}
 Dirt::~Dirt(){}
 void Dirt::init()
 {
+	walkable = true;
 	resistance = 20;
 	redHighLight = true;
 	blueHighLight = false;

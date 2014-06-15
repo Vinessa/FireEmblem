@@ -268,28 +268,6 @@ vector2 Characters::calculateDist(vector2 target, vector2 enemy, vector<vector<L
 }
 vector2 Characters::update(vector2 enemy, vector<vector<Land*>> land)
 {
-	int currentCostX = 0;
-	currentCostX = this->cord.x - enemy.x;
-
-	int currentCostY = 0;
-	currentCostY = this->cord.y - enemy.y;
-	vector2 carry;
-
-	if (abs(currentCostX) < abs(currentCostY))
-	{
-		if (currentCostX > 0)
-			carry = vector2(1, 0);
-		else
-			carry = vector2(-1, 0);
-	}
-	else
-	{
-		if (currentCostY > 0)
-			carry = vector2(1, 0);
-		else
-			carry = vector2(-1, 0);
-	}
-
 	vector2 newCord = cord;
 	if (enemy.x > cord.x)
 	{

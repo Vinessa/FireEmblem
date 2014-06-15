@@ -113,7 +113,7 @@ void Grid::draw(vector2 screen)
 					nodes[element.second->cord.x][element.second->cord.y]->walkable = false;
 				for (auto & element : unplayable)
 					nodes[element.second->cord.x][element.second->cord.y]->walkable = false;
-
+				
 				if (playable[turn]->calculateCost(nodes[i][ii], 4, vector2(i, ii)))
 				{
 					nodes[i][ii]->blueHighLight = true;
