@@ -67,11 +67,12 @@ Screens::Screens(void)
 	show = true;
 }
 Screens::~Screens(){}
-void Screens::draw()
+void Screens::draw(bool splash)
 {
 	if (!show)
 		return;
 	glEnable(GL_TEXTURE_2D);
+	glEnable(GL_BLEND);
 
 	glBindTexture(GL_TEXTURE_2D, texture);
 	glBegin(GL_QUADS);
@@ -85,6 +86,23 @@ void Screens::draw()
 	glTexCoord2f(0, 1); glVertex3f(-1, -1, 0);
 	glPopMatrix();
 	glEnd();
+	if (!splash)
+	{
+		glBindTexture(GL_TEXTURE_2D, instTexture);
+		glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+		glEnable(GL_BLEND);
+		glBegin(GL_QUADS);
+		glPushMatrix();
+		//glRotatef(180, 1, 0, 0);
+		glLoadIdentity();
+		glColor3f(1, 1, 1);
+		glTexCoord2f(0, 0); glVertex3f(0, 0.5, 0);
+		glTexCoord2f(1, 0); glVertex3f(1, 0.5, 0);
+		glTexCoord2f(1, 1); glVertex3f(1, -0.5, 0);
+		glTexCoord2f(0, 1); glVertex3f(0, -0.5, 0);
+		glPopMatrix();
+		glEnd();
+	}
 	//glRotatef(-180, 1, 0, 0);
 	glDisable(GL_TEXTURE_2D);
 }
@@ -93,6 +111,14 @@ bool Screens::load(char * file)
 	texture = SOIL_load_OGL_texture
 		(
 		file,
+		SOIL_LOAD_AUTO,
+		SOIL_CREATE_NEW_ID, 0
+		/*SOIL_FLAG_INVERT_Y*/
+		);
+
+	instTexture = SOIL_load_OGL_texture
+		(
+		"IntroText.png",
 		SOIL_LOAD_AUTO,
 		SOIL_CREATE_NEW_ID, 0
 		/*SOIL_FLAG_INVERT_Y*/

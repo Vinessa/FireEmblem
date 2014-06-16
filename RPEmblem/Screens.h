@@ -33,10 +33,11 @@ class Screens
 {
 public:
 	GLint texture;
+	GLint instTexture;
 	bool show;
 	vector<Button> buttons;
 	Screens(void);
 	~Screens();
-	virtual void draw();
+	virtual void draw(bool);
 	virtual bool load(char * file);
 };

@@ -89,6 +89,22 @@ void PlayCard::draw()
 		glPopMatrix();
 		glEnd();
 	}
+
+	glBindTexture(GL_TEXTURE_2D, instTexture);
+	glBegin(GL_QUADS);
+	glPushMatrix();
+	//glRotatef(90, 1, 0, 0);
+
+	//glColor3f(1, 0, 0);
+	glLoadIdentity();
+	glColor3f(1, 1, 1);
+	glTexCoord2f(0,0); glVertex3f(-1, -0.25, 0);
+	glTexCoord2f(1, 0); glVertex3f(-0.25, -0.25, 0);
+	glTexCoord2f(1,1); glVertex3f(-0.25, -1, 0);
+	glTexCoord2f(0, 1); glVertex3f(-1, -1, 0);
+	glPopMatrix();
+	glEnd();
+
 	glDisable(GL_TEXTURE_2D);
 }
 bool PlayCard::load()
@@ -96,6 +112,14 @@ bool PlayCard::load()
 	texture = SOIL_load_OGL_texture
 		(
 		"card.png",
+		SOIL_LOAD_AUTO,
+		SOIL_CREATE_NEW_ID,0
+		/*SOIL_FLAG_INVERT_Y*/
+		);
+
+	instTexture = SOIL_load_OGL_texture
+		(
+		"Instructions_Overlay.png",
 		SOIL_LOAD_AUTO,
 		SOIL_CREATE_NEW_ID, 0
 		/*SOIL_FLAG_INVERT_Y*/

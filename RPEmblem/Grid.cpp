@@ -54,9 +54,9 @@ void Grid::init(int x/*18*/, int y/*18*/)
 	keyState[' '] = false;
 
 	HPickup* hPick = new HPickup();
-	hPick->init(vector2(3, 3));
+	hPick->init(vector2(3, 5));
 	HTrap* hTrap = new HTrap();
-	hTrap->init(vector2(3, 5));
+	hTrap->init(vector2(4, 7));
 	items = vector<Items*>(2);
 	items[0] = (Items*)hPick;
 	items[1] = (Items*)hTrap;
@@ -72,7 +72,7 @@ void Grid::draw(vector2 screen)
 {
 	if (scr.show)
 	{
-		scr.draw();
+		scr.draw(curr == SPLASH);
 		updateHalt++;
 		for (auto & element : scr.buttons)
 		{

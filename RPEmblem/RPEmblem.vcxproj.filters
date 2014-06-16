@@ -289,6 +289,12 @@
     <Image Include="numbers.png">
       <Filter>Resource Files\Images</Filter>
     </Image>
+    <Image Include="Instructions_Overlay.png">
+      <Filter>Resource Files\Images</Filter>
+    </Image>
+    <Image Include="IntroText.png">
+      <Filter>Resource Files\Images</Filter>
+    </Image>
   </ItemGroup>
   <ItemGroup>
     <Xml Include="LevelData.xml">

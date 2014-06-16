@@ -22,6 +22,7 @@ class PlayCard
 {
 public:
 	GLint texture;
+	GLint instTexture;
 	Characters * sel;
 	Characters * opSel;
 	Land * selLand;

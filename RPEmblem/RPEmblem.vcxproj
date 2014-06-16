@@ -145,6 +145,8 @@
     <Image Include="health.png" />
     <Image Include="houseB.png" />
     <Image Include="houseT.png" />
+    <Image Include="Instructions_Overlay.png" />
+    <Image Include="IntroText.png" />
     <Image Include="maceA.png" />
     <Image Include="maceE.png" />
     <Image Include="MaceKnight_B.png" />
