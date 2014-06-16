@@ -352,11 +352,11 @@ void Grid::update()
 				card.sel = (Characters*)it->second;
 				card.selLand = (Land*)nodes[it->second->cord.x][it->second->cord.y];
 				//if (unplayable.find(turn - unplayable.size()) != unplayable.end()){
-				if (move && unplayable.at(turn)->calculateCost(nodes[selectedNode.x][selectedNode.y], 4, selectedNode))
-				{
+				//if (move)// && unplayable.at(turn)->calculateCost(nodes[selectedNode.x][selectedNode.y], 4, selectedNode))
+				//{
 					updateHalt = 0.1;
-				}
-				else if (move)
+				//}
+				//else if (move)
 					move = false;
 			}
 			it->second->alive = it->second->health > 0;
