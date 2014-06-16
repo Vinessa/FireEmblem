@@ -317,7 +317,68 @@ vector2 Characters::update(vector2 enemy, vector<vector<Land*>> land)
 			newCord.y--;
 		}
 	}
+	else if (enemy.x == cord.x)
+	{
 
+		std::cout << "on same x axis";
+		updatePrefer(enemy, land, false);
+	}
+	else if (enemy.y == cord.y)
+	{
+
+		std::cout << "on same y axis";
+		updatePrefer(enemy, land, true);
+	}
+
+	return newCord;
+}
+vector2 Characters::updatePrefer(vector2 enemy, vector<vector<Land*>> land,bool prefer)
+{
+	vector2 newCord = cord;
+	if (prefer)
+	{
+		if (enemy.x > cord.x)
+		{
+			while (enemy.x > newCord.x && (land.at(newCord.x + 1).at(newCord.y)->walkable))
+			{
+				if (newCord.x >= cord.x + 4)
+					return newCord;
+				newCord.x++;
+			}
+		}
+
+		else// if (enemy.x < cord.x)
+		{
+			while (enemy.x < newCord.x && (land.at(newCord.x - 1).at(newCord.y)->walkable))
+			{
+				if (newCord.x <= cord.x - 4)
+					return newCord;
+				newCord.x--;
+			}
+		}
+	}
+	else
+	{
+	if (enemy.y > cord.y)
+	{
+		while (enemy.y > newCord.y && (land.at(newCord.x).at(newCord.y + 1)->walkable))
+		{
+			if (newCord.y >= cord.y + 4)
+				return newCord;
+			newCord.y++;
+		}
+	}
+
+	//else if (enemy.y < cord.y)
+	{
+		while (enemy.y < newCord.y && (land.at(newCord.x).at(newCord.y - 1)->walkable))
+		{
+			if (newCord.y <= cord.y - 4)
+				return newCord;
+			newCord.y--;
+		}
+	}
+	}
 	return newCord;
 }
 void Characters::swapStance()

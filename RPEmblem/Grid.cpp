@@ -165,87 +165,153 @@ void Grid::draw(vector2 screen)
 
 void Grid::update()
 {
-	bool wipeSel = true;
-	if (curr == STATE::GAME)
-		scr.show = false;
-	if (scr.show)
-		return;
-
-	for (auto & element : turnSkips){
-		if (element == turn)
-		{
-			turn++;
-			return;
-		}
-	}
-	auto i = std::begin(text);
-
-	while (i != std::end(text)) {
-		// do some stuff
-		if (i->deathTime <= 0)
-			i = text.erase(i);
-		else
-			++i;
-	}
-
-	playable[4] = new Characters();
-	for (std::map<int, Characters*>::iterator it = playable.begin(); /*bob <= playable.size() ||*/it != playable.cend() /* not hoisted */; /* no increment */)
-		//for (const auto it : playable)
+	try
 	{
-		
-		if (it->second->health <= 0)
-		{
-			delList.push_back(it);
-			break;
-		}
-		else if (it->second->waiting)
-		{
-			it->second->waiting = false;
-			turn++;
-			selectedNode = vector2(-1, -1);
-			move = false;
+		bool wipeSel = true;
+		if (curr == STATE::GAME)
+			scr.show = false;
+		if (scr.show)
 			return;
-		}
-		else
-		{
-			if (turn == it->second->turnOrder)
+
+		for (auto & element : turnSkips){
+			if (element == turn)
 			{
-				card.sel = (Characters*)it->second;
-				card.selLand = (Land*)nodes[it->second->cord.x][it->second->cord.y];
-				if (move && playable[turn]->calculateCost(nodes[selectedNode.x][selectedNode.y], 4, selectedNode))
+				turn++;
+				return;
+			}
+		}
+		auto i = std::begin(text);
+
+		while (i != std::end(text)) {
+			// do some stuff
+			if (i->deathTime <= 0)
+				i = text.erase(i);
+			else
+				++i;
+		}
+
+		playable[4] = new Characters();
+		for (std::map<int, Characters*>::iterator it = playable.begin(); /*bob <= playable.size() ||*/it != playable.cend() /* not hoisted */; /* no increment */)
+			//for (const auto it : playable)
+		{
+
+			if (it->second->health <= 0)
+			{
+				delList.push_back(it);
+				break;
+			}
+			else if (it->second->waiting)
+			{
+				it->second->waiting = false;
+				turn++;
+				selectedNode = vector2(-1, -1);
+				move = false;
+				return;
+			}
+			else
+			{
+				if (turn == it->second->turnOrder)
 				{
-					for (auto iit : playable)
+					card.sel = (Characters*)it->second;
+					card.selLand = (Land*)nodes[it->second->cord.x][it->second->cord.y];
+					if (move && playable[turn]->calculateCost(nodes[selectedNode.x][selectedNode.y], 4, selectedNode))
 					{
-						if (iit.second->cord == selectedNode)
+						for (auto iit : playable)
 						{
+							if (iit.second->cord == selectedNode)
+							{
+								move = false;
+							}
+						}
+						if (move)
+						{
+							it->second->waiting = false;
+							it->second->updatePos(selectedNode);
+							if (it->first != 4)
+								turn++;
 							move = false;
 						}
+						selectedNode = vector2(-1, -1);
 					}
-					if (move)
-					{
-						it->second->waiting = false;
-						it->second->updatePos(selectedNode);
-						if (it->first != 4)
-							turn++;
+					else if (move)
 						move = false;
-					}
-					selectedNode = vector2(-1, -1);
 				}
-				else if (move)
-					move = false;
-			}
-			if (selectedNode == it->second->cord)
-			{
-				selCharacter = (Characters*)it->second;
-				card.opSel = (Characters*)selCharacter;
-				card.opselLand = (Land*)nodes[it->second->cord.x][it->second->cord.y];
-				card.showOpSel = true;
-				wipeSel = false;
-				/*if (it->first == turn)
+				if (selectedNode == it->second->cord)
 				{
+					selCharacter = (Characters*)it->second;
+					card.opSel = (Characters*)selCharacter;
+					card.opselLand = (Land*)nodes[it->second->cord.x][it->second->cord.y];
+					card.showOpSel = true;
+					wipeSel = false;
+					/*if (it->first == turn)
+					{
 					turn++;
 					return;
-				}*/
+					}*/
+				}
+				else if (selectedNode == vector2(-1, -1))
+				{
+					card.showOpSel = false;
+					selCharacter = (Characters*)new Characters;
+				}
+				else
+				{
+					selCharacter = (Characters*)new Characters;
+				}
+				it->second->alive = it->second->health > 0;
+				it->second->waiting = false;
+				int itemTrackVal = 0;
+				if (!items.empty())
+					for (auto & element : items)
+					{
+					element->update(it->second->cord);
+					if (element->alive)
+					{
+						element->effect(it->second);
+						items.erase(items.begin() + itemTrackVal);
+						break;
+					}
+					itemTrackVal++;
+					}
+				//if (it->first + 1 >= 4)
+				++it;
+			}
+		}
+		///	delList.push_back(playable.rend);
+
+		for (auto i : delList){
+			if (i->first != 4)
+				turnSkips.push_back(i->first);
+			playable.erase(i);
+		}
+		delList.clear();
+
+		for (auto i : delUnList){
+			//if (i->first != 4)
+			turnSkips.push_back(i->first);
+			unplayable.erase(i);
+		}
+		delUnList.clear();
+		//AI TIME
+		for (auto & element : unplayable)
+		{
+			if (element.second->health <= 0)
+			{
+				//Characters testChar = element.second;
+				//delUnList.
+				auto test = unplayable.begin();
+				while (test->first != element.first)
+					test++;// += (element.first - 1);
+				delUnList.push_back(test);
+				break;
+			}
+			if (selectedNode == element.second->cord)
+			{
+				selCharacter = (Characters*)element.second;
+				card.opSel = (Characters*)selCharacter;
+				card.opselLand = (Land*)nodes[element.second->cord.x][element.second->cord.y];
+				card.showOpSel = true;
+				wipeSel = false;
 			}
 			else if (selectedNode == vector2(-1, -1))
 			{
@@ -256,171 +322,112 @@ void Grid::update()
 			{
 				selCharacter = (Characters*)new Characters;
 			}
-			it->second->alive = it->second->health > 0;
-			it->second->waiting = false;
-			int itemTrackVal = 0;
-			if (!items.empty())
-				for (auto & element : items)
-				{
-				element->update(it->second->cord);
-				if (element->alive)
-				{
-					element->effect(it->second);
-					items.erase(items.begin() + itemTrackVal);
-					break;
-				}
-				itemTrackVal++;
-				}
-			//if (it->first + 1 >= 4)
-			++it;
 		}
-	}
-	///	delList.push_back(playable.rend);
+		if (wipeSel)
+			card.opSel = (Characters*)new Characters;
 
-	for (auto i : delList){
-		if (i->first != 4)
-			turnSkips.push_back(i->first);
-		playable.erase(i);
-	}
-	delList.clear();
-
-	for (auto i : delUnList){
-		//if (i->first != 4)
-		turnSkips.push_back(i->first);
-		unplayable.erase(i);
-	}
-	delUnList.clear();
-	//AI TIME
-	for (auto & element : unplayable)
-	{
-		if (element.second->health <= 0)
+		//if (((turn > playable.size())|| (playable.size() == 4 && turn == 4) && updateHalt == 0))
+		if (turn > playable.size() && updateHalt == 0)
 		{
-			//Characters testChar = element.second;
-			//delUnList.
-			auto test = unplayable.begin();
-			while (test->first != element.first)
-				test++;// += (element.first - 1);
-			delUnList.push_back(test);
-			break;
-		}
-		if (selectedNode == element.second->cord)
-		{
-			selCharacter = (Characters*)element.second;
-			card.opSel = (Characters*)selCharacter;
-			card.opselLand = (Land*)nodes[element.second->cord.x][element.second->cord.y];
-			card.showOpSel = true;
-			wipeSel = false;
-		}
-		else if (selectedNode == vector2(-1, -1))
-		{
-			card.showOpSel = false;
-			selCharacter = (Characters*)new Characters;
-		}
-		else
-		{
-			selCharacter = (Characters*)new Characters;
-		}
-	}
-	if (wipeSel)
-		card.opSel = (Characters*)new Characters;
-
-	//if (((turn > playable.size())|| (playable.size() == 4 && turn == 4) && updateHalt == 0))
-	if (turn > playable.size() && updateHalt == 0)
-	{
-		//if (turn == 4)
-		int enemyTurn = 0;
-		for (map<int, Characters*>::iterator it = unplayable.begin(); it != unplayable.end(); it++)
-		{
-			enemyTurn++;
-			if (turn == it->second->turnOrder)
+			//if (turn == 4)
+			int enemyTurn = 0;
+			for (map<int, Characters*>::iterator it = unplayable.begin(); it != unplayable.end(); it++)
 			{
-				card.sel = (Characters*)it->second;
-				card.selLand = (Land*)nodes[it->second->cord.x][it->second->cord.y];
-				//if (unplayable.find(turn - unplayable.size()) != unplayable.end()){
-				//if (move)// && unplayable.at(turn)->calculateCost(nodes[selectedNode.x][selectedNode.y], 4, selectedNode))
-				//{
+				enemyTurn++;
+				if (turn == it->second->turnOrder)
+				{
+					card.sel = (Characters*)it->second;
+					card.selLand = (Land*)nodes[it->second->cord.x][it->second->cord.y];
+					//if (unplayable.find(turn - unplayable.size()) != unplayable.end()){
+					//if (move)// && unplayable.at(turn)->calculateCost(nodes[selectedNode.x][selectedNode.y], 4, selectedNode))
+					//{
 					updateHalt = 0.1;
-				//}
-				//else if (move)
+					//}
+					//else if (move)
 					move = false;
+				}
+				it->second->alive = it->second->health > 0;
+				it->second->waiting = false;
+				int itemTrackVal = 0;
+				if (!items.empty())
+					for (auto & element : items)
+					{
+					element->update(it->second->cord);
+					if (element->alive)
+					{
+						element->effect(it->second);
+						items.erase(items.begin() + itemTrackVal);
+						break;
+					}
+					itemTrackVal++;
+					}
 			}
-			it->second->alive = it->second->health > 0;
-			it->second->waiting = false;
-			int itemTrackVal = 0;
-			if (!items.empty())
-				for (auto & element : items)
+		}
+		else if (turn > (int)playable.size() && updateHalt != 100)
+		{
+			updateHalt++;
+			if (updateHalt >= 500)//The time between each AI movement
+			{
+				if (unplayable.find(turn) != unplayable.end())
 				{
-				element->update(it->second->cord);
-				if (element->alive)
+					//unplayable[turn - 3]->updatePos(selectedNode);
+					//unplayable[turn - 3]->updatePos(unplayable[turn - 3]->calculateDist(unplayable[turn - 3]->calculateWorth(unplayable[turn - 3]->closestEnemy(playable)->cord), unplayable[turn - 3]->closestEnemy(playable)->cord, nodes));
+					unplayable[turn]->updatePos(unplayable[turn]->update(unplayable[turn]->closestEnemy(playable)->cord, nodes));
+					turn++;
+					updateHalt = 0;
+					selectedNode = vector2(-1, -1);
+					//selectedNode = 
+					move = false;
+				}
+				else
+					turn++;
+			}
+		}
+		//End of the round
+		bool peopleLeft = 3 - unplayable.size() > 0;
+		if (turn > maxTurns)
+			//if (turn > maxTurns || (peopleLeft && turn == 7 - (3 - unplayable.size())))
+		{
+			for (auto & element : playable)
+			{
+				element.second->healthLost = element.second->health;
+				element.second->getAdj(unplayable);
+
+				Attacks * attk = new Attacks();
+				attk->ExecuteBattle(element.second);
+				element.second->healthLost = element.second->healthLost - element.second->health;
+				if (element.second->healthLost > 0)
 				{
-					element->effect(it->second);
-					items.erase(items.begin() + itemTrackVal);
-					break;
+					Text newText;
+					newText.position = element.second->position;
+					newText.number = element.second->healthLost;
+					text.push_back(newText);
 				}
-				itemTrackVal++;
+			}
+			for (auto & element : unplayable)
+			{
+				element.second->healthLost = element.second->health;
+				element.second->getAdj(playable);
+
+				Attacks * attk = new Attacks();
+				attk->ExecuteBattle(element.second);
+				element.second->healthLost = element.second->healthLost - element.second->health;
+				if (element.second->healthLost > 0)
+				{
+					Text newText;
+					newText.position = element.second->position;
+					newText.number = element.second->healthLost;
+					text.push_back(newText);
 				}
+			}
+			PlaySound(L"Sound\\Music\\215037__taira-komori__sword-battle-loop.wav", NULL, SND_NOSTOP);
+
+			//Reset the turn order
+			turn = 1;
 		}
 	}
-	else if (turn > (int)playable.size() && updateHalt != 100)
+	catch (std::out_of_range oor)
 	{
-		updateHalt++;
-		if (updateHalt >= 500)//The time between each AI movement
-		{
-			if (unplayable.find(turn) != unplayable.end())
-			{
-				//unplayable[turn - 3]->updatePos(selectedNode);
-				//unplayable[turn - 3]->updatePos(unplayable[turn - 3]->calculateDist(unplayable[turn - 3]->calculateWorth(unplayable[turn - 3]->closestEnemy(playable)->cord), unplayable[turn - 3]->closestEnemy(playable)->cord, nodes));
-				unplayable[turn]->updatePos(unplayable[turn]->update(unplayable[turn]->closestEnemy(playable)->cord,nodes));
-				turn++;
-				updateHalt = 0;
-				selectedNode = vector2(-1, -1);
-				//selectedNode = 
-				move = false;
-			}
-			else
-				turn++;
-		}
-	}
-	//End of the round
-	bool peopleLeft = 3 - unplayable.size() > 0;
-	if (turn > maxTurns)
-	//if (turn > maxTurns || (peopleLeft && turn == 7 - (3 - unplayable.size())))
-	{
-		for (auto & element : playable)
-		{
-			element.second->healthLost = element.second->health;
-			element.second->getAdj(unplayable);
-
-			Attacks * attk = new Attacks();
-			attk->ExecuteBattle(element.second);
-			element.second->healthLost = element.second->healthLost - element.second->health;
-			if (element.second->healthLost > 0)
-			{
-				Text newText;
-				newText.position = element.second->position;
-				newText.number = element.second->healthLost;
-				text.push_back(newText);
-			}
-		}
-		for (auto & element : unplayable)
-		{
-			element.second->healthLost = element.second->health;
-			element.second->getAdj(playable);
-
-			Attacks * attk = new Attacks();
-			attk->ExecuteBattle(element.second);
-			element.second->healthLost = element.second->healthLost - element.second->health;
-			if (element.second->healthLost > 0)
-			{
-				Text newText;
-				newText.position = element.second->position;
-				newText.number = element.second->healthLost;
-				text.push_back(newText);
-			}
-		}
-		PlaySound(L"Sound\\Music\\215037__taira-komori__sword-battle-loop.wav", NULL, SND_NOSTOP);
-
-		//Reset the turn order
-		turn = 1;
+		std::cerr << "Out of Range" << oor.what();
 	}
 }

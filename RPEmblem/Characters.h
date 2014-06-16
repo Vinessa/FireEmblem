@@ -51,6 +51,7 @@ public:
 	virtual vector2 calculateDist(vector2 target, vector2 enemy, vector<vector<Land*>> land);
 	virtual Characters* closestEnemy(map<int, Characters*> thePlayable);
 	virtual vector2 update(vector2 enemy, vector<vector<Land*>> land);
+	virtual vector2 updatePrefer(vector2 enemy, vector<vector<Land*>> land, bool preferX);
 	virtual void swapStance();
 };
 class HeavyMace : Characters
