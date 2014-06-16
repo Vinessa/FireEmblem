@@ -108,6 +108,7 @@ public:
 class Selection :Land
 {
 public:
+	~Selection(void);
 	Land * belowContent;
 	vector2 cord = vector2(0, 0);
 	virtual void draw();

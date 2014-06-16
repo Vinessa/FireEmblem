@@ -1,6 +1,19 @@
 #include "stdafx.h"
 #include "Weapon.h"
 
+Weapon::~Weapon(void)
+{
+
+}SWORD::~SWORD(void)
+{
+
+}AXE::~AXE(void)
+{
+
+}MACE::~MACE(void)
+{
+
+}
 SWORD::SWORD(int newDurability)
 {
 	durability = newDurability;

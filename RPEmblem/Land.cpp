@@ -640,6 +640,9 @@ bool Dirt::load(int part)
 	return false;
 }
 
+Selection::~Selection(void){
+	//delete belowContent;
+}
 void Selection::draw()
 {
 	try{

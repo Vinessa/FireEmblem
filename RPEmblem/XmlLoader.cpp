@@ -5,7 +5,8 @@ PlayCard::PlayCard(void)
 {
 	showOpSel = false;
 }
-PlayCard::~PlayCard(){}
+PlayCard::~PlayCard(){
+}
 void PlayCard::draw()
 {
 	glEnable(GL_TEXTURE_2D);

@@ -9,8 +9,7 @@ protected:
 public:
 	Weapon(){}
 	Weapon(int newDurability){}
-	~Weapon(void){
-	}
+	~Weapon(void);
 	//has to use itself
 	int durability;
 	virtual int Compare(Weapon* Weapon2) = 0;
@@ -23,7 +22,7 @@ public:
 
 	SWORD(){}
 	SWORD(int newDurability);
-	~SWORD(void){}
+	~SWORD(void);
 	std::string type() { return "Sword"; }
 	int Compare(Weapon* Weapon2);
 };
@@ -31,7 +30,7 @@ class MACE : public Weapon{
 public:
 	MACE(){}
 	MACE(int newDurability);
-	~MACE(void){}
+	~MACE(void);
 	std::string type(){ return "Mace"; }
 	int Compare(Weapon * Weapon2);
 };
@@ -40,7 +39,7 @@ class AXE : public Weapon{
 public:
 	AXE(){}
 	AXE(int newDurability);
-	~AXE(void){}
+	~AXE(void);
 	std::string type(){ return "Axe"; }
 	int Compare(Weapon *Weapon2);
 };

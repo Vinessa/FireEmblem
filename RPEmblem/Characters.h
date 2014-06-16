@@ -36,6 +36,7 @@ public:
 	int turnOrder;
 	vector<Characters*> adjecentArray;
 	Characters(void);
+	~Characters(void);
 	Characters(Characters* newChar);
 	virtual void init(vector2 change, string newName);
 	virtual void draw();
@@ -50,6 +51,7 @@ public:
 	virtual vector2 calculateDist(vector2 target, vector2 enemy, vector<vector<Land*>> land);
 	virtual Characters* closestEnemy(map<int, Characters*> thePlayable);
 	virtual vector2 update(vector2 enemy, vector<vector<Land*>> land);
+	virtual void swapStance();
 };
 class HeavyMace : Characters
 {

@@ -19,6 +19,15 @@ Characters::Characters(Characters* newChar)
 	mvmP = newChar->mvmP;
 	turnOrder = newChar->turnOrder;
 }
+Characters::~Characters(void)
+{
+	//delete weapon;
+	//for (int i = 0; i < adjecentArray.size(); ++i) {
+	///	delete adjecentArray[i]; // Calls ~object (which deallocates tmp[i]->foo) 
+	//	// and deallocates *tmp[i]
+	//}
+	//adjecentArray.clear();
+}
 void Characters::init(vector2 change, string newName)
 {
 	alive = health > 0;
@@ -310,6 +319,33 @@ vector2 Characters::update(vector2 enemy, vector<vector<Land*>> land)
 	}
 
 	return newCord;
+}
+void Characters::swapStance()
+{
+	//HeavyMace * testChar = Characters(currentStance);
+	Characters * character = new Characters(this);
+	if (name == "HeavyMace")
+	{
+		Swordsman * newChar = new Swordsman();
+		newChar->init(cord, "Swordsman");
+		character = (Characters*)newChar;
+	}
+	else if (name == "Swordsman")
+	{
+		Axeman * newChar = new Axeman();
+		newChar->init(cord, "Axeman");
+		character = (Characters*)newChar;
+	}
+	else if (name == "Axeman")
+	{
+		HeavyMace * newChar = new HeavyMace();
+		newChar->init(cord, "HeavyMace");
+		character = (Characters*)newChar;
+	}
+
+	this->texture = character->texture;
+	this->weapon = character->weapon;
+	this->name = character->name;
 }
 
 HeavyMace::HeavyMace(void){}

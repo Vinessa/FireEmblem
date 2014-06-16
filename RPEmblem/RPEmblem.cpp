@@ -58,6 +58,8 @@ void keyboard_up(unsigned char key, int x, int y)
 	case ' ':
 		if (grid.curr == grid.GAME)
 		{
+			if (grid.turn <= grid.playable.size())
+				grid.playable.at(grid.turn)->swapStance();
 		}
 		else if (grid.curr == grid.SPLASH)
 		{

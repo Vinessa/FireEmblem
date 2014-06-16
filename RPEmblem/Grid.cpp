@@ -2,7 +2,23 @@
 #include "Grid.h"
 
 Grid::Grid(){}
-Grid::~Grid(){}
+Grid::~Grid(){
+	/*for (int i = 0; i < playable.size(); ++i) {
+		delete playable[i]; 
+	}
+	for (int i = 0; i < unplayable.size(); ++i) {
+		delete unplayable[i];
+	}
+	for (int i = 0; i < nodes.size(); ++i) {
+		for (int ii = 0; ii < nodes.size(); ++ii) {
+			delete nodes[i][ii];
+		}
+	}
+	for (int i = 0; i < items.size(); ++i) {
+		delete items[i];
+	}
+	delete selCharacter;*/
+}
 
 void Grid::init(int x/*18*/, int y/*18*/)
 {
@@ -60,6 +76,9 @@ void Grid::init(int x/*18*/, int y/*18*/)
 	items[0] = (Items*)hPick;
 	items[1] = (Items*)hTrap;
 
+
+	playable[1]->swapStance();
+
 	//Text testText;
 	//text = vector<Text>(1);
 	//text[0] = testText;
@@ -74,7 +93,7 @@ void Grid::draw(vector2 screen)
 		{
 			element.draw();
 		}
-		if (updateHalt >= 1500 && curr != MENU)
+		if (updateHalt >= 2500 && curr != MENU)
 		{
 			curr = MENU;
 			scr = Screens();
