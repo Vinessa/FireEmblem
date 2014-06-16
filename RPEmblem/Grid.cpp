@@ -21,17 +21,17 @@ void Grid::init(int x/*18*/, int y/*18*/)
 	playable[2]->init(vector2(9, 12), "Swordsman");
 	playable[3]->init(vector2(12, 9), "Axeman");
 
-	unplayable[1] = (Characters*)new HeavyMace();
-	unplayable[2] = (Characters*)new Swordsman;
-	unplayable[3] = (Characters*)new Axeman;
-	unplayable[1]->init(vector2(15, 15), "HeavyMace");
-	unplayable[2]->init(vector2(15, 12), "Swordsman");
-	unplayable[3]->init(vector2(12, 15), "Axeman");
+	unplayable[4] = (Characters*)new HeavyMace();
+	unplayable[5] = (Characters*)new Swordsman;
+	unplayable[6] = (Characters*)new Axeman;
+	unplayable[4]->init(vector2(15, 15), "HeavyMace");
+	unplayable[5]->init(vector2(15, 12), "Swordsman");
+	unplayable[6]->init(vector2(12, 15), "Axeman");
 	for (auto & element : unplayable)
 		element.second->loadAsEnemy();
-	unplayable[1]->turnOrder = 4;
-	unplayable[2]->turnOrder = 5;
-	unplayable[3]->turnOrder = 6;
+	unplayable[4]->turnOrder = 4;
+	unplayable[5]->turnOrder = 5;
+	unplayable[6]->turnOrder = 6;
 	selectedNode = vector2(-1, -1);
 	//sel.init();
 	sel.load();
@@ -315,7 +315,7 @@ void Grid::update()
 				card.sel = (Characters*)it->second;
 				card.selLand = (Land*)nodes[it->second->cord.x][it->second->cord.y];
 				//if (unplayable.find(turn - unplayable.size()) != unplayable.end()){
-				if (move && unplayable.at(turn - 3)->calculateCost(nodes[selectedNode.x][selectedNode.y], 4, selectedNode))
+				if (move && unplayable.at(turn)->calculateCost(nodes[selectedNode.x][selectedNode.y], 4, selectedNode))
 				{
 					updateHalt = 0.1;
 				}
@@ -344,11 +344,11 @@ void Grid::update()
 		updateHalt++;
 		if (updateHalt >= 500)//The time between each AI movement
 		{
-			if (unplayable.find(turn - 3) != unplayable.end())
+			if (unplayable.find(turn) != unplayable.end())
 			{
 				//unplayable[turn - 3]->updatePos(selectedNode);
 				//unplayable[turn - 3]->updatePos(unplayable[turn - 3]->calculateDist(unplayable[turn - 3]->calculateWorth(unplayable[turn - 3]->closestEnemy(playable)->cord), unplayable[turn - 3]->closestEnemy(playable)->cord, nodes));
-				unplayable[turn - 3]->updatePos(unplayable[turn - 3]->update(unplayable[turn - 3]->closestEnemy(playable)->cord,nodes));
+				unplayable[turn]->updatePos(unplayable[turn]->update(unplayable[turn]->closestEnemy(playable)->cord,nodes));
 				turn++;
 				updateHalt = 0;
 				selectedNode = vector2(-1, -1);
@@ -361,7 +361,8 @@ void Grid::update()
 	}
 	//End of the round
 	bool peopleLeft = 3 - unplayable.size() > 0;
-	if (turn > maxTurns || (peopleLeft && turn == 7 - (3 - unplayable.size())))
+	if (turn > maxTurns)
+	//if (turn > maxTurns || (peopleLeft && turn == 7 - (3 - unplayable.size())))
 	{
 		for (auto & element : playable)
 		{
