@@ -161,6 +161,7 @@ void Grid::draw(vector2 screen)
 
 void Grid::update()
 {
+	bool wipeSel = true;
 	if (curr == STATE::GAME)
 		scr.show = false;
 	if (scr.show)
@@ -187,10 +188,19 @@ void Grid::update()
 	for (std::map<int, Characters*>::iterator it = playable.begin(); /*bob <= playable.size() ||*/it != playable.cend() /* not hoisted */; /* no increment */)
 		//for (const auto it : playable)
 	{
+		
 		if (it->second->health <= 0)
 		{
 			delList.push_back(it);
 			break;
+		}
+		else if (it->second->waiting)
+		{
+			it->second->waiting = false;
+			turn++;
+			selectedNode = vector2(-1, -1);
+			move = false;
+			return;
 		}
 		else
 		{
@@ -226,6 +236,12 @@ void Grid::update()
 				card.opSel = (Characters*)selCharacter;
 				card.opselLand = (Land*)nodes[it->second->cord.x][it->second->cord.y];
 				card.showOpSel = true;
+				wipeSel = false;
+				/*if (it->first == turn)
+				{
+					turn++;
+					return;
+				}*/
 			}
 			else if (selectedNode == vector2(-1, -1))
 			{
@@ -271,7 +287,6 @@ void Grid::update()
 	}
 	delUnList.clear();
 	//AI TIME
-
 	for (auto & element : unplayable)
 	{
 		if (element.second->health <= 0)
@@ -290,6 +305,7 @@ void Grid::update()
 			card.opSel = (Characters*)selCharacter;
 			card.opselLand = (Land*)nodes[element.second->cord.x][element.second->cord.y];
 			card.showOpSel = true;
+			wipeSel = false;
 		}
 		else if (selectedNode == vector2(-1, -1))
 		{
@@ -301,6 +317,8 @@ void Grid::update()
 			selCharacter = (Characters*)new Characters;
 		}
 	}
+	if (wipeSel)
+		card.opSel = (Characters*)new Characters;
 
 	//if (((turn > playable.size())|| (playable.size() == 4 && turn == 4) && updateHalt == 0))
 	if (turn > playable.size() && updateHalt == 0)
