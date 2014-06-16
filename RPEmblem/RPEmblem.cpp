@@ -58,7 +58,7 @@ void keyboard_up(unsigned char key, int x, int y)
 	case ' ':
 		if (grid.curr == grid.GAME)
 		{
-			if (grid.turn <= grid.playable.size())
+			if (grid.turn <= 3)
 				grid.playable.at(grid.turn)->swapStance();
 		}
 		else if (grid.curr == grid.SPLASH)

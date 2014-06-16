@@ -3,21 +3,6 @@
 
 Grid::Grid(){}
 Grid::~Grid(){
-	/*for (int i = 0; i < playable.size(); ++i) {
-		delete playable[i]; 
-	}
-	for (int i = 0; i < unplayable.size(); ++i) {
-		delete unplayable[i];
-	}
-	for (int i = 0; i < nodes.size(); ++i) {
-		for (int ii = 0; ii < nodes.size(); ++ii) {
-			delete nodes[i][ii];
-		}
-	}
-	for (int i = 0; i < items.size(); ++i) {
-		delete items[i];
-	}
-	delete selCharacter;*/
 }
 
 void Grid::init(int x/*18*/, int y/*18*/)
@@ -40,8 +25,8 @@ void Grid::init(int x/*18*/, int y/*18*/)
 	unplayable[4] = (Characters*)new HeavyMace();
 	unplayable[5] = (Characters*)new Swordsman;
 	unplayable[6] = (Characters*)new Axeman;
-	unplayable[4]->init(vector2(15, 15), "HeavyMace");
-	unplayable[5]->init(vector2(15, 12), "Swordsman");
+	unplayable[4]->init(vector2(13, 15), "HeavyMace");
+	unplayable[5]->init(vector2(13, 12), "Swordsman");
 	unplayable[6]->init(vector2(12, 15), "Axeman");
 	for (auto & element : unplayable)
 		element.second->loadAsEnemy();
@@ -77,7 +62,7 @@ void Grid::init(int x/*18*/, int y/*18*/)
 	items[1] = (Items*)hTrap;
 
 
-	playable[1]->swapStance();
+	//playable[1]->swapStance();
 
 	//Text testText;
 	//text = vector<Text>(1);
